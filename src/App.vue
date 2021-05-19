@@ -28,6 +28,9 @@ import {
 } from "@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
 
+import Localbase from "localbase";
+let db = new Localbase("db");
+
 export default {
   components: {
     LMap,
@@ -35,18 +38,32 @@ export default {
     LMarker,
     LControlLayers,
   },
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  mounted() {
+    db.collection("markers")
+      .get()
+      .then((markers) => {
+        markers.map((markers) => this.markers.push(markers.latlng));
+      });
+  },
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
       zoom: 16,
+      id: null,
       // iconWidth: 25,
       // iconHeight: 40,
       center: [50.8311091801179, -0.13301259444431282],
       currentMarker: [],
-      markers: [[50.8311091801179, -0.13301259444431282]],
+      markers: [],
     };
   },
   methods: {
     addMarker(e) {
+      db.collection("markers").add({
+        id: Date.now().toString(),
+        latlng: [e.latlng.lat, e.latlng.lng],
+      });
       this.markers.push([e.latlng.lat, e.latlng.lng]);
     },
   },
