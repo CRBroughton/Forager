@@ -6,6 +6,7 @@
     :options="{ zoomSnap: 0.1, zoomDelta: 0.1 }"
     @click="addMarker"
   >
+    <marker-popup id="MarkerPopup"></marker-popup>
     <l-tile-layer
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     ></l-tile-layer>
@@ -20,6 +21,7 @@
 </template>
 
 <script lang="ts">
+import MarkerPopup from "./components/MarkerPopup.vue";
 import {
   LMap,
   LTileLayer,
@@ -33,6 +35,7 @@ let db = new Localbase("db");
 
 export default {
   components: {
+    MarkerPopup,
     LMap,
     LTileLayer,
     LMarker,
@@ -80,5 +83,10 @@ body,
 #app {
   height: 100vh;
   width: 100vw;
+}
+#MarkerPopup {
+  z-index: 1000;
+  display: inline-block;
+  position: absolute;
 }
 </style>
