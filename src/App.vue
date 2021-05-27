@@ -4,9 +4,9 @@
     v-model:zoom="zoom"
     :center="center"
     :options="{ zoomSnap: 0.1, zoomDelta: 0.1 }"
-    @click="addMarker"
+    @click.stop="CreateMarker"
   >
-    <marker-popup id="MarkerPopup"></marker-popup>
+    <marker-popup id="MarkerPopup" v-if="popupVisible"></marker-popup>
     <l-tile-layer
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     ></l-tile-layer>
@@ -52,6 +52,7 @@ export default {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
+      popupVisible: false,
       zoom: 16,
       id: null,
       // iconWidth: 25,
@@ -62,9 +63,15 @@ export default {
     };
   },
   methods: {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    CreateMarker() {
+      this.popupVisible = !this.popupVisible;
+    },
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     addMarker(e) {
       db.collection("markers").add({
         id: Date.now().toString(),
+        title: "test-title",
         latlng: [e.latlng.lat, e.latlng.lng],
       });
       this.markers.push([e.latlng.lat, e.latlng.lng]);
