@@ -5,7 +5,11 @@
     v-model:zoom="zoom"
     :center="center"
     :options="{ zoomSnap: 0.1, zoomDelta: 0.1 }"
-    @click.stop="CreateMarker"
+    @pointerdown="handleDown"
+    @pointerup="handleUp"
+    @pointercancel="handleUp"
+    @click.stop="handleClick"
+    ref="draggableRoot"
   >
     <l-tile-layer
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -60,9 +64,34 @@ export default {
       center: [50.8311091801179, -0.13301259444431282],
       currentMarker: [],
       markers: [],
+      drag: false,
+      click: false,
     };
   },
   methods: {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    handleMove() {
+      if (this.$refs.draggableRoot) {
+        this.drag = true;
+        this.popupVisible = false;
+      }
+    },
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    handleDown() {
+      document.addEventListener("pointermove", this.handleMove);
+    },
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    handleUp() {
+      document.removeEventListener("pointermove", this.handleMove);
+      setTimeout(() => (this.drag = false));
+    },
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    handleClick() {
+      if (!this.drag) {
+        this.click = true;
+        this.popupVisible = true;
+      }
+    },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     CreateMarker() {
       this.popupVisible = !this.popupVisible;
