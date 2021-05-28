@@ -8,7 +8,7 @@
     @pointerdown="handleDown"
     @pointerup="handleUp"
     @pointercancel="handleUp"
-    @click.stop="handleClick"
+    @click="handleClick"
     ref="draggableRoot"
   >
     <l-tile-layer
@@ -86,15 +86,13 @@ export default {
       setTimeout(() => (this.drag = false));
     },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    handleClick() {
+    handleClick(e) {
       if (!this.drag) {
         this.click = true;
+        this.center = [e.latlng.lat, e.latlng.lng];
         this.popupVisible = true;
+        this.addMarker(e);
       }
-    },
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    CreateMarker() {
-      this.popupVisible = !this.popupVisible;
     },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     addMarker(e) {
