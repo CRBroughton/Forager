@@ -1,4 +1,5 @@
 <template>
+  <marker-popup id="MarkerPopup" v-if="popupVisible"></marker-popup>
   <l-map
     v-model="zoom"
     v-model:zoom="zoom"
@@ -6,7 +7,6 @@
     :options="{ zoomSnap: 0.1, zoomDelta: 0.1 }"
     @click.stop="CreateMarker"
   >
-    <marker-popup id="MarkerPopup" v-if="popupVisible"></marker-popup>
     <l-tile-layer
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     ></l-tile-layer>

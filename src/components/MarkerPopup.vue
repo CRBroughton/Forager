@@ -45,6 +45,12 @@ export default {
       isHidden: false,
     };
   },
+  methods: {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    addMarker() {
+      return;
+    }
+  }
 };
 </script>
 
