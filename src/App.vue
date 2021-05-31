@@ -17,6 +17,7 @@
     <l-control-layers />
 
     <l-marker
+      @click="deleteMarker"
       v-for="marker in markers"
       :key="marker"
       :lat-lng="marker"
@@ -50,7 +51,7 @@ export default {
     db.collection("markers")
       .get()
       .then((markers) => {
-        markers.map((markers) => this.markers.push(markers.latlng));
+        markers.map((markers) => this.markers.push(markers));
       });
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -86,22 +87,40 @@ export default {
       setTimeout(() => (this.drag = false));
     },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    handleClick(e) {
+    handleClick(e: { latlng: { lat: number; lng: number } }) {
       if (!this.drag) {
         this.click = true;
         this.center = [e.latlng.lat, e.latlng.lng];
-        this.popupVisible = true;
         this.addMarker(e);
       }
     },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    addMarker(e) {
-      db.collection("markers").add({
+    addMarker(e: { latlng: { lat: number; lng: number } }) {
+      const newMarker = {
         id: Date.now().toString(),
         title: "test-title",
-        latlng: [e.latlng.lat, e.latlng.lng],
+        // latlng: [e.latlng.lat, e.latlng.lng],
+        lat: e.latlng.lat,
+        lng: e.latlng.lng,
+      };
+
+      db.collection("markers").add(newMarker);
+      this.markers.push(newMarker);
+      console.log(e);
+    },
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    deleteMarker(e: { latlng: { lat: number; lng: number } }) {
+      this.click = true;
+      this.center = e.latlng;
+      this.popupVisible = true;
+      db.collection("markers").doc(e.latlng).delete();
+
+      const filteredMarkers = this.markers.filter(function (el: {
+        lat: number;
+      }) {
+        return el.lat != e.latlng.lat;
       });
-      this.markers.push([e.latlng.lat, e.latlng.lng]);
+      this.markers = filteredMarkers;
     },
   },
 };
