@@ -60,8 +60,6 @@ export default {
       popupVisible: false,
       zoom: 16,
       id: null,
-      // iconWidth: 25,
-      // iconHeight: 40,
       center: [50.8311091801179, -0.13301259444431282],
       currentMarker: [],
       markers: [],
@@ -99,7 +97,6 @@ export default {
       const newMarker = {
         id: Date.now().toString(),
         title: "test-title",
-        // latlng: [e.latlng.lat, e.latlng.lng],
         lat: e.latlng.lat,
         lng: e.latlng.lng,
       };
