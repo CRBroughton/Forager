@@ -114,8 +114,9 @@ export default {
 
       const filteredMarkers = this.markers.filter(function (el: {
         lat: number;
+        lng: number;
       }) {
-        return el.lat != e.latlng.lat;
+        return el.lat != e.latlng.lat && el.lng != e.latlng.lng;
       });
       this.markers = filteredMarkers;
     },
