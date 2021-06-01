@@ -1,4 +1,5 @@
 <template>
+  <welcome-screen v-if="this.home.length === 0"></welcome-screen>
   <marker-popup id="MarkerPopup" v-if="popupVisible"></marker-popup>
   <l-map
     v-model="zoom"
@@ -27,6 +28,7 @@
 
 <script lang="ts">
 import MarkerPopup from "./components/MarkerPopup.vue";
+import WelcomeScreen from "./components/WelcomeScreen.vue";
 import {
   LMap,
   LTileLayer,
@@ -40,6 +42,7 @@ let db = new Localbase("db");
 
 export default {
   components: {
+    WelcomeScreen,
     MarkerPopup,
     LMap,
     LTileLayer,
@@ -47,20 +50,39 @@ export default {
     LControlLayers,
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  mounted() {
+  created() {
     db.collection("markers")
       .get()
       .then((markers) => {
         markers.map((markers) => this.markers.push(markers));
+      });
+    db.collection("home")
+      .get()
+      .then((home) => {
+        const homeArray = [home[0].lat, home[0].lng];
+        home.map(() => this.home.push(homeArray));
+
+        // Adds a small delay due to map not loading the center properly
+        const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+        const reassignCenter = async () => {
+          // this.center = [];
+          await delay(500);
+          this.center = [home[0].lat, home[0].lng];
+          this.zoom = 16;
+          console.log(this.center);
+        };
+        reassignCenter();
       });
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
       popupVisible: false,
-      zoom: 16,
+      zoom: 2,
       id: null,
-      center: [50.8311091801179, -0.13301259444431282],
+      home: [],
+      center: [46.237820128136654, -22.141468687768604],
       currentMarker: [],
       markers: [],
       drag: false,
@@ -89,6 +111,21 @@ export default {
       if (!this.drag) {
         this.click = true;
         this.center = [e.latlng.lat, e.latlng.lng];
+
+        if (this.home.length === 0) {
+          const startLocation = {
+            id: Date.now().toString(),
+            title: "Home",
+            lat: e.latlng.lat,
+            lng: e.latlng.lng,
+          };
+
+          db.collection("home").add(startLocation);
+          this.home = [e.latlng.lat, e.latlng.lng];
+          this.zoom = 14;
+          return;
+        }
+
         this.addMarker(e);
       }
     },
@@ -103,7 +140,6 @@ export default {
 
       db.collection("markers").add(newMarker);
       this.markers.push(newMarker);
-      console.log(e);
     },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     deleteMarker(e: { latlng: { lat: number; lng: number } }) {
