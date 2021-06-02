@@ -1,4 +1,5 @@
 <template>
+  <loading id="loading" v-if="loading && this.home.length !== 0"></loading>
   <welcome-screen v-if="this.home.length === 0"></welcome-screen>
   <marker-popup id="MarkerPopup" v-if="popupVisible"></marker-popup>
   <l-map
@@ -15,7 +16,6 @@
     <l-tile-layer
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     ></l-tile-layer>
-    <l-control-layers />
 
     <l-marker
       @click="deleteMarker"
@@ -29,12 +29,8 @@
 <script lang="ts">
 import MarkerPopup from "./components/MarkerPopup.vue";
 import WelcomeScreen from "./components/WelcomeScreen.vue";
-import {
-  LMap,
-  LTileLayer,
-  LMarker,
-  LControlLayers,
-} from "@vue-leaflet/vue-leaflet";
+import Loading from "./components/Loading.vue";
+import { LMap, LTileLayer, LMarker } from "@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
 
 import Localbase from "localbase";
@@ -44,10 +40,10 @@ export default {
   components: {
     WelcomeScreen,
     MarkerPopup,
+    Loading,
     LMap,
     LTileLayer,
     LMarker,
-    LControlLayers,
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   created() {
@@ -67,9 +63,10 @@ export default {
 
         const reassignCenter = async () => {
           // this.center = [];
-          await delay(500);
+          await delay(50000);
           this.center = [home[0].lat, home[0].lng];
           this.zoom = 16;
+          this.loading = false;
           console.log(this.center);
         };
         reassignCenter();
@@ -78,6 +75,7 @@ export default {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
+      loading: true,
       popupVisible: false,
       zoom: 2,
       id: null,
@@ -170,6 +168,9 @@ body,
 #app {
   height: 100vh;
   width: 100vw;
+}
+#loading {
+  z-index: 3000;
 }
 #MarkerPopup {
   z-index: 1000;
