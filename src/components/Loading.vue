@@ -1,19 +1,28 @@
 <template>
   <div class="w-screen h-screen">
-    <div class="h-1/2 flex bg-red-100">
+    <div class="h-4/6 flex">
       <img
-        class="m-auto"
-        src="https://via.placeholder.com/200"
+        class="w-64 h-64 m-auto rounded-ful bg-yellow-100 object-scale-down p-8 rounded-full"
+        src="../assets/logo.png"
         alt=""
         srcset=""
       />
     </div>
-    <div class="h-1/2 bg-red-300">
-      <div class="h-1/2 flex">
-        <h1 class="m-auto text-3xl">Forager</h1>
+    <div class="h-2/6">
+      <div class="h-1/3 flex">
+        <h1 class="m-auto text-3xl font-semibold">Forager</h1>
       </div>
-      <div class="h-1/2 flex bg-yellow-400">
-        <h3 class="m-auto text-1xl">Loading...</h3>
+      <div class="h-1/3 flex">
+        <h3 class="m-auto text-1xl">Loading... (If frozen, please reload)</h3>
+      </div>
+      <div class="h-1/3 flex">
+        <div class="m-auto text-xs font-thin">
+          Icons made by
+          <a href="https://www.freepik.com" title="Freepik">Freepik</a> from
+          <a href="https://www.flaticon.com/" title="Flaticon"
+            >www.flaticon.com</a
+          >
+        </div>
       </div>
     </div>
   </div>
