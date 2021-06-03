@@ -25,6 +25,7 @@
       </svg>
     </div>
     <div
+      @click="returnHome"
       class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border"
     >
       <svg
@@ -43,6 +44,7 @@
       </svg>
     </div>
     <div
+      @click="donate"
       class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border"
     >
       <svg
@@ -63,6 +65,22 @@
   </div>
 </template>
 
-<script lang="ts"></script>
+<script lang="ts">
+export default {
+  data() {
+    return {
+      donationLink: "https://placeholder.com/",
+    };
+  },
+  methods: {
+    donate() {
+      window.location.href = this.donationLink;
+    },
+    returnHome() {
+      this.$emit("returnHome");
+    },
+  },
+};
+</script>
 
 <style scoped></style>
