@@ -1,8 +1,8 @@
 <template>
   <loading id="loading" v-if="loading && this.home.length !== 0"></loading>
   <welcome-screen id="welcome" v-if="this.home.length === 0"></welcome-screen>
-  <base-marker-button id="basemarkerbutton"></base-marker-button>
-  <base-small-button id="basesmallbutton"></base-small-button>
+  <base-marker-button id="basemarkerbutton" v-if="!loading"></base-marker-button>
+  <base-small-button id="basesmallbutton" v-if="!loading"></base-small-button>
   <marker-popup id="MarkerPopup" v-if="popupVisible"></marker-popup>
   <l-map
     v-model="zoom"
