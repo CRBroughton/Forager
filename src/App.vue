@@ -34,11 +34,8 @@ import WelcomeScreen from "./components/WelcomeScreen.vue";
 import Loading from "./components/Loading.vue";
 import BaseSmallButton from "./components/buttons/BaseSmallButton.vue";
 import BaseMarkerButton from "./components/buttons/BaseMarkerButton.vue";
-import { LMap, LTileLayer, LMarker } from "@vue-leaflet/vue-leaflet";
-import "leaflet/dist/leaflet.css";
 
-import Localbase from "localbase";
-let db = new Localbase("db");
+import db from "./Localbase";
 
 export default {
   components: {
@@ -47,9 +44,6 @@ export default {
     Loading,
     BaseSmallButton,
     BaseMarkerButton,
-    LMap,
-    LTileLayer,
-    LMarker,
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   created() {
