@@ -1,6 +1,7 @@
 <template>
   <loading id="loading" v-if="loading && this.home.length !== 0"></loading>
-  <welcome-screen v-if="this.home.length === 0"></welcome-screen>
+  <welcome-screen id="welcome" v-if="this.home.length === 0"></welcome-screen>
+  <base-small-button id="basesmallbutton"></base-small-button>
   <marker-popup id="MarkerPopup" v-if="popupVisible"></marker-popup>
   <l-map
     v-model="zoom"
@@ -30,6 +31,7 @@
 import MarkerPopup from "./components/MarkerPopup.vue";
 import WelcomeScreen from "./components/WelcomeScreen.vue";
 import Loading from "./components/Loading.vue";
+import BaseSmallButton from "./components/buttons/BaseSmallButton.vue";
 import { LMap, LTileLayer, LMarker } from "@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -41,6 +43,7 @@ export default {
     WelcomeScreen,
     MarkerPopup,
     Loading,
+    BaseSmallButton,
     LMap,
     LTileLayer,
     LMarker,
@@ -63,7 +66,7 @@ export default {
 
         const reassignCenter = async () => {
           // this.center = [];
-          await delay(50000);
+          await delay(500);
           this.center = [home[0].lat, home[0].lng];
           this.zoom = 16;
           this.loading = false;
@@ -174,6 +177,16 @@ body,
   position: absolute;
 }
 #MarkerPopup {
+  z-index: 1000;
+  display: inline-block;
+  position: absolute;
+}
+#welcome {
+  z-index: 1000;
+  display: inline-block;
+  position: absolute;
+}
+#basesmallbutton {
   z-index: 1000;
   display: inline-block;
   position: absolute;
