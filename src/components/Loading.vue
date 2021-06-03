@@ -16,8 +16,8 @@
         <h3 class="m-auto text-1xl">Loading... (If frozen, please reload)</h3>
       </div>
       <div class="h-1/3 flex">
-        <div class="m-auto text-xs font-thin">
-          Icons made by
+        <div class="m-auto text-xs font-thin mb-20">
+          Icon made by
           <a href="https://www.freepik.com" title="Freepik">Freepik</a> from
           <a href="https://www.flaticon.com/" title="Flaticon"
             >www.flaticon.com</a
