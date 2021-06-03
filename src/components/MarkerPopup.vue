@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import MyButton from "./MyButton.vue";
+import MyButton from "./buttons/BaseButton.vue";
 
 export default {
   components: {
