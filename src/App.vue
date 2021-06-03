@@ -171,6 +171,7 @@ body,
 }
 #loading {
   z-index: 3000;
+  position: absolute;
 }
 #MarkerPopup {
   z-index: 1000;
