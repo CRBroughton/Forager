@@ -18,6 +18,7 @@ Forager is a Progressive Web Application, and therefore can be installed via any
 ## Known bugs
 
 - App will not center itself on the home location, needs refeshing a few times.
+- After selecting your home location, app will hang on first launch. 
 - Select location popup briefly appears during startup.
 
 ## Project setup
