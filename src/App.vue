@@ -2,6 +2,7 @@
   <loading id="loading" v-if="loading && this.home.length !== 0"></loading>
   <welcome-screen id="welcome" v-if="this.home.length === 0"></welcome-screen>
   <base-marker-button
+    @markerAdd="OpenMarkerPopup"
     id="basemarkerbutton"
     v-if="!loading"
   ></base-marker-button>
@@ -10,7 +11,11 @@
     id="basesmallbutton"
     v-if="!loading"
   ></base-small-button>
-  <add-marker id="addmarker" v-if="popupVisible"></add-marker>
+  <add-marker
+    id="addmarker"
+    v-if="popupVisible"
+    @hideMarkerPopup="HideMarkerPopup"
+  ></add-marker>
   <l-map
     v-model="zoom"
     v-model:zoom="zoom"
@@ -81,6 +86,12 @@ export default {
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     centerUpdate(center) {
       this.center = center;
+    },
+    OpenMarkerPopup() {
+      this.popupVisible = true;
+    },
+    HideMarkerPopup() {
+      this.popupVisible = false;
     },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     getHome() {

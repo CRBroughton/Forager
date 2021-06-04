@@ -18,8 +18,8 @@
         ></path>
       </svg>
     </div>
-    <div
-      class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-not-allowed"
+    <div @click="markerAdd"
+      class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
       <svg
         class="w-6 h-6 text-gray-500"
@@ -39,6 +39,14 @@
   </div>
 </template>
 
-<script lang="ts"></script>
+<script lang="ts">
+export default {
+  methods: {
+    markerAdd() {
+      this.$emit("markerAdd");
+    },
+  },
+};
+</script>
 
 <style scoped></style>
