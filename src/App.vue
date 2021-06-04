@@ -1,8 +1,15 @@
 <template>
   <loading id="loading" v-if="loading && this.home.length !== 0"></loading>
   <welcome-screen id="welcome" v-if="this.home.length === 0"></welcome-screen>
-  <base-marker-button id="basemarkerbutton" v-if="!loading"></base-marker-button>
-  <base-small-button id="basesmallbutton" v-if="!loading"></base-small-button>
+  <base-marker-button
+    id="basemarkerbutton"
+    v-if="!loading"
+  ></base-marker-button>
+  <base-small-button
+    @returnHome="getHome"
+    id="basesmallbutton"
+    v-if="!loading"
+  ></base-small-button>
   <marker-popup id="MarkerPopup" v-if="popupVisible"></marker-popup>
   <l-map
     v-model="zoom"
@@ -52,25 +59,7 @@ export default {
       .then((markers) => {
         markers.map((markers) => this.markers.push(markers));
       });
-    db.collection("home")
-      .get()
-      .then((home) => {
-        const homeArray = [home[0].lat, home[0].lng];
-        home.map(() => this.home.push(homeArray));
-
-        // Adds a small delay due to map not loading the center properly
-        const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-
-        const reassignCenter = async () => {
-          // this.center = [];
-          await delay(500);
-          this.center = [home[0].lat, home[0].lng];
-          this.zoom = 16;
-          this.loading = false;
-          console.log(this.center);
-        };
-        reassignCenter();
-      });
+    this.getHome();
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
@@ -88,6 +77,29 @@ export default {
     };
   },
   methods: {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    getHome() {
+      console.log("Running return home...");
+      db.collection("home")
+        .get()
+        .then((home) => {
+          const homeArray = [home[0].lat, home[0].lng];
+          home.map(() => this.home.push(homeArray));
+
+          // Adds a small delay due to map not loading the center properly
+          const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+          const reassignCenter = async () => {
+            await delay(500);
+            this.center = [home[0].lat, home[0].lng];
+            this.click = true;
+            this.zoom = 16;
+            this.loading = false;
+            console.log(JSON.stringify(this.center));
+          };
+          reassignCenter();
+        });
+    },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     handleMove() {
       if (this.$refs.draggableRoot) {
