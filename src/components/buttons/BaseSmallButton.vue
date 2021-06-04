@@ -26,7 +26,7 @@
     </div>
     <div
       @click="returnHome"
-      class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
+      class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
       <svg
         class="w-6 h-6 text-gray-500"
@@ -45,7 +45,7 @@
     </div>
     <div
       @click="donate"
-      class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
+      class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
       <svg
         class="w-6 h-6 text-gray-500"
