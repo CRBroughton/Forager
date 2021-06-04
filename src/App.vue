@@ -171,6 +171,9 @@ export default {
 </script>
 
 <style>
+* {
+  -webkit-tap-highlight-color: transparent;
+}
 body {
   padding: 0;
   margin: 0;
