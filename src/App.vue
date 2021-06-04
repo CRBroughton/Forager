@@ -10,7 +10,7 @@
     id="basesmallbutton"
     v-if="!loading"
   ></base-small-button>
-  <marker-popup id="MarkerPopup" v-if="popupVisible"></marker-popup>
+  <add-marker id="addmarker" v-if="popupVisible"></add-marker>
   <l-map
     v-model="zoom"
     v-model:zoom="zoom"
@@ -37,21 +37,21 @@
 </template>
 
 <script lang="ts">
-import MarkerPopup from "./components/MarkerPopup.vue";
 import WelcomeScreen from "./components/WelcomeScreen.vue";
 import Loading from "./components/Loading.vue";
 import BaseSmallButton from "./components/buttons/BaseSmallButton.vue";
 import BaseMarkerButton from "./components/buttons/BaseMarkerButton.vue";
+import AddMarker from "./components/buttons/AddMarker.vue";
 
 import db from "./Localbase";
 
 export default {
   components: {
     WelcomeScreen,
-    MarkerPopup,
     Loading,
     BaseSmallButton,
     BaseMarkerButton,
+    AddMarker,
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   created() {
@@ -211,6 +211,10 @@ body,
 #basemarkerbutton {
   z-index: 1000;
   display: inline-block;
+  position: absolute;
+}
+#addmarker {
+  z-index: 1000;
   position: absolute;
 }
 </style>
