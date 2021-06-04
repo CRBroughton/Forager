@@ -1,7 +1,7 @@
 <template>
   <div class="bottom-2 left-2 w-50 flex">
     <div
-      class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border"
+      class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-not-allowed"
     >
       <svg
         class="w-6 h-6 text-gray-500"
@@ -19,7 +19,7 @@
       </svg>
     </div>
     <div
-      class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border"
+      class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-not-allowed"
     >
       <svg
         class="w-6 h-6 text-gray-500"

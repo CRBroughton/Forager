@@ -1,7 +1,7 @@
 <template>
   <div class="top-2 right-2 w-50 flex">
     <div
-      class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border"
+      class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-not-allowed"
     >
       <svg
         class="w-6 h-6 text-gray-500"
@@ -26,7 +26,7 @@
     </div>
     <div
       @click="returnHome"
-      class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border"
+      class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
       <svg
         class="w-6 h-6 text-gray-500"
@@ -45,7 +45,7 @@
     </div>
     <div
       @click="donate"
-      class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border"
+      class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
       <svg
         class="w-6 h-6 text-gray-500"
@@ -78,6 +78,7 @@ export default {
     },
     returnHome() {
       this.$emit("returnHome");
+      console.log("Returning Home...")
     },
   },
 };

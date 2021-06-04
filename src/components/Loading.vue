@@ -1,8 +1,8 @@
 <template>
-  <div class="w-screen h-screen bg-white">
+  <div class="w-screen h-screen bg-white cursor-wait">
     <div class="h-4/6 flex">
       <img
-        class="w-64 h-64 m-auto rounded-ful bg-yellow-100 object-scale-down p-8 rounded-full"
+        class="w-64 h-64 m-auto rounded-ful bg-yellow-100 object-scale-down p-8 rounded-full shadow-xl"
         src="../assets/logo.png"
         alt=""
         srcset=""
