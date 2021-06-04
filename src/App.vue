@@ -20,6 +20,7 @@
     @pointerup="handleUp"
     @pointercancel="handleUp"
     @click="handleClick"
+    @update:center="centerUpdate"
     ref="draggableRoot"
   >
     <l-tile-layer
@@ -78,11 +79,16 @@ export default {
   },
   methods: {
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    centerUpdate(center) {
+      this.center = center;
+    },
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     getHome() {
       console.log("Running return home...");
       db.collection("home")
         .get()
         .then((home) => {
+          this.home = [];
           const homeArray = [home[0].lat, home[0].lng];
           home.map(() => this.home.push(homeArray));
 
@@ -91,11 +97,10 @@ export default {
 
           const reassignCenter = async () => {
             await delay(500);
-            this.center = [home[0].lat, home[0].lng];
-            this.click = true;
+            this.center = [];
+            this.center = homeArray;
             this.zoom = 16;
             this.loading = false;
-            console.log(JSON.stringify(this.center));
           };
           reassignCenter();
         });
