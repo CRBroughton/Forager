@@ -21,6 +21,7 @@
     id="addmarker"
     v-if="popupVisible"
     @hideMarkerPopup="toggleMarkerPopup"
+    @createMarker="createMarker"
   ></add-marker>
   <l-map
     v-model="zoom"
@@ -163,6 +164,17 @@ export default {
 
         this.addMarker(e);
       }
+    },
+    createMarker() {
+      const newMarker = {
+        id: Date.now().toString(),
+        title: "test-title",
+        lat: this.center.lat,
+        lng: this.center.lng,
+      };
+
+      db.collection("markers").add(newMarker);
+      this.markers.push(newMarker);
     },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     addMarker(e: { latlng: { lat: number; lng: number } }) {
