@@ -1,6 +1,11 @@
 <template>
   <loading id="loading" v-if="loading && this.home.length !== 0"></loading>
   <welcome-screen id="welcome" v-if="this.home.length === 0"></welcome-screen>
+  <options-menu
+    id="optionsmenu"
+    v-if="optionsVisible"
+    @hideOptions="toggleOptions"
+  ></options-menu>
   <base-marker-button
     @markerAdd="OpenMarkerPopup"
     id="basemarkerbutton"
@@ -47,6 +52,7 @@ import Loading from "./components/Loading.vue";
 import BaseSmallButton from "./components/buttons/BaseSmallButton.vue";
 import BaseMarkerButton from "./components/buttons/BaseMarkerButton.vue";
 import AddMarker from "./components/buttons/AddMarker.vue";
+import OptionsMenu from "./components/OptionsMenu.vue";
 
 import db from "./Localbase";
 
@@ -57,6 +63,7 @@ export default {
     BaseSmallButton,
     BaseMarkerButton,
     AddMarker,
+    OptionsMenu,
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   created() {
@@ -72,6 +79,7 @@ export default {
     return {
       loading: true,
       popupVisible: false,
+      optionsVisible: false,
       zoom: 2,
       id: null,
       home: [],
@@ -221,6 +229,11 @@ body,
 }
 #basemarkerbutton {
   z-index: 1000;
+  display: inline-block;
+  position: absolute;
+}
+#optionsmenu {
+  z-index: 5000;
   display: inline-block;
   position: absolute;
 }
