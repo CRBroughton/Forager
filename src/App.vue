@@ -6,11 +6,6 @@
     v-if="optionsVisible"
     @hideOptions="toggleOptions"
   ></options-menu>
-  <base-marker-button
-    @markerAdd="toggleMarkerPopup"
-    id="basemarkerbutton"
-    v-if="!loading"
-  ></base-marker-button>
   <base-small-button
     @showOptions="toggleOptions"
     @returnHome="getHome"
@@ -52,7 +47,6 @@
 import WelcomeScreen from "./components/WelcomeScreen.vue";
 import Loading from "./components/Loading.vue";
 import BaseSmallButton from "./components/buttons/BaseSmallButton.vue";
-import BaseMarkerButton from "./components/buttons/BaseMarkerButton.vue";
 import AddMarker from "./components/buttons/AddMarker.vue";
 import OptionsMenu from "./components/OptionsMenu.vue";
 
@@ -63,7 +57,6 @@ export default {
     WelcomeScreen,
     Loading,
     BaseSmallButton,
-    BaseMarkerButton,
     AddMarker,
     OptionsMenu,
   },
