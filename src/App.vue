@@ -7,11 +7,12 @@
     @hideOptions="toggleOptions"
   ></options-menu>
   <base-marker-button
-    @markerAdd="OpenMarkerPopup"
+    @markerAdd="toggleMarkerPopup"
     id="basemarkerbutton"
     v-if="!loading"
   ></base-marker-button>
   <base-small-button
+    @showOptions="toggleOptions"
     @returnHome="getHome"
     id="basesmallbutton"
     v-if="!loading"
@@ -19,7 +20,7 @@
   <add-marker
     id="addmarker"
     v-if="popupVisible"
-    @hideMarkerPopup="HideMarkerPopup"
+    @hideMarkerPopup="toggleMarkerPopup"
   ></add-marker>
   <l-map
     v-model="zoom"
@@ -95,11 +96,11 @@ export default {
     centerUpdate(center) {
       this.center = center;
     },
-    OpenMarkerPopup() {
-      this.popupVisible = true;
+    toggleMarkerPopup() {
+      this.popupVisible = !this.popupVisible;
     },
-    HideMarkerPopup() {
-      this.popupVisible = false;
+    toggleOptions() {
+      this.optionsVisible = !this.optionsVisible;
     },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     getHome() {
