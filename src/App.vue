@@ -6,13 +6,13 @@
     v-if="optionsVisible"
     @hideOptions="toggleOptions"
   ></options-menu>
-  <base-small-button
+  <side-menu
     @showOptions="toggleOptions"
     @returnHome="getHome"
     id="basesmallbutton"
     v-if="!loading"
     class="flex flex-col absolute"
-  ></base-small-button>
+  ></side-menu>
   <add-marker
     id="addmarker"
     v-if="popupVisible"
@@ -47,7 +47,7 @@
 <script lang="ts">
 import WelcomeScreen from "./components/WelcomeScreen.vue";
 import Loading from "./components/Loading.vue";
-import BaseSmallButton from "./components/buttons/BaseSmallButton.vue";
+import SideMenu from "./components/buttons/SideMenu.vue";
 import AddMarker from "./components/buttons/AddMarker.vue";
 import OptionsMenu from "./components/OptionsMenu.vue";
 
@@ -57,7 +57,7 @@ export default {
   components: {
     WelcomeScreen,
     Loading,
-    BaseSmallButton,
+    SideMenu,
     AddMarker,
     OptionsMenu,
   },
