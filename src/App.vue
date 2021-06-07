@@ -47,7 +47,7 @@
 <script lang="ts">
 import WelcomeScreen from "./components/WelcomeScreen.vue";
 import Loading from "./components/Loading.vue";
-import SideMenu from "./components/buttons/SideMenu.vue";
+import SideMenu from "./components/SideMenu.vue";
 import AddMarker from "./components/buttons/AddMarker.vue";
 import OptionsMenu from "./components/OptionsMenu.vue";
 
