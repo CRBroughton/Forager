@@ -1,14 +1,14 @@
 <template>
-  <div v-if="!isHidden" class="bottom-2 right-2 w-auto">
-    <div class="flex m-auto flex-col items-center">
-      <input
-        type="text"
-        class="w-full flex rounded my-5 py-3 shadow-xl border-gray-200 border cursor-pointer outline-none focus:outline-none"
-        placeholder="Object Name"
-      />
-    </div>
-    <div class="flex flex-row-reverse0">
-      <div class="flex w-60">
+  <div v-if="!isHidden" class="bottom-0 w-full p-3">
+    <div class="max-w-sm flex flex-col m-auto rounded-xl">
+      <div class="m-auto items-center w-full">
+        <input
+          type="text"
+          class="w-full flex my-5 py-3 shadow-xl border-gray-200 border cursor-pointer outline-none focus:outline-none text-center rounded-xl"
+          placeholder="Object Name"
+        />
+      </div>
+      <div class="flex m-auto w-full justify-center">
         <MyButton title="Create" class="mb-1 mr-1" @click="createMarker">
           Create
         </MyButton>
