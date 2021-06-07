@@ -11,6 +11,7 @@
     @returnHome="getHome"
     id="basesmallbutton"
     v-if="!loading"
+    class="flex flex-col absolute"
   ></base-small-button>
   <add-marker
     id="addmarker"
@@ -216,33 +217,13 @@ body,
 }
 #loading {
   z-index: 3000;
-  position: absolute;
 }
-#MarkerPopup {
-  z-index: 1000;
-  display: inline-block;
-  position: absolute;
-}
-#welcome {
-  z-index: 1000;
-  display: inline-block;
-  position: absolute;
-}
-#basesmallbutton {
-  z-index: 1000;
-  display: inline-block;
-  position: absolute;
-}
-#basemarkerbutton {
-  z-index: 1000;
-  display: inline-block;
-  position: absolute;
-}
-#optionsmenu {
-  z-index: 5000;
-  display: inline-block;
-  position: absolute;
-}
+#loading,
+#MarkerPopup,
+#welcome,
+#basemarkerbutton,
+#basesmallbutton,
+#optionsmenu,
 #addmarker {
   z-index: 1000;
   position: absolute;
