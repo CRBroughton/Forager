@@ -1,6 +1,6 @@
 <template>
-  <div v-if="!isHidden" class="bottom-2 right-2 flex flex-row-reverse">
-    <div class="flex flex-row-reverse w-64">
+  <div v-if="!isHidden" class="bottom-0 w-full p-3">
+    <div class="flex m-auto w-full justify-center">
       <MyButton title="Delete Home" class="mb-1 mr-1" @click="deleteHome">
         Delete Home
       </MyButton>
