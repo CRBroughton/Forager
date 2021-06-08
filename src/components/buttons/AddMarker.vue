@@ -5,7 +5,8 @@
         <input
           type="text"
           class="w-full flex my-5 py-3 shadow-xl border-gray-200 border cursor-pointer outline-none focus:outline-none text-center rounded-xl"
-          placeholder="Object Name"
+          placeholder="Please Enter Object Name"
+          v-model="input"
         />
       </div>
       <div class="flex m-auto w-full justify-center">
@@ -33,6 +34,7 @@ export default {
   data() {
     return {
       isHidden: this.popupVisible,
+      input: "",
     };
   },
   methods: {
@@ -41,7 +43,7 @@ export default {
       this.$emit("hideMarkerPopup");
     },
     createMarker() {
-      this.$emit("createMarker");
+      this.$emit("createMarker", this.input);
     },
   },
 };

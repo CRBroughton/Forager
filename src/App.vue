@@ -84,6 +84,7 @@ export default {
       markers: [],
       drag: false,
       click: false,
+      input: null,
     };
   },
   methods: {
@@ -156,31 +157,28 @@ export default {
           return;
         }
 
-        this.addMarker(e);
+        this.showCreateMarkerPopup();
       }
     },
-    createMarker() {
+    showCreateMarkerPopup() {
+      this.click = true;
+      this.popupVisible = true;
+    },
+    createMarker(input) {
+      if (input === "") {
+        alert("Please enter a object name!");
+        return;
+      }
       const newMarker = {
         id: Date.now().toString(),
-        title: "test-title",
+        title: input,
         lat: this.center.lat,
         lng: this.center.lng,
       };
 
       db.collection("markers").add(newMarker);
       this.markers.push(newMarker);
-    },
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    addMarker(e: { latlng: { lat: number; lng: number } }) {
-      const newMarker = {
-        id: Date.now().toString(),
-        title: "test-title",
-        lat: e.latlng.lat,
-        lng: e.latlng.lng,
-      };
-
-      db.collection("markers").add(newMarker);
-      this.markers.push(newMarker);
+      this.popupVisible = false;
     },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     deleteMarker(e: { latlng: { lat: number; lng: number } }) {
