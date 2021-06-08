@@ -13,6 +13,11 @@
     v-if="!loading"
     class="flex flex-col absolute"
   ></side-menu>
+  <delete-marker
+    id="deletemarker"
+    v-if="deleteVisible"
+    @hideDeletePopup="hideDeletePopup"
+  ></delete-marker>
   <add-marker
     id="addmarker"
     v-if="popupVisible"
@@ -50,6 +55,7 @@ import Loading from "./components/Loading.vue";
 import SideMenu from "./components/SideMenu.vue";
 import AddMarker from "./components/buttons/AddMarker.vue";
 import OptionsMenu from "./components/OptionsMenu.vue";
+import DeleteMarker from "./components/buttons/DeleteMarker.vue";
 
 import db from "./Localbase";
 
@@ -60,6 +66,7 @@ export default {
     SideMenu,
     AddMarker,
     OptionsMenu,
+    DeleteMarker,
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   created() {
@@ -76,6 +83,7 @@ export default {
       loading: true,
       popupVisible: false,
       optionsVisible: false,
+      deleteVisible: false,
       zoom: 2,
       id: null,
       home: [],
@@ -94,9 +102,13 @@ export default {
     },
     toggleMarkerPopup() {
       this.popupVisible = !this.popupVisible;
+      this.deleteVisible = !this.deleteVisible;
     },
     toggleOptions() {
       this.optionsVisible = !this.optionsVisible;
+    },
+    hideDeletePopup() {
+      this.deleteVisible = !this.deleteVisible;
     },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     getHome() {
@@ -179,12 +191,13 @@ export default {
       db.collection("markers").add(newMarker);
       this.markers.push(newMarker);
       this.popupVisible = false;
+      this.deleteVisible = false;
     },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     deleteMarker(e: { latlng: { lat: number; lng: number } }) {
       this.click = true;
       this.center = e.latlng;
-      this.popupVisible = true;
+      this.deleteVisible = true;
       db.collection("markers").doc(e.latlng).delete();
 
       const filteredMarkers = this.markers.filter(function (el: {
@@ -222,7 +235,8 @@ body,
 #basemarkerbutton,
 #basesmallbutton,
 #optionsmenu,
-#addmarker {
+#addmarker,
+#deletemarker {
   z-index: 1000;
   position: absolute;
 }
