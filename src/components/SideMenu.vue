@@ -45,6 +45,7 @@
       </svg>
     </div>
     <div
+      v-if="!tooltip"
       @click="hideTooltips"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
@@ -60,6 +61,26 @@
           stroke-linejoin="round"
           stroke-width="2"
           d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
+        ></path>
+      </svg>
+    </div>
+    <div
+      v-else
+      @click="hideTooltips"
+      class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
+    >
+      <svg
+        class="w-6 h-6 text-gray-500"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M7 12m5 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
         ></path>
       </svg>
     </div>
@@ -106,8 +127,10 @@
 
 <script lang="ts">
 export default {
+  props: ["tooltipVisible"],
   data() {
     return {
+      tooltip: this.tooltipVisible,
       donationLink: "https://placeholder.com/",
     };
   },
@@ -120,6 +143,7 @@ export default {
       console.log("Returning Home...");
     },
     hideTooltips() {
+      this.tooltip = !this.tooltip;
       this.$emit("hideTooltips");
     },
     showOptions() {
