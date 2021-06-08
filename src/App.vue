@@ -9,6 +9,7 @@
   <side-menu
     @showOptions="toggleOptions"
     @returnHome="getHome"
+    @hideTooltips="toggleTooltips"
     id="basesmallbutton"
     v-if="!loading"
     class="flex flex-col absolute"
@@ -40,12 +41,33 @@
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     ></l-tile-layer>
 
-    <l-marker
-      @click="deleteMarker"
-      v-for="marker in markers"
-      :key="marker"
-      :lat-lng="marker"
-    ></l-marker>
+    <div v-if="tooltipVisible">
+      <l-marker
+        @click="deleteMarker"
+        v-for="marker in markers"
+        :key="marker.id"
+        :lat-lng="marker"
+      >
+        <l-tooltip
+          :options="{
+            permanent: true,
+            interactive: false,
+            direction: 'top',
+            opacity: 1,
+          }"
+          :content="marker.title"
+        />
+      </l-marker>
+    </div>
+    <div v-else>
+      <l-marker
+        @click="deleteMarker"
+        v-for="marker in markers"
+        :key="marker.id"
+        :lat-lng="marker"
+      >
+      </l-marker>
+    </div>
   </l-map>
 </template>
 
@@ -76,6 +98,7 @@ export default {
         markers.map((markers) => this.markers.push(markers));
       });
     this.getHome();
+    console.log(this.markers);
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
@@ -84,6 +107,7 @@ export default {
       popupVisible: false,
       optionsVisible: false,
       deleteVisible: false,
+      tooltipVisible: true,
       zoom: 2,
       id: null,
       home: [],
@@ -106,6 +130,9 @@ export default {
     },
     toggleOptions() {
       this.optionsVisible = !this.optionsVisible;
+    },
+    toggleTooltips() {
+      this.tooltipVisible = !this.tooltipVisible;
     },
     hideDeletePopup() {
       this.deleteVisible = false;

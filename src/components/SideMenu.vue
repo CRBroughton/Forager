@@ -44,7 +44,27 @@
         ></path>
       </svg>
     </div>
-    <div @click="notWorking"
+    <div
+      @click="hideTooltips"
+      class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
+    >
+      <svg
+        class="w-6 h-6 text-gray-500"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
+        ></path>
+      </svg>
+    </div>
+    <div
+      @click="notWorking"
       class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-not-allowed"
     >
       <svg
@@ -99,12 +119,15 @@ export default {
       this.$emit("returnHome");
       console.log("Returning Home...");
     },
+    hideTooltips() {
+      this.$emit("hideTooltips");
+    },
     showOptions() {
       this.$emit("showOptions");
     },
     notWorking() {
       alert("Feature not yet implemented");
-    }
+    },
   },
 };
 </script>
