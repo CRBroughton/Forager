@@ -101,14 +101,14 @@ export default {
       this.center = center;
     },
     toggleMarkerPopup() {
-      this.popupVisible = !this.popupVisible;
-      this.deleteVisible = !this.deleteVisible;
+      this.popupVisible = false;
+      this.deleteVisible = false;
     },
     toggleOptions() {
       this.optionsVisible = !this.optionsVisible;
     },
     hideDeletePopup() {
-      this.deleteVisible = !this.deleteVisible;
+      this.deleteVisible = false;
     },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     getHome() {
