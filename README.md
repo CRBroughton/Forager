@@ -8,6 +8,17 @@ Forager utilises the below software stack:
 - [Tailwind](https://tailwindcss.com/)
 - [Leaflet](https://leafletjs.com/)
 - [Localbase](https://github.com/dannyconnell/localbase)
+- [Workbox](https://developers.google.com/web/tools/workbox)
+
+Forager utilises [Workbox](https://developers.google.com/web/tools/workbox) to cache map images and the entire app on your device. For offline use, please ensure you have a minimum of 2GB as Forager will store a maximum of 100 map images on your device, and that you have already cached the desired map data. 
+
+Please note that if you exceed the cache limit, previously cached map data will be automatically deleted from your device. 
+
+To re-cache map data, simply be online and load the desired map location.
+
+Uncached maps will simply show a gray screen.
+
+All pinned locations are stored locally on your device using [Localbase](https://github.com/dannyconnell/localbase).
 
 ## Installation
 
