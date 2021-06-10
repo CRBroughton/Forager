@@ -261,10 +261,13 @@ body,
 #welcome,
 #basemarkerbutton,
 #basesmallbutton,
-#optionsmenu,
 #addmarker,
 #deletemarker {
   z-index: 1000;
+  position: absolute;
+}
+#optionsmenu {
+  z-index: 3000;
   position: absolute;
 }
 </style>
