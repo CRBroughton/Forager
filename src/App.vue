@@ -1,6 +1,6 @@
 <template>
   <loading id="loading" v-if="loading && this.home.length !== 0"></loading>
-  <welcome-screen id="welcome" v-if="this.home.length === 0"></welcome-screen>
+  <location-selector id="welcome" v-if="this.home.length === 0"></location-selector>
   <options-menu
     id="optionsmenu"
     v-if="optionsVisible"
@@ -72,7 +72,7 @@
 </template>
 
 <script lang="ts">
-import WelcomeScreen from "./components/WelcomeScreen.vue";
+import LocationSelector from "./components/LocationSelector.vue";
 import Loading from "./components/Loading.vue";
 import SideMenu from "./components/SideMenu.vue";
 import AddMarker from "./components/buttons/AddMarker.vue";
@@ -83,7 +83,7 @@ import db from "./Localbase";
 
 export default {
   components: {
-    WelcomeScreen,
+    LocationSelector,
     Loading,
     SideMenu,
     AddMarker,
