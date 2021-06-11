@@ -4,7 +4,7 @@
       <div class="m-auto items-center w-full">
         <input
           type="text"
-          class="w-full flex my-5 py-3 shadow-xl border-gray-200 border cursor-pointer outline-none focus:outline-none text-center rounded-xl"
+          class="w-full flex my-5 py-3 shadow-xl border-gray-200 border cursor-pointer outline-none focus:outline-none text-center rounded-xl focus:ring-2 focus:ring-gray-400"
           placeholder="Please Enter Object Name"
           v-model="input"
         />

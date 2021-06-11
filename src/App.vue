@@ -1,6 +1,13 @@
 <template>
   <loading id="loading" v-if="loading && this.home.length !== 0"></loading>
-  <location-selector id="welcome" v-if="this.home.length === 0"></location-selector>
+  <welcome-screen
+    id="welcomescreen"
+    v-if="this.home.length === 0"
+  ></welcome-screen>
+  <location-selector
+    id="locationselector"
+    v-if="this.home.length === 0"
+  ></location-selector>
   <options-menu
     id="optionsmenu"
     v-if="optionsVisible"
@@ -72,6 +79,7 @@
 </template>
 
 <script lang="ts">
+import WelcomeScreen from "./components/WelcomeScreen.vue";
 import LocationSelector from "./components/LocationSelector.vue";
 import Loading from "./components/Loading.vue";
 import SideMenu from "./components/SideMenu.vue";
@@ -83,6 +91,7 @@ import db from "./Localbase";
 
 export default {
   components: {
+    WelcomeScreen,
     LocationSelector,
     Loading,
     SideMenu,
@@ -266,8 +275,13 @@ body,
   z-index: 1000;
   position: absolute;
 }
-#optionsmenu {
+#optionsmenu,
+#locationselector {
   z-index: 3000;
+  position: absolute;
+}
+#welcomescreen {
+  z-index: 5000;
   position: absolute;
 }
 </style>
