@@ -1,12 +1,16 @@
 <template>
-  <loading id="loading" v-if="loading && this.home.length !== 0"></loading>
+  <loading
+    @loadingFinished="updateLoading"
+    id="loading"
+    v-if="loading && Object.keys(home).length !== 0"
+  ></loading>
   <welcome-screen
     id="welcomescreen"
-    v-if="this.home.length === 0"
+    v-if="Object.keys(home).length === 0"
   ></welcome-screen>
   <location-selector
     id="locationselector"
-    v-if="this.home.length === 0"
+    v-if="Object.keys(home).length === 0"
   ></location-selector>
   <options-menu
     id="optionsmenu"
@@ -18,7 +22,7 @@
     @returnHome="getHome"
     @hideTooltips="toggleTooltips"
     id="basesmallbutton"
-    v-if="!loading"
+    v-if="!loading && Object.keys(home).length !== 0"
     class="flex flex-col absolute"
   ></side-menu>
   <delete-marker
@@ -28,7 +32,7 @@
   ></delete-marker>
   <add-marker
     id="addmarker"
-    v-if="popupVisible"
+    v-if="!loading && popupVisible"
     @hideMarkerPopup="toggleMarkerPopup"
     @createMarker="createMarker"
   ></add-marker>
@@ -79,6 +83,8 @@
 </template>
 
 <script lang="ts">
+import { ref } from "@vue/reactivity";
+import { onMounted } from "@vue/runtime-core";
 import WelcomeScreen from "./components/WelcomeScreen.vue";
 import LocationSelector from "./components/LocationSelector.vue";
 import Loading from "./components/Loading.vue";
@@ -100,98 +106,107 @@ export default {
     DeleteMarker,
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  created() {
-    db.collection("markers")
-      .get()
-      .then((markers) => {
-        markers.map((markers) => this.markers.push(markers));
-      });
-    this.getHome();
-    console.log(this.markers);
-  },
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  data() {
-    return {
-      loading: true,
-      popupVisible: false,
-      optionsVisible: false,
-      deleteVisible: false,
-      tooltipVisible: true,
-      zoom: 2,
-      id: null,
-      home: [],
-      center: [46.237820128136654, -22.141468687768604],
-      currentMarker: [],
-      markers: [],
-      drag: false,
-      click: false,
-      input: null,
-    };
-  },
-  methods: {
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    centerUpdate(center) {
-      this.center = center;
-    },
-    toggleMarkerPopup() {
-      this.popupVisible = false;
-      this.deleteVisible = false;
-    },
-    toggleOptions() {
-      this.optionsVisible = !this.optionsVisible;
-    },
-    toggleTooltips() {
-      this.tooltipVisible = !this.tooltipVisible;
-    },
-    hideDeletePopup() {
-      this.deleteVisible = false;
-    },
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    getHome() {
+  setup() {
+    const loading = ref(true);
+    const popupVisible = ref(false);
+    const optionsVisible = ref(false);
+    const deleteVisible = ref(false);
+    const tooltipVisible = ref(true);
+    const zoom = ref(2);
+    const id = ref(null);
+    let home = ref([]);
+    let center = ref([46.237820128136654, -22.141468687768604]);
+    const currentMarker = ref([]);
+    let markers = ref([]);
+    const drag = ref(false);
+    const click = ref(false);
+    const input = ref(null);
+    const draggableRoot = ref(null);
+
+    onMounted(() => {
+      db.collection("markers")
+        .get()
+        .then((markerData) => {
+          markers.value = markerData;
+        });
+      getHome();
+    });
+
+    const getHome = () => {
       console.log("Running return home...");
       db.collection("home")
         .get()
-        .then((home) => {
-          this.home = [];
-          const homeArray = [home[0].lat, home[0].lng];
-          home.map(() => this.home.push(homeArray));
+        .then((homeData) => {
+          home.value = [];
+          const homeArray = [homeData[0].lat, homeData[0].lng];
+          // homeData.map(() => home.value.push(homeArray));
+          home.value = homeArray;
 
           // Adds a small delay due to map not loading the center properly
           const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
           const reassignCenter = async () => {
             await delay(500);
-            this.center = [];
-            this.center = homeArray;
-            this.zoom = 16;
-            this.loading = false;
+            center.value = [];
+            center.value = homeArray;
+            zoom.value = 16;
+            loading.value = false;
           };
           reassignCenter();
         });
-    },
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    handleMove() {
-      if (this.$refs.draggableRoot) {
-        this.drag = true;
-        this.popupVisible = false;
-      }
-    },
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    handleDown() {
-      document.addEventListener("pointermove", this.handleMove);
-    },
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    handleUp() {
-      document.removeEventListener("pointermove", this.handleMove);
-      setTimeout(() => (this.drag = false));
-    },
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    handleClick(e: { latlng: { lat: number; lng: number } }) {
-      if (!this.drag) {
-        this.click = true;
-        this.center = [e.latlng.lat, e.latlng.lng];
+    };
 
-        if (this.home.length === 0) {
+    const updateLoading = () => {
+      loading.value = false;
+      drag.value = false;
+      popupVisible.value = false;
+    };
+
+    const centerUpdate = function (newCenter) {
+      const tmpCenter = [newCenter.lat, newCenter.lng];
+      center.value = tmpCenter;
+    };
+
+    const toggleMarkerPopup = () => {
+      popupVisible.value = false;
+      deleteVisible.value = false;
+    };
+
+    const toggleOptions = () => {
+      optionsVisible.value = !optionsVisible.value;
+    };
+
+    const toggleTooltips = () => {
+      tooltipVisible.value = !tooltipVisible.value;
+    };
+
+    const hideDeletePopup = () => {
+      deleteVisible.value = !deleteVisible.value;
+    };
+
+    const handleMove = () => {
+      if (draggableRoot.value) {
+        drag.value = true;
+        popupVisible.value = false;
+      }
+    };
+
+    const handleDown = () => {
+      document.addEventListener("pointermove", handleMove);
+    };
+
+    const handleUp = () => {
+      document.removeEventListener("pointermove", handleMove);
+      setTimeout(() => (drag.value = false));
+    };
+
+    const handleClick = function (e: { latlng: { lat: number; lng: number } }) {
+      if (!drag.value) {
+        click.value = true;
+        popupVisible.value = true;
+        center.value = [e.latlng.lat, e.latlng.lng];
+
+        if (Object.keys(home.value).length === 0) {
           const startLocation = {
             id: Date.now().toString(),
             title: "Home",
@@ -200,50 +215,87 @@ export default {
           };
 
           db.collection("home").add(startLocation);
-          this.home = [e.latlng.lat, e.latlng.lng];
-          this.zoom = 14;
+          home.value = [e.latlng.lat, e.latlng.lng];
+          zoom.value = 14;
           return;
         }
 
-        this.showCreateMarkerPopup();
+        showCreateMarkerPopup;
       }
-    },
-    showCreateMarkerPopup() {
-      this.click = true;
-      this.popupVisible = true;
-    },
-    createMarker(input) {
-      if (input === "") {
+    };
+
+    const showCreateMarkerPopup = () => {
+      click.value = true;
+      popupVisible.value = true;
+    };
+
+    const createMarker = function (input) {
+      if (input.value === "") {
         alert("Please enter a object name!");
         return;
       }
       const newMarker = {
         id: Date.now().toString(),
         title: input,
-        lat: this.center.lat,
-        lng: this.center.lng,
+        lat: center.value[0],
+        lng: center.value[1],
       };
 
       db.collection("markers").add(newMarker);
-      this.markers.push(newMarker);
-      this.popupVisible = false;
-      this.deleteVisible = false;
-    },
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    deleteMarker(e: { latlng: { lat: number; lng: number } }) {
-      this.click = true;
-      this.center = e.latlng;
-      this.deleteVisible = true;
+      markers.value.push(newMarker);
+      popupVisible.value = false;
+      deleteVisible.value = false;
+    };
+
+    const deleteMarker = function (e: {
+      latlng: { lat: number; lng: number };
+    }) {
+      click.value = true;
+      center.value = [e.latlng.lat, e.latlng.lng];
+      popupVisible.value = false;
+      deleteVisible.value = true;
       db.collection("markers").doc(e.latlng).delete();
 
-      const filteredMarkers = this.markers.filter(function (el: {
+      const filteredMarkers = markers.value.filter(function (el: {
         lat: number;
         lng: number;
       }) {
         return el.lat != e.latlng.lat && el.lng != e.latlng.lng;
       });
-      this.markers = filteredMarkers;
-    },
+      markers.value = filteredMarkers;
+    };
+
+    return {
+      centerUpdate,
+      toggleMarkerPopup,
+      toggleOptions,
+      toggleTooltips,
+      hideDeletePopup,
+      getHome,
+      loading,
+      popupVisible,
+      optionsVisible,
+      deleteVisible,
+      tooltipVisible,
+      zoom,
+      id,
+      home,
+      center,
+      currentMarker,
+      markers,
+      drag,
+      click,
+      input,
+      draggableRoot,
+      handleMove,
+      handleDown,
+      handleUp,
+      handleClick,
+      showCreateMarkerPopup,
+      createMarker,
+      deleteMarker,
+      updateLoading,
+    };
   },
 };
 </script>

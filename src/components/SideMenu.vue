@@ -126,32 +126,44 @@
 </template>
 
 <script lang="ts">
+import { ref } from "@vue/reactivity";
 export default {
   props: ["tooltipVisible"],
-  data() {
-    return {
-      tooltip: this.tooltipVisible,
-      donationLink: "https://placeholder.com/",
+  emits: ["returnHome", "hideTooltips", "showOptions"],
+  setup(props, { emit }) {
+    const tooltip = ref(props.tooltipVisible);
+    const donationLink = "https://placeholder.com/";
+
+    const donate = () => {
+      window.location.href = donationLink;
     };
-  },
-  methods: {
-    donate() {
-      window.location.href = this.donationLink;
-    },
-    returnHome() {
-      this.$emit("returnHome");
+
+    const returnHome = () => {
+      emit("returnHome");
       console.log("Returning Home...");
-    },
-    hideTooltips() {
-      this.tooltip = !this.tooltip;
-      this.$emit("hideTooltips");
-    },
-    showOptions() {
-      this.$emit("showOptions");
-    },
-    notWorking() {
+    };
+
+    const hideTooltips = () => {
+      tooltip.value = !tooltip.value;
+      emit("hideTooltips");
+    };
+
+    const showOptions = () => {
+      emit("showOptions");
+    };
+
+    const notWorking = () => {
       alert("Feature not yet implemented");
-    },
+    };
+
+    return {
+      tooltip,
+      donate,
+      returnHome,
+      hideTooltips,
+      showOptions,
+      notWorking,
+    };
   },
 };
 </script>

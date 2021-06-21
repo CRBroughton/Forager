@@ -62,39 +62,50 @@
 </template>
 
 <script lang="ts">
+import { ref } from "@vue/reactivity";
 import MyButton from "./buttons/BaseButton.vue";
 import db from "../Localbase";
 
 export default {
   props: ["optionsVisible"],
+  emits: ["hideOptions"],
   components: {
     MyButton,
   },
-  data() {
-    return {
-      isHidden: this.optionsVisible,
+  setup(props, { emit }) {
+    const isHidden = ref(props.optionsVisible);
+
+    const hideOptions = () => {
+      isHidden.value = true;
+      emit("hideOptions");
     };
-  },
-  methods: {
-    hideOptions() {
-      this.isHidden = true;
-      this.$emit("hideOptions");
-    },
-    deleteHome() {
+
+    const deleteHome = () => {
       db.collection("home").delete();
       window.location.reload();
-    },
-    deleteMarkers() {
+    };
+
+    const deleteMarkers = () => {
       db.collection("markers").delete();
       window.location.reload();
-    },
-    clearCache() {
+    };
+    const clearCache = () => {
       caches.delete("forager-cache");
-    },
-    goBack() {
-      this.isHidden = true;
-      this.$emit("hideOptions");
-    },
+      console.log("Cache Cleared!");
+    };
+    const goBack = () => {
+      isHidden.value = true;
+      emit("hideOptions");
+    };
+
+    return {
+      isHidden,
+      hideOptions,
+      deleteHome,
+      deleteMarkers,
+      clearCache,
+      goBack,
+    };
   },
 };
 </script>

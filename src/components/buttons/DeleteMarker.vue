@@ -14,6 +14,7 @@
 </template>
 
 <script lang="ts">
+import { ref } from "@vue/reactivity";
 import MyButton from "./BaseButton.vue";
 
 export default {
@@ -21,21 +22,21 @@ export default {
   components: {
     MyButton,
   },
-  data() {
-    return {
-      isHidden: this.deleteVisible,
-      input: "",
+  setup(props, { emit }) {
+    const input = ref("");
+    const isHidden = ref(props.deleteVisible);
+
+    const hidePopup = () => {
+      isHidden.value = true;
+      emit("hideDeletePopup");
     };
-  },
-  methods: {
-    hidePopup() {
-      this.isHidden = true;
-      this.$emit("hideDeletePopup");
-    },
-    deleteMarker() {
-      this.isHidden = true;
-      this.$emit("deleteMarker");
-    },
+
+    const deleteMarker = () => {
+      isHidden.value = true;
+      emit("deleteMarker");
+    };
+
+    return { input, isHidden, hidePopup, deleteMarker };
   },
 };
 </script>

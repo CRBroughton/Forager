@@ -28,6 +28,19 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script lang="ts">
+export default {
+  emits: ["loadingFinished"],
+  setup(__, { emit }) {
+    // Adds a small delay due to map not loading the center properly
+    const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+    const loading = async () => {
+      await delay(500);
+      emit("loadingFinished");
+    };
+    loading();
+  },
+};
+</script>
 
 <style scoped></style>

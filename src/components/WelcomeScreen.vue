@@ -61,6 +61,7 @@
 </template>
 
 <script lang="ts">
+import { ref } from "@vue/reactivity";
 import MyButton from "./buttons/BaseButton.vue";
 
 export default {
@@ -68,15 +69,14 @@ export default {
   components: {
     MyButton,
   },
-  data() {
-    return {
-      isHidden: this.optionsVisible,
+  setup(props) {
+    const isHidden = ref(props.optionsVisible);
+
+    const hideWelcomeScreen = () => {
+      isHidden.value = true;
     };
-  },
-  methods: {
-    hideWelcomeScreen() {
-      this.isHidden = true;
-    },
+
+    return { isHidden, hideWelcomeScreen };
   },
 };
 </script>
