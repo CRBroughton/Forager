@@ -21,6 +21,7 @@
     @showOptions="toggleOptions"
     @returnHome="getHome"
     @hideTooltips="toggleTooltips"
+    @enablePathFinder="enablePathFinder"
     id="basesmallbutton"
     v-if="!loading && Object.keys(home).length !== 0"
     class="flex flex-col absolute"
@@ -169,7 +170,7 @@ export default {
     const enablePathFinder = () => {
       pathFinderMode.value = !pathFinderMode.value;
       deleteVisible.value = false;
-    },
+    };
 
     const centerUpdate = function (newCenter) {
       const tmpCenter = [newCenter.lat, newCenter.lng];
