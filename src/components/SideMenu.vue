@@ -129,7 +129,7 @@
 import { ref } from "@vue/reactivity";
 export default {
   props: ["tooltipVisible"],
-  emits: ["returnHome", "hideTooltips", "showOptions"],
+  emits: ["returnHome", "hideTooltips", "showOptions", "enablePathFinder"],
   setup(props, { emit }) {
     const tooltip = ref(props.tooltipVisible);
     const donationLink = "https://placeholder.com/";

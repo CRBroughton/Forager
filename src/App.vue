@@ -260,8 +260,16 @@ export default {
     const deleteMarker = function (e: {
       latlng: { lat: number; lng: number };
     }) {
-      click.value = true;
       center.value = [e.latlng.lat, e.latlng.lng];
+      if (pathFinderMode.value === true) {
+        const tempLoc = [center.value[0], center.value[0]];
+        console.log(tempLoc);
+        path.value.push(...tempLoc);
+        console.log(this.path);
+        return;
+      }
+
+      click.value = true;
       popupVisible.value = false;
       deleteVisible.value = true;
       db.collection("markers").doc(e.latlng).delete();
