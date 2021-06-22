@@ -125,6 +125,7 @@ export default {
     const input = ref(null);
     const draggableRoot = ref(null);
     const path = ref([]);
+    const pathFinderMode = ref(false);
 
     onMounted(() => {
       db.collection("markers")
@@ -164,6 +165,11 @@ export default {
       drag.value = false;
       popupVisible.value = false;
     };
+
+    const enablePathFinder = () => {
+      pathFinderMode.value = !pathFinderMode.value;
+      deleteVisible.value = false;
+    },
 
     const centerUpdate = function (newCenter) {
       const tmpCenter = [newCenter.lat, newCenter.lng];
@@ -298,6 +304,7 @@ export default {
       createMarker,
       deleteMarker,
       updateLoading,
+      enablePathFinder,
     };
   },
 };
