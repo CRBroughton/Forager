@@ -53,7 +53,7 @@
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     ></l-tile-layer>
 
-    <l-polyline ref="path" :lat-lngs="[]" color="green" />
+    <l-polyline ref="path" :lat-lngs="[]" color="black" />
 
     <div v-if="tooltipVisible">
       <l-marker
@@ -125,7 +125,7 @@ export default {
     const click = ref(false);
     const input = ref(null);
     const draggableRoot = ref(null);
-    const path = ref([]);
+    const path = ref();
     const pathFinderMode = ref(false);
 
     onMounted(() => {
@@ -170,6 +170,7 @@ export default {
     const enablePathFinder = () => {
       pathFinderMode.value = !pathFinderMode.value;
       deleteVisible.value = false;
+      console.log("PATHFINDER");
     };
 
     const centerUpdate = function (newCenter) {
@@ -212,9 +213,12 @@ export default {
 
     const handleClick = function (e: { latlng: { lat: number; lng: number } }) {
       if (!drag.value) {
+        center.value = [e.latlng.lat, e.latlng.lng];
+        if (pathFinderMode.value === true) {
+          return;
+        }
         click.value = true;
         popupVisible.value = true;
-        center.value = [e.latlng.lat, e.latlng.lng];
 
         if (Object.keys(home.value).length === 0) {
           const startLocation = {
@@ -262,10 +266,8 @@ export default {
     }) {
       center.value = [e.latlng.lat, e.latlng.lng];
       if (pathFinderMode.value === true) {
-        const tempLoc = [center.value[0], center.value[0]];
-        console.log(tempLoc);
-        path.value.push(...tempLoc);
-        console.log(this.path);
+        const tempLoc = [center.value[0], center.value[1]];
+        path.value.leafletObject.addLatLng(tempLoc);
         return;
       }
 
@@ -303,6 +305,7 @@ export default {
       markers,
       drag,
       click,
+      path,
       input,
       draggableRoot,
       handleMove,
