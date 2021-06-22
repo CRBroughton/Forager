@@ -52,6 +52,8 @@
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     ></l-tile-layer>
 
+    <l-polyline ref="path" :lat-lngs="[]" color="green" />
+
     <div v-if="tooltipVisible">
       <l-marker
         @click="deleteMarker"
@@ -122,6 +124,7 @@ export default {
     const click = ref(false);
     const input = ref(null);
     const draggableRoot = ref(null);
+    const path = ref([]);
 
     onMounted(() => {
       db.collection("markers")
