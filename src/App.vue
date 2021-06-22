@@ -41,6 +41,7 @@
     v-model="zoom"
     v-model:zoom="zoom"
     :center="center"
+    :zoomAnimation="false"
     :options="{ zoomSnap: 0.1, zoomDelta: 0.1 }"
     @pointerdown="handleDown"
     @pointerup="handleUp"
@@ -128,6 +129,12 @@ export default {
     const path = ref();
     const pathFinderMode = ref(false);
 
+    const result = ref();
+    const lat1 = ref();
+    const lat2 = ref();
+    const lng1 = ref();
+    const lng2 = ref();
+
     onMounted(() => {
       db.collection("markers")
         .get()
@@ -171,6 +178,21 @@ export default {
       pathFinderMode.value = !pathFinderMode.value;
       deleteVisible.value = false;
       console.log("PATHFINDER");
+    };
+
+    const pathFinderCalc = () => {
+      var p = 0.017453292519943295; // Math.PI / 180
+      var c = Math.cos;
+      var a =
+        0.5 -
+        c((lat2.value - lat1.value) * p) / 2 +
+        (c(lat1.value * p) *
+          c(lat2.value * p) *
+          (1 - c((lng2.value - lng1.value) * p))) /
+          2;
+
+      result.value = 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = distance
+      console.log("Distance is: " + result.value.toFixed(2) + " Miles");
     };
 
     const centerUpdate = function (newCenter) {
@@ -268,6 +290,18 @@ export default {
       if (pathFinderMode.value === true) {
         const tempLoc = [center.value[0], center.value[1]];
         path.value.leafletObject.addLatLng(tempLoc);
+
+        if (!lat1.value) {
+          lat1.value = tempLoc[0];
+          lng1.value = tempLoc[1];
+          console.log("1: " + lat1.value);
+        } else {
+          lat2.value = tempLoc[0];
+          lng2.value = tempLoc[1];
+          console.log("2: " + lat2.value);
+          pathFinderCalc();
+        }
+
         return;
       }
 
@@ -317,6 +351,12 @@ export default {
       deleteMarker,
       updateLoading,
       enablePathFinder,
+      pathFinderCalc,
+      result,
+      lat1,
+      lat2,
+      lng1,
+      lng2,
     };
   },
 };
