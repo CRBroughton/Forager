@@ -31,6 +31,12 @@
     v-if="deleteVisible"
     @hideDeletePopup="hideDeletePopup"
   ></delete-marker>
+  <distance-viewer
+    id="distancepopup"
+    v-if="distance !== 0"
+    :distance="distance"
+    :distanceMiles="distanceMiles"
+  ></distance-viewer>
   <add-marker
     id="addmarker"
     v-if="!loading && popupVisible"
@@ -96,6 +102,7 @@ import SideMenu from "./components/SideMenu.vue";
 import AddMarker from "./components/buttons/AddMarker.vue";
 import OptionsMenu from "./components/OptionsMenu.vue";
 import DeleteMarker from "./components/buttons/DeleteMarker.vue";
+import DistanceViewer from "./components/DistanceViewer.vue";
 
 import db from "./Localbase";
 
@@ -108,6 +115,7 @@ export default {
     AddMarker,
     OptionsMenu,
     DeleteMarker,
+    DistanceViewer,
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup() {
@@ -134,7 +142,8 @@ export default {
     const lat2 = ref();
     const lng1 = ref();
     const lng2 = ref();
-    const distance = ref();
+    const distance = ref(0);
+    const distanceMiles = ref(0);
 
     onMounted(() => {
       db.collection("markers")
@@ -192,15 +201,22 @@ export default {
           (1 - c((lng2.value - lng1.value) * p))) /
           2;
 
+      // conversion factor
+      const factor = 0.621371;
+
       if (!distance.value) {
         distance.value = 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = distance
-        console.log("Distance is: " + distance.value.toFixed(2) + " Miles");
+        distanceMiles.value = distance.value * factor;
+        console.log("Distance is: " + distance.value.toFixed(2) + " Km");
+        console.log("Distance is: " + distanceMiles.value.toFixed(2) + " Miles");
         return;
       }
       result.value = 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = distance
       const journey = distance.value + result.value;
       distance.value = journey;
-      console.log("Distance is: " + journey.toFixed(2) + " Miles");
+      distanceMiles.value = distance.value * factor;
+      console.log("Distance is: " + distance.value.toFixed(2) + " Km");
+      console.log("Distance is: " + distanceMiles.value.toFixed(2) + " Miles");
     };
 
     const centerUpdate = function (newCenter) {
@@ -373,6 +389,8 @@ export default {
       lat2,
       lng1,
       lng2,
+      distance,
+      distanceMiles,
     };
   },
 };
@@ -401,7 +419,8 @@ body,
 #basemarkerbutton,
 #basesmallbutton,
 #addmarker,
-#deletemarker {
+#deletemarker,
+#distancepopup {
   z-index: 1000;
   position: absolute;
 }
