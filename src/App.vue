@@ -134,6 +134,7 @@ export default {
     const lat2 = ref();
     const lng1 = ref();
     const lng2 = ref();
+    const distance = ref();
 
     onMounted(() => {
       db.collection("markers")
@@ -191,8 +192,15 @@ export default {
           (1 - c((lng2.value - lng1.value) * p))) /
           2;
 
+      if (!distance.value) {
+        distance.value = 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = distance
+        console.log("Distance is: " + distance.value.toFixed(2) + " Miles");
+        return;
+      }
       result.value = 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = distance
-      console.log("Distance is: " + result.value.toFixed(2) + " Miles");
+      const journey = distance.value + result.value;
+      distance.value = journey;
+      console.log("Distance is: " + journey.toFixed(2) + " Miles");
     };
 
     const centerUpdate = function (newCenter) {
@@ -294,12 +302,20 @@ export default {
         if (!lat1.value) {
           lat1.value = tempLoc[0];
           lng1.value = tempLoc[1];
-          console.log("1: " + lat1.value);
-        } else {
+          return;
+        }
+
+        if (!lat2.value) {
           lat2.value = tempLoc[0];
           lng2.value = tempLoc[1];
-          console.log("2: " + lat2.value);
           pathFinderCalc();
+        }
+
+        if (lat1.value) {
+          lat1.value = tempLoc[0];
+          lng1.value = tempLoc[1];
+          lat2.value = null;
+          lng2.value = null;
         }
 
         return;
