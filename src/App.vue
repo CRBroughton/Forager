@@ -33,7 +33,7 @@
   ></delete-marker>
   <distance-viewer
     id="distancepopup"
-    v-if="distance !== 0"
+    v-if="pathFinderMode"
     :distance="distance"
     :distanceMiles="distanceMiles"
   ></distance-viewer>
@@ -207,16 +207,12 @@ export default {
       if (!distance.value) {
         distance.value = 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = distance
         distanceMiles.value = distance.value * factor;
-        console.log("Distance is: " + distance.value.toFixed(2) + " Km");
-        console.log("Distance is: " + distanceMiles.value.toFixed(2) + " Miles");
         return;
       }
       result.value = 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = distance
       const journey = distance.value + result.value;
       distance.value = journey;
       distanceMiles.value = distance.value * factor;
-      console.log("Distance is: " + distance.value.toFixed(2) + " Km");
-      console.log("Distance is: " + distanceMiles.value.toFixed(2) + " Miles");
     };
 
     const centerUpdate = function (newCenter) {
@@ -391,6 +387,7 @@ export default {
       lng2,
       distance,
       distanceMiles,
+      pathFinderMode,
     };
   },
 };
