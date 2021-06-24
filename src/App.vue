@@ -76,7 +76,7 @@
             direction: 'top',
             opacity: 1,
           }"
-          :content="marker.title"
+          :content="marker.title + testy + marker.date"
         />
       </l-marker>
     </div>
@@ -144,6 +144,7 @@ export default {
     const lng2 = ref();
     const distance = ref(0);
     const distanceMiles = ref(0);
+    const testy = ref("<br>");
 
     onMounted(() => {
       db.collection("markers")
@@ -188,6 +189,16 @@ export default {
       pathFinderMode.value = !pathFinderMode.value;
       deleteVisible.value = false;
       console.log("PATHFINDER");
+      if (pathFinderMode.value === false) {
+        path.value.leafletObject.setLatLngs([]);
+        result.value = 0;
+        lat1.value = 0;
+        lat2.value = 0;
+        lng1.value = 0;
+        lng2.value = 0;
+        distance.value = 0;
+        distanceMiles.value = 0;
+      }
     };
 
     const pathFinderCalc = () => {
@@ -290,7 +301,9 @@ export default {
         alert("Please enter a object name!");
         return;
       }
+      const event = new Date();
       const newMarker = {
+        date: event.toDateString(),
         id: Date.now().toString(),
         title: input,
         lat: center.value[0],
@@ -388,6 +401,7 @@ export default {
       distance,
       distanceMiles,
       pathFinderMode,
+      testy,
     };
   },
 };
