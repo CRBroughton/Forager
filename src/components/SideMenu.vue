@@ -86,7 +86,8 @@
     </div>
     <div
       @click="enablePathFinder"
-      class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
+      class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 cursor-pointer"
+      :class="pathfinderEnabled && active"
     >
       <svg
         class="w-6 h-6 text-gray-500"
@@ -133,6 +134,8 @@ export default {
   setup(props, { emit }) {
     const tooltip = ref(props.tooltipVisible);
     const donationLink = "https://placeholder.com/";
+    const active = "border-red-500 border-2";
+    const pathfinderEnabled = ref(false);
 
     const donate = () => {
       window.location.href = donationLink;
@@ -153,6 +156,7 @@ export default {
     };
 
     const enablePathFinder = () => {
+      pathfinderEnabled.value = !pathfinderEnabled.value;
       emit("enablePathFinder");
     };
 
@@ -168,6 +172,8 @@ export default {
       showOptions,
       notWorking,
       enablePathFinder,
+      active,
+      pathfinderEnabled,
     };
   },
 };
