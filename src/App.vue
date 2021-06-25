@@ -93,7 +93,6 @@
 </template>
 
 <script lang="ts">
-import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 import WelcomeScreen from "./components/WelcomeScreen.vue";
 import LocationSelector from "./components/LocationSelector.vue";
@@ -166,7 +165,6 @@ export default {
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup() {
-
     onMounted(() => {
       db.collection("markers")
         .get()
@@ -199,7 +197,7 @@ export default {
           reassignCenter();
         });
     };
-    
+
     return {
       centerUpdate,
       toggleMarkerPopup,
