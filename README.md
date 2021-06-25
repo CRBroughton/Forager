@@ -22,9 +22,9 @@ All pinned locations are stored locally on your device using [Localbase](https:/
 
 ## Installation
 
-Forager is a Progressive Web Application, and therefore can be installed via any browser. The current URL for the live test version is:
+Forager is a Progressive Web Application, and therefore can be installed via any browser. The URL for the live version is:
 
-[https://wonderful-shockley-3760b4.netlify.app](https://wonderful-shockley-3760b4.netlify.app)
+[https://forager.crbroughton.me](https://forager.crbroughton.me)
 
 ## Known bugs
 
