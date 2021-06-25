@@ -15,9 +15,10 @@
         <p>Forager</p>
       </div>
       <div
-        class="w-full pb-2 flex justify-center items-center text-gray-500 text-xs"
+        class="w-full pb-2 flex flex-col justify-center items-center text-gray-500 text-xs"
       >
-        <p>By Craig Broughton</p>
+        <p class="pb-1">By Craig Broughton</p>
+        <p>Version 1.0</p>
       </div>
       <div class="w-full h-full flex flex-wrap content-end">
         <div class="w-full bottom-0 py-1 px-1">
