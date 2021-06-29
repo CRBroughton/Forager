@@ -1,5 +1,5 @@
 import { ref } from "@vue/reactivity";
-import { deleteVisible, path } from "./App";
+import { center, deleteVisible, path } from "./App";
 
 const pathFinderMode = ref(false);
 const result = ref();
@@ -13,7 +13,7 @@ const distanceMiles = ref(0);
 const enablePathFinder = () => {
     pathFinderMode.value = !pathFinderMode.value;
     deleteVisible.value = false;
-    console.log("PATHFINDER");
+    console.log("PATHFINDER :", pathFinderMode.value);
     if (pathFinderMode.value === false) {
       path.value.leafletObject.setLatLngs([]);
       result.value = 0;
@@ -25,6 +25,33 @@ const enablePathFinder = () => {
       distanceMiles.value = 0;
     }
   };
+
+const runPathFinder = function (e: { latlng: { lat: number; lng: number } }) {
+  center.value = [e.latlng.lat, e.latlng.lng];
+  const tempLoc = [center.value[0], center.value[1]];
+  path.value.leafletObject.addLatLng(tempLoc);
+
+  if (!lat1.value) {
+    lat1.value = tempLoc[0];
+    lng1.value = tempLoc[1];
+    return;
+  }
+
+  if (!lat2.value) {
+    lat2.value = tempLoc[0];
+    lng2.value = tempLoc[1];
+    pathFinderCalc();
+  }
+
+  if (lat1.value) {
+    lat1.value = tempLoc[0];
+    lng1.value = tempLoc[1];
+    lat2.value = null;
+    lng2.value = null;
+  }
+
+  return;
+};
 
   const pathFinderCalc = () => {
     const p = 0.017453292519943295; // Math.PI / 180
@@ -51,4 +78,4 @@ const enablePathFinder = () => {
     distanceMiles.value = distance.value * factor;
   };
 
-export { pathFinderMode, result, lat1, lat2, lng1, lng2, distance, distanceMiles, enablePathFinder, pathFinderCalc };
+export { pathFinderMode, result, lat1, lat2, lng1, lng2, distance, distanceMiles, enablePathFinder, pathFinderCalc, runPathFinder };

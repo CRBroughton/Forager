@@ -1,32 +1,42 @@
 <template>
-  <div v-if="!isHidden" class="w-screen h-60 bottom-0 p-1">
-    <div
-      class="bg-gray-100 w-full h-full rounded-xl shadow-inner overflow-hidden"
-    >
-      <div class="h-1/4 flex border-b-2 border-white-700">
-        <h1 class="text-gray-700 text-2xl font-semibold m-auto">
-          Blackberry Bush
-        </h1>
+  <div
+    class="w-full bottom-0 flex flex-wrap content-end sm:p-2 p-2"
+    v-if="markerPopupVisible"
+  >
+    <div class="w-full flex flex-col bg-gray-100 rounded-2xl shadow-2xl">
+      <div class="w-full pt-2 flex justify-center"></div>
+      <div
+        class="w-full p-2 flex justify-center items-center text-gray-500 font-semibold"
+      >
+        <p>{{ selectedMarker[0].title }}</p>
       </div>
-      <div class="h-1/4 flex border-b-2 border-white-700">
-        <h1 class="text-gray-700 text-2xl font-semibold m-auto">28/06/2021</h1>
+      <div
+        class="w-full pb-2 flex flex-col justify-center items-center text-gray-500 text-xs"
+      >
+        <p class="pb-2">Date Last Foraged: {{ selectedMarker[0].dateLastForaged }}</p>
+        <p>Date Added: {{ selectedMarker[0].date }}</p>
       </div>
-      <div class="h-1/4 flex border-b-2 border-white-700">
-        <h1 class="text-gray-700 text-2xl font-semibold m-auto">
-          1.2 Miles Away
-        </h1>
-      </div>
-      <div class="h-1/4 flex justify-center space-x-10 items-center">
-        <MyButton
-          title="Create"
-          class="bg-green-500"
-          @click="addMarker"
-        ></MyButton>
-        <MyButton
-          title="Cancel"
-          class="bg-red-500"
-          @click="isHidden = true"
-        ></MyButton>
+      <div class="w-full h-full flex flex-wrap content-end">
+        <div class="w-full bottom-0 py-1 px-1">
+          <div
+            class="w-full flex justify-center m-auto py-2 bg-gray-200 rounded-xl"
+          >
+            <MyButton
+              title="Delete Marker"
+              class="mb-1 mr-1 ml-1 w-full"
+              @click="deleteMarker"
+            >
+              Delete Marker
+            </MyButton>
+            <MyButton
+              title="Close"
+              class="mb-1 mr-1 ml-1 w-full"
+              @click="closeMarkerPopup"
+            >
+              Close
+            </MyButton>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -34,23 +44,28 @@
 
 <script lang="ts">
 import MyButton from "./buttons/BaseButton.vue";
+import {
+  selectedMarker,
+  markerPopupVisible,
+  deleteMarker,
+} from "../functions/Marker";
 
 export default {
   components: {
     MyButton,
   },
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  data() {
+  setup() {
+    const closeMarkerPopup = () => {
+      markerPopupVisible.value = false;
+    };
+
     return {
-      isHidden: false,
+      selectedMarker,
+      closeMarkerPopup,
+      markerPopupVisible,
+      deleteMarker,
     };
   },
-  methods: {
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    addMarker() {
-      return;
-    }
-  }
 };
 </script>
 

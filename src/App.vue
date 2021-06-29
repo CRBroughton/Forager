@@ -12,6 +12,7 @@
     id="locationselector"
     v-if="Object.keys(home).length === 0"
   ></location-selector>
+  <marker-popup id="markerpopup" v-if="!loading && markerPopupVisible" />
   <options-menu
     id="optionsmenu"
     v-if="optionsVisible"
@@ -64,7 +65,7 @@
 
     <div v-if="tooltipVisible">
       <l-marker
-        @click="deleteMarker"
+        @click="handleMarker"
         v-for="marker in markers"
         :key="marker.id"
         :lat-lng="marker"
@@ -82,7 +83,7 @@
     </div>
     <div v-else>
       <l-marker
-        @click="deleteMarker"
+        @click="handleMarker"
         v-for="marker in markers"
         :key="marker.id"
         :lat-lng="marker"
@@ -102,6 +103,7 @@ import AddMarker from "./components/buttons/AddMarker.vue";
 import OptionsMenu from "./components/OptionsMenu.vue";
 import DeleteMarker from "./components/buttons/DeleteMarker.vue";
 import DistanceViewer from "./components/DistanceViewer.vue";
+import MarkerPopup from "./components/MarkerPopup.vue";
 
 import { toggleOptions, optionsVisible } from "./functions/OptionsMenu";
 import { tooltipVisible, toggleTooltips } from "./functions/SideMenu";
@@ -147,7 +149,9 @@ import {
   toggleMarkerPopup,
   hideDeletePopup,
   createMarker,
-  deleteMarker,
+  currentFilteredMarker,
+  markerPopupVisible,
+  handleMarker,
 } from "./functions/Marker";
 
 import db from "./Localbase";
@@ -162,6 +166,7 @@ export default {
     OptionsMenu,
     DeleteMarker,
     DistanceViewer,
+    MarkerPopup,
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup() {
@@ -224,7 +229,6 @@ export default {
       handleClick,
       showCreateMarkerPopup,
       createMarker,
-      deleteMarker,
       updateLoading,
       enablePathFinder,
       pathFinderCalc,
@@ -237,6 +241,9 @@ export default {
       distanceMiles,
       pathFinderMode,
       brSpace,
+      currentFilteredMarker,
+      markerPopupVisible,
+      handleMarker,
     };
   },
 };
@@ -271,7 +278,8 @@ body,
   position: absolute;
 }
 #optionsmenu,
-#locationselector {
+#locationselector,
+#markerpopup {
   z-index: 3000;
   position: absolute;
 }
