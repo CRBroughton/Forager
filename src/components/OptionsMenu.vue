@@ -26,6 +26,30 @@
             class="w-full flex justify-center m-auto py-2 bg-gray-200 rounded-xl"
           >
             <MyButton
+              title="Export Markers"
+              class="mb-1 mr-1 ml-1"
+              @click="saveAsJSON"
+            >
+              Export Markers
+            </MyButton>
+            <!-- <MyButton title="Import Markers" class="mb-1 mr-1"> </MyButton> -->
+            <label
+              class="h-14 w-36 text-gray-500 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer outline-none focus:outline-none text-xs sm:text-base"
+            >Import Markers
+              <input
+                type="file"
+                id="file-input"
+                class="hidden"
+                @click="importJSON"
+              />
+            </label>
+          </div>
+        </div>
+        <div class="w-full bottom-0 py-1 px-1">
+          <div
+            class="w-full flex justify-center m-auto py-2 bg-gray-200 rounded-xl"
+          >
+            <MyButton
               title="Delete Home"
               class="mb-1 mr-1 ml-1"
               @click="deleteHome"
@@ -49,11 +73,11 @@
             class="w-full flex justify-center m-auto py-2 bg-gray-200 rounded-xl"
           >
             <MyButton
-              title="Back"
+              title="Close"
               class="mb-1 mr-1 ml-1 w-full"
               @click="goBack"
             >
-              Back
+              Close
             </MyButton>
           </div>
         </div>
@@ -66,6 +90,7 @@
 import { ref } from "@vue/reactivity";
 import MyButton from "./buttons/BaseButton.vue";
 import { version } from "../functions/App";
+import { saveAsJSON, importJSON } from "../functions/OptionsMenu";
 import db from "../Localbase";
 
 export default {
@@ -108,6 +133,8 @@ export default {
       clearCache,
       goBack,
       version,
+      saveAsJSON,
+      importJSON,
     };
   },
 };
