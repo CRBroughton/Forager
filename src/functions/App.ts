@@ -8,7 +8,7 @@ const zoom = ref(2);
 const popupVisible = ref(false);
 const deleteVisible = ref(false);
 const path = ref();
-const version = ref("1.0.2");
+const version = ref("1.0.3");
 
 const updateLoading = () => {
     loading.value = false;
