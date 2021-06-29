@@ -8,6 +8,7 @@ const zoom = ref(2);
 const popupVisible = ref(false);
 const deleteVisible = ref(false);
 const path = ref();
+const version = ref("1.0.2");
 
 const updateLoading = () => {
     loading.value = false;
@@ -20,4 +21,4 @@ const updateLoading = () => {
     center.value = tmpCenter;
   };
 
-export { loading, home, center, zoom, popupVisible, deleteVisible, path, updateLoading, centerUpdate };
+export { loading, home, center, zoom, popupVisible, deleteVisible, path, version, updateLoading, centerUpdate };

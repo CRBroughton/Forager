@@ -18,7 +18,7 @@
         class="w-full pb-2 flex flex-col justify-center items-center text-gray-500 text-xs"
       >
         <p class="pb-1">By Craig Broughton</p>
-        <p>Version 1.0</p>
+        <p>Version {{ version }}</p>
       </div>
       <div class="w-full h-full flex flex-wrap content-end">
         <div class="w-full bottom-0 py-1 px-1">
@@ -65,6 +65,7 @@
 <script lang="ts">
 import { ref } from "@vue/reactivity";
 import MyButton from "./buttons/BaseButton.vue";
+import { version } from "../functions/App";
 import db from "../Localbase";
 
 export default {
@@ -106,6 +107,7 @@ export default {
       deleteMarkers,
       clearCache,
       goBack,
+      version,
     };
   },
 };
