@@ -1,9 +1,7 @@
 workbox.core.setCacheNameDetails({ prefix: "forager" });
 
 self.addEventListener("message", (event) => {
-  if (event.data && event.data.type === "SKIP_WAITING") {
-    self.skipWaiting();
-  }
+  if (event.data.action == "SKIP_WAITING") self.skipWaiting();
 });
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
