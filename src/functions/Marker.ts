@@ -101,6 +101,7 @@ const updateForage = () => {
     dateLastForaged: event.toDateString(),
   })
   selectedMarker.value[0].dateLastForaged = event.toDateString();
+  markerPopupVisible.value = false;
   return;
 };
 
