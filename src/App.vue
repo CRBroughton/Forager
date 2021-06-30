@@ -140,6 +140,7 @@ import {
   path,
   updateLoading,
   centerUpdate,
+  getGPS,
 } from "./functions/App";
 
 import {
@@ -177,6 +178,7 @@ export default {
           markers.value = markerData;
         });
       getHome();
+      getGPS();
     });
 
     const getHome = () => {
@@ -244,6 +246,7 @@ export default {
       currentFilteredMarker,
       markerPopupVisible,
       handleMarker,
+      getGPS,
     };
   },
 };

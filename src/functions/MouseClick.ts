@@ -44,7 +44,7 @@ const handleMove = () => {
 
         db.collection("home").add(startLocation);
         home.value = [e.latlng.lat, e.latlng.lng];
-        zoom.value = 14;
+        zoom.value = 16;
         return;
       }
 
