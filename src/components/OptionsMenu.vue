@@ -35,7 +35,7 @@
             <!-- <MyButton title="Import Markers" class="mb-1 mr-1"> </MyButton> -->
             <label
               class="h-14 w-36 text-gray-500 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer outline-none focus:outline-none text-xs sm:text-base"
-            >Import Markers
+              >Import Markers
               <input
                 type="file"
                 id="file-input"

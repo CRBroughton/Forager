@@ -23,7 +23,7 @@ function readSingleFile(e) {
     return;
   }
   const reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = function (e) {
     const contents = e.target.result;
     displayContents(contents);
   };
@@ -32,14 +32,21 @@ function readSingleFile(e) {
 
 function displayContents(contents) {
   const newMarkers = JSON.parse(contents);
-  db.collection('markers').set(newMarkers);
+  db.collection("markers").set(newMarkers);
   window.location.reload();
 }
 
 const importJSON = () => {
-  document.getElementById('file-input')
-  .addEventListener('change', readSingleFile, false);
+  document
+    .getElementById("file-input")
+    .addEventListener("change", readSingleFile, false);
 };
 
-
-export { toggleOptions, saveAsJSON, importJSON, readSingleFile, displayContents, optionsVisible };
+export {
+  toggleOptions,
+  saveAsJSON,
+  importJSON,
+  readSingleFile,
+  displayContents,
+  optionsVisible,
+};

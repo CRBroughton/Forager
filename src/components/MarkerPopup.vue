@@ -13,7 +13,9 @@
       <div
         class="w-full pb-2 flex flex-col justify-center items-center text-gray-500 text-xs"
       >
-        <p class="pb-2">Date Last Foraged: {{ selectedMarker[0].dateLastForaged }}</p>
+        <p class="pb-2">
+          Date Last Foraged: {{ selectedMarker[0].dateLastForaged }}
+        </p>
         <p>Date Added: {{ selectedMarker[0].date }}</p>
       </div>
       <div class="w-full h-full flex flex-wrap content-end">

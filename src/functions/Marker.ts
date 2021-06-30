@@ -39,8 +39,8 @@ const handleMarker = function (e: { latlng: { lat: number; lng: number } }) {
       markerPopupVisible.value = false;
       return;
     }
-      markerPopupVisible.value = true
-      currentFilteredMarker(e);
+    markerPopupVisible.value = true;
+    currentFilteredMarker(e);
   }
 };
 
@@ -94,7 +94,7 @@ const currentFilteredMarker = function (e: {
 const deleteMarker = () => {
   click.value = true;
   popupVisible.value = false;
-  db.collection("markers").doc({id: selectedMarker.value[0].id}).delete();
+  db.collection("markers").doc({ id: selectedMarker.value[0].id }).delete();
 
   markers.value = filteredMarkers.value;
   markerPopupVisible.value = false;
