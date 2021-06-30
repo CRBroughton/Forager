@@ -27,16 +27,12 @@ const hideDeletePopup = () => {
 };
 
 const handleMarker = function (e: { latlng: { lat: number; lng: number } }) {
+  popupVisible.value = false;
   if (!drag.value) {
     center.value = [e.latlng.lat, e.latlng.lng];
     if (pathFinderMode.value === true) {
       markerPopupVisible.value = false;
       runPathFinder(e);
-      return;
-    }
-
-    if (popupVisible.value === true) {
-      markerPopupVisible.value = false;
       return;
     }
     markerPopupVisible.value = true;
@@ -106,6 +102,7 @@ export {
   brSpace,
   selectedMarker,
   markerPopupVisible,
+  popupVisible,
   showCreateMarkerPopup,
   toggleMarkerPopup,
   hideDeletePopup,

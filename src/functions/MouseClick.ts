@@ -3,7 +3,7 @@ import { home, center, zoom } from "./App";
 import { pathFinderMode } from "./Pathfinder";
 import { popupVisible } from "./App";
 import db from "../Localbase";
-import { showCreateMarkerPopup } from "./Marker";
+import { showCreateMarkerPopup, markerPopupVisible } from "./Marker";
 
 const draggableRoot = ref(null);
 const click = ref(false);
@@ -33,6 +33,7 @@ const handleClick = function (e: { latlng: { lat: number; lng: number } }) {
     }
     click.value = true;
     popupVisible.value = true;
+    markerPopupVisible.value = false;
 
     if (Object.keys(home.value).length === 0) {
       const startLocation = {
@@ -60,4 +61,5 @@ export {
   draggableRoot,
   click,
   drag,
+  markerPopupVisible,
 };

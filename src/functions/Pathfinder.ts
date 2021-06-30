@@ -1,5 +1,6 @@
 import { ref } from "@vue/reactivity";
-import { center, deleteVisible, path } from "./App";
+import { center, deleteVisible, path, popupVisible } from "./App";
+import { markerPopupVisible } from "./Marker";
 
 const pathFinderMode = ref(false);
 const result = ref();
@@ -14,6 +15,8 @@ const enablePathFinder = () => {
   pathFinderMode.value = !pathFinderMode.value;
   deleteVisible.value = false;
   console.log("PATHFINDER :", pathFinderMode.value);
+  popupVisible.value = false;
+  markerPopupVisible.value = false;
   if (pathFinderMode.value === false) {
     path.value.leafletObject.setLatLngs([]);
     result.value = 0;
