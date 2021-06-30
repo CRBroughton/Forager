@@ -28,6 +28,7 @@ const delay = (ms) => new Promise((res) => setTimeout(res, ms));
     await delay(1000);
     navigator.geolocation.getCurrentPosition(function(location) {
       center.value = [location.coords.latitude, location.coords.longitude];
+      zoom.value = 16;
     },
     function (error) {
      if (error.code == error.PERMISSION_DENIED ) {
