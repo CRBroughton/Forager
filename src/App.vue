@@ -77,7 +77,7 @@
             direction: 'top',
             opacity: 1,
           }"
-          :content="marker.title + brSpace + marker.date"
+          :content="marker.title + brSpace + marker.dateLastForaged"
         />
       </l-marker>
     </div>

@@ -11,6 +11,7 @@ const brSpace = ref("<br>");
 const selectedMarker = ref();
 const filteredMarkers = ref();
 const markerPopupVisible = ref(false);
+const event = new Date();
 
 const showCreateMarkerPopup = () => {
   click.value = true;
@@ -45,7 +46,6 @@ const createMarker = function (input) {
     alert("Please enter a object name!");
     return;
   }
-  const event = new Date();
   const newMarker = {
     date: event.toDateString(),
     dateLastForaged: event.toDateString(),
@@ -96,6 +96,14 @@ const deleteMarker = () => {
   markerPopupVisible.value = false;
 };
 
+const updateForage = () => {
+  db.collection("markers").doc({id: selectedMarker.value[0].id}).update({
+    dateLastForaged: event.toDateString(),
+  })
+  selectedMarker.value[0].dateLastForaged = event.toDateString();
+  return;
+};
+
 export {
   markers,
   tooltipVisible,
@@ -110,4 +118,5 @@ export {
   deleteMarker,
   currentFilteredMarker,
   handleMarker,
+  updateForage,
 };

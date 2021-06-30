@@ -31,6 +31,13 @@
               Delete Marker
             </MyButton>
             <MyButton
+              title="Forage Now"
+              class="mb-1 mr-1 ml-1 w-full"
+              @click="updateForage"
+            >
+              Forage Now
+            </MyButton>
+            <MyButton
               title="Close"
               class="mb-1 mr-1 ml-1 w-full"
               @click="closeMarkerPopup"
@@ -50,6 +57,7 @@ import {
   selectedMarker,
   markerPopupVisible,
   deleteMarker,
+  updateForage,
 } from "../functions/Marker";
 
 export default {
@@ -66,6 +74,7 @@ export default {
       closeMarkerPopup,
       markerPopupVisible,
       deleteMarker,
+      updateForage,
     };
   },
 };
