@@ -31,7 +31,7 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 
-export default defineComponent ({
+export default defineComponent({
   emits: ["loadingFinished"],
   setup(__, { emit }) {
     // Adds a small delay due to map not loading the center properly

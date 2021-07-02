@@ -99,9 +99,9 @@ const deleteMarker = () => {
 };
 
 const updateForage = () => {
-  db.collection("markers").doc({id: selectedMarker.value[0].id}).update({
+  db.collection("markers").doc({ id: selectedMarker.value[0].id }).update({
     dateLastForaged: event.toDateString(),
-  })
+  });
   selectedMarker.value[0].dateLastForaged = event.toDateString();
   markerPopupVisible.value = false;
   return;

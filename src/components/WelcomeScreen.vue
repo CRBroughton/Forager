@@ -66,7 +66,7 @@ import MyButton from "./buttons/BaseButton.vue";
 import { version } from "../functions/App";
 import { defineComponent } from "@vue/runtime-core";
 
-export default defineComponent ({
+export default defineComponent({
   components: {
     MyButton,
   },

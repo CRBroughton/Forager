@@ -129,7 +129,7 @@
 <script lang="ts">
 import { ref } from "@vue/reactivity";
 import { defineComponent } from "@vue/runtime-core";
-export default defineComponent ({
+export default defineComponent({
   props: {
     tooltipVisible: {
       required: true,

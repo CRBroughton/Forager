@@ -93,7 +93,7 @@ import { saveAsJSON, importJSON } from "../functions/OptionsMenu";
 import db from "../Localbase";
 import { defineComponent } from "@vue/runtime-core";
 
-export default defineComponent ({
+export default defineComponent({
   props: {
     optionsVisible: {
       required: true,
