@@ -1,14 +1,14 @@
 import { ref } from "@vue/reactivity";
 import { drag } from "./MouseClick";
 
-const loading = ref(true);
-const home = ref([]);
-const center = ref([46.237820128136654, -22.141468687768604]);
-const zoom = ref(2);
-const popupVisible = ref(false);
-const deleteVisible = ref(false);
-const path = ref();
-const version = ref("1.0.4");
+const loading = ref<boolean>(true);
+const home = ref<number[]>([]);
+const center = ref<number[]>([46.237820128136654, -22.141468687768604]);
+const zoom = ref<number>(2);
+const popupVisible = ref<boolean>(false);
+const deleteVisible = ref<boolean>(false);
+const path = ref<any>();
+const version = ref<string>("1.0.4");
 
 const updateLoading = () => {
   loading.value = false;

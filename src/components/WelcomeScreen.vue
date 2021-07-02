@@ -6,7 +6,6 @@
     <div class="w-full flex flex-col bg-gray-100 rounded-2xl shadow-2xl">
       <div class="w-full pt-2 flex justify-center">
         <div
-          @click="showOptions"
           class="h-14 w-14 bg-white flex justify-center items-center rounded-full cursor-pointer"
         >
           <img src="" alt="" srcset="../assets/logo.png" class="w-10 h-10" />
@@ -65,13 +64,14 @@
 import { ref } from "@vue/reactivity";
 import MyButton from "./buttons/BaseButton.vue";
 import { version } from "../functions/App";
+import { defineComponent } from "@vue/runtime-core";
 
-export default {
+export default defineComponent ({
   components: {
     MyButton,
   },
   setup(props) {
-    const isHidden = ref(false);
+    const isHidden = ref<boolean>(false);
 
     const hideWelcomeScreen = () => {
       isHidden.value = true;
@@ -79,7 +79,7 @@ export default {
 
     return { isHidden, hideWelcomeScreen, version };
   },
-};
+});
 </script>
 
 <style scoped></style>

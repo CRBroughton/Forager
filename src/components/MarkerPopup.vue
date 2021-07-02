@@ -59,8 +59,9 @@ import {
   deleteMarker,
   updateForage,
 } from "../functions/Marker";
+import { defineComponent } from "@vue/runtime-core";
 
-export default {
+export default defineComponent({
   components: {
     MyButton,
   },
@@ -77,7 +78,7 @@ export default {
       updateForage,
     };
   },
-};
+});
 </script>
 
 <style scoped></style>

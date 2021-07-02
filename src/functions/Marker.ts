@@ -4,13 +4,15 @@ import { center, popupVisible, deleteVisible } from "./App";
 import { pathFinderMode, runPathFinder } from "./Pathfinder";
 import { tooltipVisible } from "./SideMenu";
 
+import Marker from "@/types/Marker";
+
 import db from "../Localbase";
 
-const markers = ref([]);
-const brSpace = ref("<br>");
-const selectedMarker = ref();
-const filteredMarkers = ref();
-const markerPopupVisible = ref(false);
+const markers = ref<Marker[]>([]);
+const brSpace = ref<string>("<br>");
+const selectedMarker = ref<Marker[]>();
+const filteredMarkers = ref<Marker[]>();
+const markerPopupVisible = ref<boolean>(false);
 const event = new Date();
 
 const showCreateMarkerPopup = () => {
@@ -46,7 +48,7 @@ const createMarker = function (input) {
     alert("Please enter a object name!");
     return;
   }
-  const newMarker = {
+  const newMarker = <Marker>{
     date: event.toDateString(),
     dateLastForaged: event.toDateString(),
     id: Date.now().toString(),

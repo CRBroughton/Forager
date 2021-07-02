@@ -21,16 +21,30 @@
 
 <script lang="ts">
 import { ref } from "@vue/reactivity";
+import { defineComponent } from "@vue/runtime-core";
 import MyButton from "./buttons/BaseButton.vue";
 
-export default {
-  props: ["DistancePopupVisible", "distance", "distanceMiles"],
+export default defineComponent({
+  props: {
+    DistancePopupVisible: {
+      required: true,
+      type: Boolean,
+    },
+    distance: {
+      required: true,
+      type: Number,
+    },
+    distanceMiles: {
+      required: true,
+      type: Number,
+    },
+  },
   components: {
     MyButton,
   },
   setup(props, { emit }) {
-    const input = ref("");
-    const isHidden = ref(props.DistancePopupVisible);
+    const input = ref<string>("");
+    const isHidden = ref<boolean>(props.DistancePopupVisible);
     const title = "Distance: ";
     const measure = " Km / ";
     const milesTitle = " Miles";
@@ -49,7 +63,7 @@ export default {
       milesTitle,
     };
   },
-};
+});
 </script>
 
 <style scoped></style>

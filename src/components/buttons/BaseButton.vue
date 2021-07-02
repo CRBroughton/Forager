@@ -12,7 +12,16 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  props: ["title", "colour"],
+  props: {
+    title: {
+      required: true,
+      type: String,
+    },
+    colour: {
+      required: true,
+      type: String,
+    },
+  },
 });
 </script>
 

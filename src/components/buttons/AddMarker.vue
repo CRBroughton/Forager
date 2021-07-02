@@ -25,17 +25,23 @@
 
 <script lang="ts">
 import { ref } from "@vue/reactivity";
+import { defineComponent } from "vue";
 import MyButton from "./BaseButton.vue";
 
-export default {
-  props: ["popupVisible"],
+export default defineComponent({
+  props: {
+    popupVisible: {
+      required: true,
+      type: Boolean,
+    },
+  },
   emits: ["hideMarkerPopup", "createMarker"],
   components: {
     MyButton,
   },
   setup(props, { emit }) {
-    const input = ref("");
-    const isHidden = ref(props.popupVisible);
+    const input = ref<string>("");
+    const isHidden = ref<boolean>(props.popupVisible);
 
     const hidePopup = () => {
       isHidden.value = true;
@@ -51,7 +57,7 @@ export default {
       createMarker,
     };
   },
-};
+});
 </script>
 
 <style scoped></style>

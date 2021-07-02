@@ -29,7 +29,9 @@
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from "@vue/runtime-core";
+
+export default defineComponent ({
   emits: ["loadingFinished"],
   setup(__, { emit }) {
     // Adds a small delay due to map not loading the center properly
@@ -40,7 +42,7 @@ export default {
     };
     loading();
   },
-};
+});
 </script>
 
 <style scoped></style>

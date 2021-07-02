@@ -1,6 +1,6 @@
 import { ref } from "@vue/reactivity";
 
-const tooltipVisible = ref(true);
+const tooltipVisible = ref<boolean>(true);
 
 const toggleTooltips = () => {
   tooltipVisible.value = !tooltipVisible.value;

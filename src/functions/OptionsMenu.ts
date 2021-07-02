@@ -2,7 +2,7 @@ import db from "@/Localbase";
 import { ref } from "@vue/reactivity";
 import { markers } from "./Marker";
 
-const optionsVisible = ref(false);
+const optionsVisible = ref<boolean>(false);
 
 const toggleOptions = () => {
   optionsVisible.value = !optionsVisible.value;

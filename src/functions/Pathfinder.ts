@@ -2,14 +2,14 @@ import { ref } from "@vue/reactivity";
 import { center, deleteVisible, path, popupVisible } from "./App";
 import { markerPopupVisible } from "./Marker";
 
-const pathFinderMode = ref(false);
-const result = ref();
-const lat1 = ref();
-const lat2 = ref();
-const lng1 = ref();
-const lng2 = ref();
-const distance = ref(0);
-const distanceMiles = ref(0);
+const pathFinderMode = ref<boolean>(false);
+const result = ref<number>();
+const lat1 = ref<number>();
+const lat2 = ref<number>();
+const lng1 = ref<number>();
+const lng2 = ref<number>();
+const distance = ref<number>(0);
+const distanceMiles = ref<number>(0);
 
 const enablePathFinder = () => {
   pathFinderMode.value = !pathFinderMode.value;
@@ -31,7 +31,7 @@ const enablePathFinder = () => {
 
 const runPathFinder = function (e: { latlng: { lat: number; lng: number } }) {
   center.value = [e.latlng.lat, e.latlng.lng];
-  const tempLoc = [center.value[0], center.value[1]];
+  const tempLoc: Array<number> = [center.value[0], center.value[1]];
   path.value.leafletObject.addLatLng(tempLoc);
 
   if (!lat1.value) {
@@ -58,8 +58,8 @@ const runPathFinder = function (e: { latlng: { lat: number; lng: number } }) {
 
 const pathFinderCalc = () => {
   const p = 0.017453292519943295; // Math.PI / 180
-  const c = Math.cos;
-  const a =
+  const c: (x: number) => number = Math.cos;
+  const a: number =
     0.5 -
     c((lat2.value - lat1.value) * p) / 2 +
     (c(lat1.value * p) *

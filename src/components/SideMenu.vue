@@ -128,14 +128,20 @@
 
 <script lang="ts">
 import { ref } from "@vue/reactivity";
-export default {
-  props: ["tooltipVisible"],
+import { defineComponent } from "@vue/runtime-core";
+export default defineComponent ({
+  props: {
+    tooltipVisible: {
+      required: true,
+      type: Boolean,
+    },
+  },
   emits: ["returnHome", "hideTooltips", "showOptions", "enablePathFinder"],
   setup(props, { emit }) {
-    const tooltip = ref(props.tooltipVisible);
+    const tooltip = ref<boolean>(props.tooltipVisible);
     const donationLink = "https://placeholder.com/";
     const active = "border-red-500 border-2";
-    const pathfinderEnabled = ref(false);
+    const pathfinderEnabled = ref<boolean>(false);
 
     const donate = () => {
       window.location.href = donationLink;
@@ -176,7 +182,7 @@ export default {
       pathfinderEnabled,
     };
   },
-};
+});
 </script>
 
 <style scoped></style>

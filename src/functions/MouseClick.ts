@@ -5,9 +5,11 @@ import { popupVisible } from "./App";
 import db from "../Localbase";
 import { showCreateMarkerPopup, markerPopupVisible } from "./Marker";
 
+import Home from "@/types/Home";
+
 const draggableRoot = ref(null);
-const click = ref(false);
-const drag = ref(false);
+const click = ref<boolean>(false);
+const drag = ref<boolean>(false);
 
 const handleMove = () => {
   if (draggableRoot.value) {
@@ -36,7 +38,7 @@ const handleClick = function (e: { latlng: { lat: number; lng: number } }) {
     markerPopupVisible.value = false;
 
     if (Object.keys(home.value).length === 0) {
-      const startLocation = {
+      const startLocation: Home = {
         id: Date.now().toString(),
         title: "Home",
         lat: e.latlng.lat,
