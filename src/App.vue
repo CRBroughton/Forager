@@ -1,23 +1,28 @@
 <template>
-  <loading
-    @loadingFinished="updateLoading"
-    id="loading"
-    v-if="loading && Object.keys(home).length !== 0"
-  ></loading>
-  <welcome-screen
-    id="welcomescreen"
-    v-if="Object.keys(home).length === 0"
-  ></welcome-screen>
+  <transition name="shortFade">
+    <loading
+      @loadingFinished="updateLoading"
+      id="loading"
+      v-if="loading && Object.keys(home).length !== 0"
+    />
+  </transition>
+  <transition name="shortFade">
+    <welcome-screen id="welcomescreen" v-if="Object.keys(home).length === 0" />
+  </transition>
   <location-selector
     id="locationselector"
     v-if="Object.keys(home).length === 0"
   ></location-selector>
-  <marker-popup id="markerpopup" v-if="!loading && markerPopupVisible" />
-  <options-menu
-    id="optionsmenu"
-    v-if="optionsVisible"
-    @hideOptions="toggleOptions"
-  ></options-menu>
+  <transition name="shortFade">
+    <marker-popup id="markerpopup" v-if="!loading && markerPopupVisible"
+  /></transition>
+  <transition name="shortFade">
+    <options-menu
+      id="optionsmenu"
+      v-if="optionsVisible"
+      @hideOptions="toggleOptions"
+    />
+  </transition>
   <side-menu
     @showOptions="toggleOptions"
     @returnHome="getHome"
@@ -32,18 +37,22 @@
     v-if="deleteVisible"
     @hideDeletePopup="hideDeletePopup"
   ></delete-marker>
-  <distance-viewer
-    id="distancepopup"
-    v-if="pathFinderMode"
-    :distance="distance"
-    :distanceMiles="distanceMiles"
-  ></distance-viewer>
-  <add-marker
-    id="addmarker"
-    v-if="!loading && popupVisible"
-    @hideMarkerPopup="toggleMarkerPopup"
-    @createMarker="createMarker"
-  ></add-marker>
+  <transition name="shortFade">
+    <distance-viewer
+      id="distancepopup"
+      v-if="pathFinderMode"
+      :distance="distance"
+      :distanceMiles="distanceMiles"
+    />
+  </transition>
+  <transition name="shortFade">
+    <add-marker
+      id="addmarker"
+      v-if="!loading && popupVisible"
+      @hideMarkerPopup="toggleMarkerPopup"
+      @createMarker="createMarker"
+    ></add-marker>
+  </transition>
   <l-map
     v-model="zoom"
     v-model:zoom="zoom"
@@ -289,5 +298,23 @@ body,
 #welcomescreen {
   z-index: 5000;
   position: absolute;
+}
+
+.shortFade-enter-from {
+  opacity: 0;
+}
+.shortFade-enter-to {
+  opacity: 1;
+}
+.shortFade-enter-active,
+.shortFade-leave-active {
+  transition: all 0.2s ease;
+}
+
+.shortFade-leave-from {
+  opacity: 1;
+}
+.shortFade-leave-to {
+  opacity: 0;
 }
 </style>

@@ -67,12 +67,11 @@ import MyButton from "./buttons/BaseButton.vue";
 import { version } from "../functions/App";
 
 export default {
-  props: ["optionsVisible"],
   components: {
     MyButton,
   },
   setup(props) {
-    const isHidden = ref(props.optionsVisible);
+    const isHidden = ref(false);
 
     const hideWelcomeScreen = () => {
       isHidden.value = true;
