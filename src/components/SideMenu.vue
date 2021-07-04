@@ -1,5 +1,45 @@
 <template>
-  <div class="top-2 right-2 w-50 flex">
+  <div v-if="sideMenuHidden" class="top-2 right-2 w-50 flex">
+    <div
+      @click="toggleSideMenu"
+      class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
+    >
+      <svg
+        class="w-6 h-6 text-gray-500"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"
+        ></path>
+      </svg>
+    </div>
+  </div>
+    <div v-else class="top-2 right-2 w-50 flex">
+    <div
+      @click="toggleSideMenu"
+      class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
+    >
+      <svg
+        class="w-6 h-6 text-gray-500"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M20 12H4"
+        ></path>
+      </svg>
+    </div>
     <div
       @click="showOptions"
       class="h-14 w-14 mb-1 bg-white flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
@@ -141,7 +181,7 @@ export default defineComponent({
     const tooltip = ref<boolean>(props.tooltipVisible);
     const donationLink = "https://placeholder.com/";
     const active = "border-red-500 border-2";
-    const pathfinderEnabled = ref<boolean>(false);
+    const sideMenuHidden = ref<boolean>(true);
 
     const donate = () => {
       window.location.href = donationLink;
@@ -170,6 +210,10 @@ export default defineComponent({
       alert("Feature not yet implemented");
     };
 
+    const toggleSideMenu = () => {
+      sideMenuHidden.value = !sideMenuHidden.value;
+    };
+
     return {
       tooltip,
       donate,
@@ -178,6 +222,8 @@ export default defineComponent({
       showOptions,
       notWorking,
       enablePathFinder,
+      toggleSideMenu,
+      sideMenuHidden,
       active,
       pathfinderEnabled,
     };
