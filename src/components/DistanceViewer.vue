@@ -23,13 +23,10 @@
 import { ref } from "@vue/reactivity";
 import { defineComponent } from "@vue/runtime-core";
 import MyButton from "./buttons/BaseButton.vue";
+import { enablePathFinder } from "@/functions/Pathfinder";
 
 export default defineComponent({
   props: {
-    DistancePopupVisible: {
-      required: true,
-      type: Boolean,
-    },
     distance: {
       required: true,
       type: Number,
@@ -42,16 +39,16 @@ export default defineComponent({
   components: {
     MyButton,
   },
-  setup(props, { emit }) {
+  setup() {
     const input = ref<string>("");
-    const isHidden = ref<boolean>(props.DistancePopupVisible);
+    const isHidden = ref<boolean>(false);
     const title = "Distance: ";
     const measure = " Km / ";
     const milesTitle = " Miles";
 
     const hidePopup = () => {
       isHidden.value = true;
-      emit("hideDistancePopup");
+      enablePathFinder();
     };
 
     return {
