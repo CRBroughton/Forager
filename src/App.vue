@@ -16,6 +16,7 @@
   <transition name="shortFade">
     <marker-popup id="markerpopup" v-if="!loading && markerPopupVisible"
   /></transition>
+  <donation-popup id="donationpopup" v-if="donationPopupVisible" />
   <transition name="shortFade">
     <options-menu
       id="optionsmenu"
@@ -113,9 +114,14 @@ import OptionsMenu from "./components/OptionsMenu.vue";
 import DeleteMarker from "./components/buttons/DeleteMarker.vue";
 import DistanceViewer from "./components/DistanceViewer.vue";
 import MarkerPopup from "./components/MarkerPopup.vue";
+import DonationPopup from "@/components/DonationPopup.vue";
 
 import { toggleOptions, optionsVisible } from "./functions/OptionsMenu";
-import { tooltipVisible, toggleTooltips } from "./functions/SideMenu";
+import {
+  tooltipVisible,
+  toggleTooltips,
+  donationPopupVisible,
+} from "./functions/SideMenu";
 import {
   handleMove,
   handleDown,
@@ -177,6 +183,7 @@ export default {
     DeleteMarker,
     DistanceViewer,
     MarkerPopup,
+    DonationPopup,
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup() {
@@ -256,6 +263,7 @@ export default {
       markerPopupVisible,
       handleMarker,
       getGPS,
+      donationPopupVisible,
     };
   },
 };
@@ -291,6 +299,7 @@ body,
 }
 #optionsmenu,
 #locationselector,
+#donationpopup,
 #markerpopup {
   z-index: 3000;
   position: absolute;

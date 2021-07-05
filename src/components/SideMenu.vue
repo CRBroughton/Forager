@@ -20,7 +20,7 @@
       </svg>
     </div>
   </div>
-    <div v-else class="top-2 right-2 w-50 flex">
+  <div v-else class="top-2 right-2 w-50 flex">
     <div
       @click="toggleSideMenu"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
@@ -170,6 +170,7 @@
 import { ref } from "@vue/reactivity";
 import { defineComponent } from "@vue/runtime-core";
 import { pathFinderMode, enablePathFinder } from "@/functions/Pathfinder";
+import { donationPopupVisible } from "@/functions/SideMenu";
 export default defineComponent({
   props: {
     tooltipVisible: {
@@ -185,7 +186,7 @@ export default defineComponent({
     const sideMenuHidden = ref<boolean>(true);
 
     const donate = () => {
-      window.location.href = donationLink;
+      donationPopupVisible.value = !donationPopupVisible.value;
     };
 
     const returnHome = () => {
@@ -222,6 +223,7 @@ export default defineComponent({
       sideMenuHidden,
       active,
       pathFinderMode,
+      donationPopupVisible,
     };
   },
 });
