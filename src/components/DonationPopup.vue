@@ -38,21 +38,25 @@
               title="Bitcoin"
               url="https://bitcoin.org/en/"
               :image="bitcoinImage"
+              :CryptoAddress="bitcoinAddress"
             />
             <crypto-base
               title="Litecoin"
               url="https://litecoin.com/en/"
               :image="litecoinImage"
+              :CryptoAddress="litecoinAddress"
             />
             <crypto-base
               title="Bitcoin Cash"
               url="https://www.bitcoincash.org/"
               :image="bitcoinCashImage"
+              :CryptoAddress="bitcoinCashAddress"
             />
             <crypto-base
               title="Ethereum"
               url="https://ethereum.org/en/"
-              :image="EthereumIage"
+              :image="EthereumImage"
+              :CryptoAddress="EthereumAddress"
             />
           </div>
         </div>
@@ -91,10 +95,19 @@ export default defineComponent({
     const bitcoinImage = ref<string>("bitcoin.png");
     const litecoinImage = ref<string>("litecoin.svg");
     const bitcoinCashImage = ref<string>("bitcoincash.png");
-    const EthereumIage = ref<string>("ethereum.png");
+    const EthereumImage = ref<string>("ethereum.png");
     const paypalImage = ref<string>("paypal.png");
     const cryptoDonateAction = ref<string>("Copy Address");
     const donationLink = "https://placeholder.com/";
+
+    const bitcoinAddress = ref<string>("39eUhAegcY1KEEumtrgrKW4PL11JmcCQPx");
+    const litecoinAddress = ref<string>("MX19AXaN2qCH6M45fkpN5Umh9mLwDMUMCA");
+    const bitcoinCashAddress = ref<string>(
+      "qzasnvxdv220tjpc9pfjakqvv6ckfa0gruqkyf4eg4"
+    );
+    const EthereumAddress = ref<string>(
+      "0x6F08422a6B0D7514ef4D6103C6244555d8c95772"
+    );
 
     const hideDonationScreen = () => {
       donationPopupVisible.value = !donationPopupVisible.value;
@@ -110,11 +123,15 @@ export default defineComponent({
       bitcoinImage,
       litecoinImage,
       bitcoinCashImage,
-      EthereumIage,
+      EthereumImage,
       paypalImage,
       cryptoDonateAction,
       goToPaypal,
       donationPopupVisible,
+      bitcoinAddress,
+      litecoinAddress,
+      bitcoinCashAddress,
+      EthereumAddress,
     };
   },
 });
