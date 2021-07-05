@@ -27,7 +27,7 @@ export default defineComponent({
       type: String,
     },
     CryptoAddress: {
-      required: true,
+      required: false,
       type: String,
     },
   },
@@ -35,6 +35,9 @@ export default defineComponent({
     const CryptoText = ref<any>(props.CryptoAddress);
 
     const copyCryptoAddress = async () => {
+      if (CryptoText.value === undefined) {
+        return;
+      }
       await navigator.clipboard.writeText(CryptoText.value);
       alert("Copied to clipboard!");
     };
