@@ -16,7 +16,9 @@
   <transition name="shortFade">
     <marker-popup id="markerpopup" v-if="!loading && markerPopupVisible"
   /></transition>
-  <donation-popup id="donationpopup" v-if="donationPopupVisible" />
+  <transition name="shortFade">
+    <donation-popup id="donationpopup" v-if="donationPopupVisible" />
+  </transition>
   <transition name="shortFade">
     <options-menu
       id="optionsmenu"
