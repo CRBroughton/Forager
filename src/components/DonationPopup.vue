@@ -98,7 +98,7 @@ export default defineComponent({
     const EthereumImage = ref<string>("ethereum.png");
     const paypalImage = ref<string>("paypal.png");
     const cryptoDonateAction = ref<string>("Copy Address");
-    const donationLink = "https://placeholder.com/";
+    const donationLink = "https://paypal.me/CRBroughton";
 
     const bitcoinAddress = ref<string>("39eUhAegcY1KEEumtrgrKW4PL11JmcCQPx");
     const litecoinAddress = ref<string>("MX19AXaN2qCH6M45fkpN5Umh9mLwDMUMCA");
