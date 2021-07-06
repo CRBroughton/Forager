@@ -339,8 +339,8 @@ body,
 
 #welcomescreen,
 #locationselector {
-  -webkit-animation: 1s ease 0s normal forwards 1 fadein;
-  animation: 1s ease 0s normal forwards 1 fadein;
+  -webkit-animation: 2s ease 0s normal forwards 1 fadein;
+  animation: 2s ease 0s normal forwards 1 fadein;
 }
 
 @keyframes fadein {

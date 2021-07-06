@@ -34,6 +34,13 @@
             </p>
           </div>
           <div
+            class="w-full flex justify-center m-auto py-2 mb-2 bg-gray-200 rounded-xl"
+          >
+            <p class="text-justify text-gray-600 text-sm p-3 max-w-lg">
+              Please be aware that Forager stores mapping data on your device, and can exceed over 1GB. Forager can also use your GPS to get your current location.
+            </p>
+          </div>
+          <div
             class="w-full flex justify-center m-auto py-2 bg-gray-200 rounded-xl"
           >
             <p class="text-justify text-gray-600 text-sm p-3 max-w-lg">
