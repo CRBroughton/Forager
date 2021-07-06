@@ -1,14 +1,12 @@
 <template>
-  <transition name="shortFade">
+  <transition name="longFade">
     <loading
       @loadingFinished="updateLoading"
       id="loading"
       v-if="loading && Object.keys(home).length !== 0"
     />
   </transition>
-  <transition name="shortFade">
-    <welcome-screen id="welcomescreen" v-if="Object.keys(home).length === 0" />
-  </transition>
+  <welcome-screen id="welcomescreen" v-if="Object.keys(home).length === 0" />
   <location-selector
     id="locationselector"
     v-if="Object.keys(home).length === 0"
@@ -319,5 +317,53 @@ body,
 }
 .shortFade-leave-to {
   opacity: 0;
+}
+
+.longFade-enter-from {
+  opacity: 1;
+}
+.longFade-enter-to {
+  opacity: 1;
+}
+.longFade-enter-active,
+.longFade-leave-active {
+  transition: all 0.5s ease;
+}
+
+.longFade-leave-from {
+  opacity: 1;
+}
+.longFade-leave-to {
+  opacity: 0;
+}
+
+#welcomescreen,
+#locationselector {
+  -webkit-animation: 1s ease 0s normal forwards 1 fadein;
+  animation: 1s ease 0s normal forwards 1 fadein;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 </style>

@@ -13,7 +13,7 @@
         <h1 class="m-auto text-3xl font-semibold">Forager</h1>
       </div>
       <div class="h-1/3 flex">
-        <h3 class="m-auto text-1xl">Loading... (If frozen, please reload)</h3>
+        <h3 class="m-auto text-1xl">Loading...</h3>
       </div>
       <div class="h-1/3 flex">
         <div class="m-auto text-xs font-thin mb-20">
