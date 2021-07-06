@@ -50,8 +50,8 @@ const createMarker = function (input) {
   }
   const newMarker = <Marker>{
     date: event.toDateString(),
-    dateLastForaged: event.toDateString(),
-    timesForaged: 1,
+    dateLastForaged: "Never Foraged",
+    timesForaged: 0,
     id: Date.now().toString(),
     title: input,
     lat: center.value[0],
@@ -102,13 +102,9 @@ const deleteMarker = () => {
 const updateForage = () => {
   db.collection("markers").doc({ id: selectedMarker.value[0].id }).update({
     dateLastForaged: event.toDateString(),
+    timesForaged: ++selectedMarker.value[0].timesForaged,
   });
 
-  const ForageCount = selectedMarker.value[0].timesForaged++;
-  
-  db.collection("markers").doc({ id: selectedMarker.value[0].id }).update({
-    timesForaged: ForageCount,
-  });
   selectedMarker.value[0].dateLastForaged = event.toDateString();
   markerPopupVisible.value = false;
   return;
