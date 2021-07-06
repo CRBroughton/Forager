@@ -50,9 +50,7 @@
               title="Continue"
               class="mb-1 mr-1 ml-1 w-full"
               @click="hideWelcomeScreen"
-            >
-              Continue
-            </MyButton>
+            />
           </div>
         </div>
       </div>
@@ -70,7 +68,7 @@ export default defineComponent({
   components: {
     MyButton,
   },
-  setup(props) {
+  setup() {
     const isHidden = ref<boolean>(false);
 
     const hideWelcomeScreen = () => {

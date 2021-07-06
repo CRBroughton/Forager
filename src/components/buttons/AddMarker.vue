@@ -10,14 +10,8 @@
         />
       </div>
       <div class="flex m-auto w-full justify-center">
-        <MyButton title="Create" class="mb-1 mr-1" @click="createMarker">
-          Create
-        </MyButton>
-        <MyButton
-          title="Cancel"
-          class="mb-1 mr-1"
-          @click="hidePopup"
-        ></MyButton>
+        <MyButton title="Create" class="mb-1 mr-1" @click="createMarker" />
+        <MyButton title="Cancel" class="mb-1 mr-1" @click="hidePopup" />
       </div>
     </div>
   </div>
@@ -29,19 +23,13 @@ import { defineComponent } from "vue";
 import MyButton from "./BaseButton.vue";
 
 export default defineComponent({
-  props: {
-    popupVisible: {
-      required: true,
-      type: Boolean,
-    },
-  },
   emits: ["hideMarkerPopup", "createMarker"],
   components: {
     MyButton,
   },
   setup(props, { emit }) {
     const input = ref<string>("");
-    const isHidden = ref<boolean>(props.popupVisible);
+    const isHidden = ref<boolean>(false);
 
     const hidePopup = () => {
       isHidden.value = true;

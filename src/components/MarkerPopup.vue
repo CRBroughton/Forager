@@ -27,23 +27,17 @@
               title="Delete Marker"
               class="mb-1 mr-1 ml-1 w-full"
               @click="deleteMarker"
-            >
-              Delete Marker
-            </MyButton>
+            />
             <MyButton
               title="Forage Now"
               class="mb-1 mr-1 ml-1 w-full"
               @click="updateForage"
-            >
-              Forage Now
-            </MyButton>
+            />
             <MyButton
               title="Close"
               class="mb-1 mr-1 ml-1 w-full"
               @click="closeMarkerPopup"
-            >
-              Close
-            </MyButton>
+            />
           </div>
         </div>
       </div>

@@ -52,19 +52,17 @@
               title="Delete Home"
               class="mb-1 mr-1 ml-1"
               @click="deleteHome"
-            >
-              Delete Home
-            </MyButton>
+            />
             <MyButton
               title="Delete Markers"
               class="mb-1 mr-1"
               @click="deleteMarkers"
-            >
-              Delete Markers
-            </MyButton>
-            <MyButton title="Clear Cache" class="mb-1 mr-1" @click="clearCache">
-              Clear Cache
-            </MyButton>
+            />
+            <MyButton
+              title="Clear Cache"
+              class="mb-1 mr-1"
+              @click="clearCache"
+            />
           </div>
         </div>
         <div class="w-full bottom-0 py-1 px-1">
@@ -75,9 +73,7 @@
               title="Close"
               class="mb-1 mr-1 ml-1 w-full"
               @click="goBack"
-            >
-              Close
-            </MyButton>
+            />
           </div>
         </div>
       </div>
@@ -86,29 +82,21 @@
 </template>
 
 <script lang="ts">
-import { ref } from "@vue/reactivity";
 import MyButton from "./buttons/BaseButton.vue";
 import { version } from "../functions/App";
 import { saveAsJSON, importJSON } from "../functions/OptionsMenu";
 import db from "../Localbase";
 import { defineComponent } from "@vue/runtime-core";
+import { optionsVisible } from "@/functions/OptionsMenu";
 
 export default defineComponent({
-  props: {
-    optionsVisible: {
-      required: true,
-      type: Boolean,
-    },
-  },
   emits: ["hideOptions"],
   components: {
     MyButton,
   },
   setup(props, { emit }) {
-    const isHidden = ref<boolean>(props.optionsVisible);
-
     const hideOptions = () => {
-      isHidden.value = true;
+      optionsVisible.value = true;
       emit("hideOptions");
     };
 
@@ -126,12 +114,11 @@ export default defineComponent({
       console.log("Cache Cleared!");
     };
     const goBack = () => {
-      isHidden.value = true;
+      optionsVisible.value = true;
       emit("hideOptions");
     };
 
     return {
-      isHidden,
       hideOptions,
       deleteHome,
       deleteMarkers,
@@ -140,6 +127,7 @@ export default defineComponent({
       version,
       saveAsJSON,
       importJSON,
+      optionsVisible,
     };
   },
 });

@@ -13,7 +13,7 @@
           "
           class="mb-1 my-1 px-5 w-auto"
           @click="hidePopup"
-        ></MyButton>
+        />
       </div>
     </div>
   </div>

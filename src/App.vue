@@ -12,7 +12,7 @@
   <location-selector
     id="locationselector"
     v-if="Object.keys(home).length === 0"
-  ></location-selector>
+  />
   <transition name="shortFade">
     <marker-popup id="markerpopup" v-if="!loading && markerPopupVisible"
   /></transition>
@@ -29,17 +29,11 @@
   <side-menu
     @showOptions="toggleOptions"
     @returnHome="getHome"
-    @hideTooltips="toggleTooltips"
     @enablePathFinder="enablePathFinder"
     id="basesmallbutton"
     v-if="!loading && Object.keys(home).length !== 0"
     class="flex flex-col absolute"
-  ></side-menu>
-  <delete-marker
-    id="deletemarker"
-    v-if="deleteVisible"
-    @hideDeletePopup="hideDeletePopup"
-  ></delete-marker>
+  />
   <transition name="shortFade">
     <distance-viewer
       id="distancepopup"
@@ -54,7 +48,7 @@
       v-if="!loading && popupVisible"
       @hideMarkerPopup="toggleMarkerPopup"
       @createMarker="createMarker"
-    ></add-marker>
+    />
   </transition>
   <l-map
     v-model="zoom"
@@ -69,9 +63,7 @@
     @update:center="centerUpdate"
     ref="draggableRoot"
   >
-    <l-tile-layer
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    ></l-tile-layer>
+    <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
     <l-polyline ref="path" :lat-lngs="[]" color="black" />
 
@@ -113,7 +105,6 @@ import Loading from "./components/Loading.vue";
 import SideMenu from "./components/SideMenu.vue";
 import AddMarker from "./components/buttons/AddMarker.vue";
 import OptionsMenu from "./components/OptionsMenu.vue";
-import DeleteMarker from "./components/buttons/DeleteMarker.vue";
 import DistanceViewer from "./components/DistanceViewer.vue";
 import MarkerPopup from "./components/MarkerPopup.vue";
 import DonationPopup from "@/components/DonationPopup.vue";
@@ -158,6 +149,7 @@ import {
   updateLoading,
   centerUpdate,
   getGPS,
+  showConsoleVersion,
 } from "./functions/App";
 
 import {
@@ -182,7 +174,6 @@ export default {
     SideMenu,
     AddMarker,
     OptionsMenu,
-    DeleteMarker,
     DistanceViewer,
     MarkerPopup,
     DonationPopup,
@@ -197,6 +188,7 @@ export default {
         });
       getHome();
       getGPS();
+      showConsoleVersion();
     });
 
     const getHome = () => {
@@ -266,6 +258,7 @@ export default {
       handleMarker,
       getGPS,
       donationPopupVisible,
+      showConsoleVersion,
     };
   },
 };
@@ -294,7 +287,6 @@ body,
 #basemarkerbutton,
 #basesmallbutton,
 #addmarker,
-#deletemarker,
 #distancepopup {
   z-index: 1000;
   position: absolute;

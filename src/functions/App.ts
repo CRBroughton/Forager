@@ -10,6 +10,10 @@ const deleteVisible = ref<boolean>(false);
 const path = ref<any>();
 const version = ref<string>("1.0.5");
 
+const showConsoleVersion = () => {
+  console.log("%c Forager Version " + version.value + " ", "background-color:black");
+};
+
 const updateLoading = () => {
   loading.value = false;
   drag.value = false;
@@ -51,4 +55,5 @@ export {
   updateLoading,
   centerUpdate,
   getGPS,
+  showConsoleVersion,
 };
