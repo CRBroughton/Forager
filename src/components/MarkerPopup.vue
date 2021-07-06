@@ -13,6 +13,7 @@
       <div
         class="w-full pb-2 flex flex-col justify-center items-center text-gray-500 text-xs"
       >
+        <p class="pb-2">Times Foraged: {{ selectedMarker[0].timesForaged }}</p>
         <p class="pb-2">
           Date Last Foraged: {{ selectedMarker[0].dateLastForaged }}
         </p>
