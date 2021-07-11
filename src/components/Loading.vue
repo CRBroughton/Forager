@@ -1,12 +1,16 @@
 <template>
   <div class="w-screen h-screen bg-white cursor-wait">
     <div class="h-4/6 flex">
-      <img
-        class="w-64 h-64 m-auto rounded-ful bg-yellow-100 object-scale-down p-8 rounded-full shadow-xl"
-        src="../assets/logo.png"
-        alt=""
-        srcset=""
-      />
+      <div
+        class="bg-yellow-100 object-scale-down p-8 rounded-full shadow-xl m-auto"
+      >
+        <img
+          class="w-52 h-52 m-auto"
+          src="../assets/logo.png"
+          alt=""
+          srcset=""
+        />
+      </div>
     </div>
     <div class="h-2/6">
       <div class="h-1/3 flex">
