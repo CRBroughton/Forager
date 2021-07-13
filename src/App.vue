@@ -179,38 +179,30 @@ export default {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup() {
     onMounted(() => {
-      db.collection("markers")
-        .get()
-        .then((markerData) => {
-          markers.value = markerData;
-        });
       getHome();
       getGPS();
+      getMarkers();
       showConsoleVersion();
     });
 
-    const getHome = () => {
+    // Adds a small delay due to map not loading the center properly
+    const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+    const getMarkers = async () => {
+      markers.value = await db.collection("markers").get();
+    };
+
+    const getHome = async () => {
       console.log("Running return home...");
-      db.collection("home")
-        .get()
-        .then((homeData) => {
-          home.value = [];
-          const homeArray = [homeData[0].lat, homeData[0].lng];
-          // homeData.map(() => home.value.push(homeArray));
-          home.value = homeArray;
 
-          // Adds a small delay due to map not loading the center properly
-          const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+      const RetrievedHomeValue = await db.collection("home").get();
+      home.value = [RetrievedHomeValue[0].lat, RetrievedHomeValue[0].lng];
 
-          const reassignCenter = async () => {
-            await delay(500);
-            center.value = [];
-            center.value = homeArray;
-            zoom.value = 16;
-            loading.value = false;
-          };
-          reassignCenter();
-        });
+      await delay(500);
+
+      center.value = home.value;
+      zoom.value = 16;
+      loading.value = false;
     };
 
     return {
