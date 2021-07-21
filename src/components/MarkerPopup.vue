@@ -3,7 +3,9 @@
     class="w-full bottom-0 flex flex-wrap content-end sm:p-2 p-2"
     v-if="markerPopupVisible"
   >
-    <div class="w-full flex flex-col bg-gray-100 rounded-2xl shadow-2xl">
+    <div
+      class="w-full m-auto max-w-screen-md flex flex-col bg-gray-100 rounded-2xl shadow-2xl"
+    >
       <div class="w-full pt-2 flex justify-center"></div>
       <div
         class="w-full p-2 flex justify-center items-center text-gray-500 font-semibold"
