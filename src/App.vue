@@ -12,6 +12,9 @@
     v-if="Object.keys(home).length === 0"
   />
   <transition name="shortFade">
+    <search id="search" />
+  </transition>
+  <transition name="shortFade">
     <marker-popup id="markerpopup" v-if="!loading && markerPopupVisible"
   /></transition>
   <transition name="shortFade">
@@ -106,6 +109,7 @@ import OptionsMenu from "./components/OptionsMenu.vue";
 import DistanceViewer from "./components/DistanceViewer.vue";
 import MarkerPopup from "./components/MarkerPopup.vue";
 import DonationPopup from "@/components/DonationPopup.vue";
+import Search from "@/components/Search.vue";
 
 import { toggleOptions, optionsVisible } from "./functions/OptionsMenu";
 import {
@@ -175,6 +179,7 @@ export default {
     DistanceViewer,
     MarkerPopup,
     DonationPopup,
+    Search,
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup() {
@@ -249,6 +254,7 @@ export default {
       getGPS,
       donationPopupVisible,
       showConsoleVersion,
+      Search,
     };
   },
 };
@@ -277,7 +283,8 @@ body,
 #basemarkerbutton,
 #basesmallbutton,
 #addmarker,
-#distancepopup {
+#distancepopup,
+#search {
   z-index: 1000;
   position: absolute;
 }

@@ -125,6 +125,26 @@
       </svg>
     </div>
     <div
+      @click="enableSearch"
+      class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 cursor-pointer"
+      :class="searchMode && active"
+    >
+      <svg
+        class="w-6 h-6 text-gray-500"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+        ></path>
+      </svg>
+    </div>
+    <div
       @click="enablePathFinder"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 cursor-pointer"
       :class="pathFinderMode && active"
@@ -171,6 +191,8 @@ import { ref } from "@vue/reactivity";
 import { defineComponent } from "@vue/runtime-core";
 import { pathFinderMode, enablePathFinder } from "@/functions/Pathfinder";
 import { donationPopupVisible, tooltipVisible } from "@/functions/SideMenu";
+import { searchMode, enableSearch } from "../functions/Search";
+
 export default defineComponent({
   emits: ["returnHome", "hideTooltips", "showOptions", "enablePathFinder"],
   setup(__, { emit }) {
@@ -216,6 +238,8 @@ export default defineComponent({
       pathFinderMode,
       donationPopupVisible,
       tooltipVisible,
+      searchMode,
+      enableSearch,
     };
   },
 });
