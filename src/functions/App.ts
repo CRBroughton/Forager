@@ -8,7 +8,7 @@ const zoom = ref<number>(2);
 const popupVisible = ref<boolean>(false);
 const deleteVisible = ref<boolean>(false);
 const path = ref<any>();
-const version = ref<string>("1.0.5");
+const version = ref<string>("1.0.6");
 
 const showConsoleVersion = () => {
   console.log("%c Forager Version " + version.value + " ", "background-color:black");
