@@ -13,6 +13,7 @@ const markers = ref<Marker[]>([]);
 const brSpace = ref<string>("<br>");
 const selectedMarker = ref<Marker[]>();
 const filteredMarkers = ref<Marker[]>();
+const filteredSearchMarkers = ref<Marker[]>([]);
 const markerPopupVisible = ref<boolean>(false);
 const event = new Date();
 
@@ -127,4 +128,5 @@ export {
   currentFilteredMarker,
   handleMarker,
   updateForage,
+  filteredSearchMarkers,
 };

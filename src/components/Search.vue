@@ -5,7 +5,7 @@
         <div
           class="bg-gray-50 rounded-xl p-1 text-gray-600 overflow-y-auto max-h-52 border-gray-300 border-2"
         >
-          <ul v-for="marker in filteredMarkers" :key="marker.id">
+          <ul v-for="marker in filteredSearchMarkers" :key="marker.id">
             <li
               class="w-full my-1 p-2 rounded-xl bg-white text-sm cursor-pointer border-2 active:bg-gray-100"
             >
@@ -36,23 +36,18 @@
 
 <script lang="ts">
 import { defineComponent, watch } from "@vue/runtime-core";
-import { ref } from "@vue/reactivity";
 import MyButton from "./buttons/BaseButton.vue";
 import { searchMode, search, enableSearch } from "../functions/Search";
-import { markers } from "../functions/Marker";
+import { markers, filteredSearchMarkers } from "../functions/Marker";
 import { centerMap } from "../functions/MouseClick";
-
-import Marker from "@/types/Marker";
 
 export default defineComponent({
   components: {
     MyButton,
   },
   setup() {
-    const filteredMarkers = ref<Marker[]>([]);
-
     watch(search, () => {
-      filteredMarkers.value = markers.value.filter((marker) => {
+      filteredSearchMarkers.value = markers.value.filter((marker) => {
         return marker.title.includes(search.value);
       });
     });
@@ -62,7 +57,7 @@ export default defineComponent({
       enableSearch,
       markers,
       search,
-      filteredMarkers,
+      filteredSearchMarkers,
       centerMap,
     };
   },
