@@ -27,6 +27,16 @@ const handleUp = () => {
   setTimeout(() => (drag.value = false));
 };
 
+const centerMap = function (e: { latlng: { lat: number; lng: number } }) {
+  if (!drag.value) {
+    center.value = [e.latlng.lat, e.latlng.lng];
+    if (pathFinderMode.value === true) {
+      return;
+    }
+    click.value = true;
+  }
+}
+
 const handleClick = function (e: { latlng: { lat: number; lng: number } }) {
   if (!drag.value) {
     center.value = [e.latlng.lat, e.latlng.lng];
@@ -64,4 +74,5 @@ export {
   click,
   drag,
   markerPopupVisible,
+  centerMap,
 };

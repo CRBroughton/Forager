@@ -1,15 +1,14 @@
 import { ref } from "@vue/reactivity";
 
 const searchMode = ref<boolean>(false);
+const search = ref<string>("");
 
 const enableSearch = () => {
     searchMode.value = !searchMode.value;
-    console.log("Search mode ", searchMode.value)
+    search.value = "";
     // deleteVisible.value = false;
-    // console.log("PATHFINDER :", pathFinderMode.value);
     // popupVisible.value = false;
     // markerPopupVisible.value = false;
-
   };
 
-export { searchMode, enableSearch }
+export { searchMode, search, enableSearch }

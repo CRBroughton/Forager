@@ -3,6 +3,7 @@ import { click, drag } from "./MouseClick";
 import { center, popupVisible, deleteVisible } from "./App";
 import { pathFinderMode, runPathFinder } from "./Pathfinder";
 import { tooltipVisible } from "./SideMenu";
+import { searchMode } from "./Search";
 
 import Marker from "@/types/Marker";
 
@@ -39,6 +40,7 @@ const handleMarker = function (e: { latlng: { lat: number; lng: number } }) {
       return;
     }
     markerPopupVisible.value = true;
+    searchMode.value = false;
     currentFilteredMarker(e);
   }
 };
