@@ -7,7 +7,7 @@
         >
           <ul v-for="marker in filteredMarkers" :key="marker.id">
             <li
-              class="w-full my-1 p-2 rounded-xl bg-white text-sm cursor-pointer border-2"
+              class="w-full my-1 p-2 rounded-xl bg-white text-sm cursor-pointer border-2 active:bg-gray-100"
             >
               <button
                 @click="
