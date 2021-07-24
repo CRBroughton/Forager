@@ -283,15 +283,15 @@ body,
 #basemarkerbutton,
 #basesmallbutton,
 #addmarker,
-#distancepopup,
-#search {
+#distancepopup {
   z-index: 1000;
   position: absolute;
 }
 #optionsmenu,
 #locationselector,
 #donationpopup,
-#markerpopup {
+#markerpopup,
+#search {
   z-index: 3000;
   position: absolute;
 }
