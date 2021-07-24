@@ -3,7 +3,7 @@
     <div class="max-w-sm flex flex-col m-auto rounded-xl">
       <div class="m-auto items-center w-full">
         <div
-          class="bg-gray-50 rounded-xl p-1 text-gray-600 overflow-y-auto max-h-48 border-gray-300 border-2"
+          class="bg-gray-50 rounded-xl p-1 text-gray-600 overflow-y-auto max-h-52 border-gray-300 border-2"
         >
           <ul v-for="marker in filteredMarkers" :key="marker.id">
             <li
