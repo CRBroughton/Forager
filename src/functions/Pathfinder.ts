@@ -1,6 +1,7 @@
 import { ref } from "@vue/reactivity";
 import { center, deleteVisible, path, popupVisible } from "./App";
 import { markerPopupVisible } from "./Marker";
+import { searchMode } from "./Search";
 
 const pathFinderMode = ref<boolean>(false);
 const result = ref<number>();
@@ -12,6 +13,7 @@ const distance = ref<number>(0);
 const distanceMiles = ref<number>(0);
 
 const enablePathFinder = () => {
+  searchMode.value = false;
   pathFinderMode.value = !pathFinderMode.value;
   deleteVisible.value = false;
   console.log("PATHFINDER :", pathFinderMode.value);
