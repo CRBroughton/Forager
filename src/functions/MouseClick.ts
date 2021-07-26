@@ -6,6 +6,7 @@ import db from "../Localbase";
 import { showCreateMarkerPopup, markerPopupVisible } from "./Marker";
 
 import Home from "@/types/Home";
+import { searchMode } from "./Search";
 
 const draggableRoot = ref(null);
 const click = ref<boolean>(false);
@@ -45,6 +46,7 @@ const handleClick = function (e: { latlng: { lat: number; lng: number } }) {
     }
     click.value = true;
     popupVisible.value = true;
+    searchMode.value = false;
     markerPopupVisible.value = false;
 
     if (Object.keys(home.value).length === 0) {
