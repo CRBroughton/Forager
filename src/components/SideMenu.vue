@@ -192,6 +192,7 @@ import { defineComponent } from "@vue/runtime-core";
 import { pathFinderMode, enablePathFinder } from "@/functions/Pathfinder";
 import { donationPopupVisible, tooltipVisible } from "@/functions/SideMenu";
 import { searchMode, enableSearch } from "../functions/Search";
+import { optionsVisible } from "@/functions/OptionsMenu"
 
 export default defineComponent({
   emits: ["returnHome", "hideTooltips", "showOptions", "enablePathFinder"],
@@ -200,6 +201,7 @@ export default defineComponent({
     const sideMenuHidden = ref<boolean>(true);
 
     const donate = () => {
+      optionsVisible.value = false;
       donationPopupVisible.value = !donationPopupVisible.value;
     };
 
