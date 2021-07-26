@@ -1,10 +1,14 @@
 import db from "@/Localbase";
 import { ref } from "@vue/reactivity";
 import { markers } from "./Marker";
+import { searchMode } from "./Search";
+import { pathFinderMode } from "./Pathfinder";
 
 const optionsVisible = ref<boolean>(false);
 
 const toggleOptions = () => {
+  searchMode.value = false;
+  pathFinderMode.value = false;
   optionsVisible.value = !optionsVisible.value;
 };
 
