@@ -5,18 +5,18 @@
         <div
           class="bg-gray-50 rounded-xl p-1 text-gray-600 overflow-y-auto max-h-52 border-gray-300 border-2"
         >
-          <ul v-for="marker in filteredSearchMarkers" :key="marker.id">
+          <ul
+            class="flex"
+            v-for="marker in filteredSearchMarkers"
+            :key="marker.id"
+          >
             <li
-              class="w-full my-1 p-2 rounded-xl bg-white text-sm cursor-pointer border-2 active:bg-gray-100"
+              @click="
+                centerMap({ latlng: { lat: marker.lat, lng: marker.lng } })
+              "
+              class="w-full text-center my-1 p-2 rounded-xl bg-white text-sm cursor-pointer border-2 active:bg-gray-100"
             >
-              <button
-                @click="
-                  centerMap({ latlng: { lat: marker.lat, lng: marker.lng } })
-                "
-                class="w-full outline-none focus:outline-none"
-              >
-                {{ marker.title }} - {{ marker.dateLastForaged }}
-              </button>
+              {{ marker.title }} - {{ marker.dateLastForaged }}
             </li>
           </ul>
         </div>
