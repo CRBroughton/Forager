@@ -81,6 +81,7 @@
             interactive: false,
             direction: 'top',
             opacity: 1,
+            offset: [-15, -15],
           }"
           :content="marker.title + brSpace + marker.dateLastForaged"
         />
