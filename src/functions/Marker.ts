@@ -46,8 +46,8 @@ const handleMarker = function (e: { latlng: { lat: number; lng: number } }) {
   }
 };
 
-const createMarker = function (input) {
-  if (input.value === "") {
+const createMarker = function (input: string) {
+  if (input === "") {
     alert("Please enter a object name!");
     return;
   }
