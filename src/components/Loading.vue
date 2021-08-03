@@ -34,12 +34,11 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
+import { delay } from "@/functions/App";
 
 export default defineComponent({
   emits: ["loadingFinished"],
   setup(__, { emit }) {
-    // Adds a small delay due to map not loading the center properly
-    const delay = (ms) => new Promise((res) => setTimeout(res, ms));
     const loading = async () => {
       await delay(500);
       emit("loadingFinished");

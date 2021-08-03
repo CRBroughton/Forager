@@ -153,6 +153,7 @@ import {
   centerUpdate,
   getGPS,
   showConsoleVersion,
+  delay,
 } from "./functions/App";
 
 import {
@@ -190,9 +191,6 @@ export default {
       getMarkers();
       showConsoleVersion();
     });
-
-    // Adds a small delay due to map not loading the center properly
-    const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
     const getMarkers = async () => {
       markers.value = await db.collection("markers").get();
@@ -256,6 +254,7 @@ export default {
       donationPopupVisible,
       showConsoleVersion,
       Search,
+      delay,
     };
   },
 };

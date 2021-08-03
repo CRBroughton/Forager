@@ -26,7 +26,7 @@ const centerUpdate = function (newCenter) {
 };
 
 // Adds a small delay due to map not loading the center properly
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 const getGPS = async () => {
   await delay(1000);
@@ -56,4 +56,5 @@ export {
   centerUpdate,
   getGPS,
   showConsoleVersion,
+  delay,
 };
