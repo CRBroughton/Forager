@@ -20,7 +20,7 @@ const updateLoading = () => {
   popupVisible.value = false;
 };
 
-const centerUpdate = function (newCenter) {
+const centerUpdate = function (newCenter: { lat: number; lng: number; }) {
   const tmpCenter = [newCenter.lat, newCenter.lng];
   center.value = tmpCenter;
 };
