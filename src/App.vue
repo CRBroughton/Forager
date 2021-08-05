@@ -63,6 +63,7 @@
     @click="handleClick"
     @update:center="centerUpdate"
     ref="draggableRoot"
+    data-test="map"
   >
     <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 

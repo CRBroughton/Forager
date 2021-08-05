@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!isHidden"
-    class="w-full bottom-0 flex flex-wrap content-end sm:p-2 p-2"
+    class="w-full bottom-0 flex flex-wrap content-end sm:p-2 p-2" data-test="welcome-screen"
   >
     <div class="w-full flex flex-col bg-gray-100 rounded-2xl shadow-2xl">
       <div class="w-full pt-2 flex justify-center">
@@ -57,6 +57,7 @@
               title="Continue"
               class="mb-1 mr-1 ml-1 w-full"
               @click="hideWelcomeScreen"
+              data-test="close-welcome-screen"
             />
           </div>
         </div>
