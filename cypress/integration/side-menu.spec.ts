@@ -4,6 +4,7 @@ const port = 8082;
 
 describe('Tests each option of the side menu', () => {
     beforeEach(() => {
+        cy.viewport(360, 640)
         cy.visit('http://localhost:' + port)
     })
 

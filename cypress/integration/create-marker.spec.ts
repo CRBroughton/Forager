@@ -4,6 +4,7 @@ const port = 8082;
 
 describe('Tests the creation and deletion of Markers', () => {
     beforeEach(() => {
+        cy.viewport(360, 640)
         cy.visit('http://localhost:' + port)
     })
 

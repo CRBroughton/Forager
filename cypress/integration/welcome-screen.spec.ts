@@ -4,6 +4,7 @@ const port = 8082;
 
 describe('Tests the welcome screen component and selects a location', () => {
     beforeEach(() => {
+        cy.viewport(360, 640)
         cy.visit('http://localhost:' + port)
     })
 
