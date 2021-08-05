@@ -30,16 +30,19 @@
               title="Delete Marker"
               class="mb-1 mr-1 ml-1 w-full"
               @click="deleteMarker"
+              data-test="marker-delete"
             />
             <MyButton
               title="Forage Now"
               class="mb-1 mr-1 ml-1 w-full"
               @click="updateForage"
+              data-test="marker-forage"
             />
             <MyButton
               title="Close"
               class="mb-1 mr-1 ml-1 w-full"
               @click="closeMarkerPopup"
+              data-test="marker-close"
             />
           </div>
         </div>

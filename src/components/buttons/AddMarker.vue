@@ -7,10 +7,11 @@
           class="w-full flex my-5 py-3 shadow-xl border-gray-200 border cursor-pointer outline-none focus:outline-none text-center rounded-xl focus:ring-2 focus:ring-gray-400"
           placeholder="Please Enter Object Name"
           v-model="input"
+          data-test="input-marker-title"
         />
       </div>
       <div class="flex m-auto w-full justify-center">
-        <MyButton title="Create" class="mb-1 mr-1" @click="createMarker" />
+        <MyButton title="Create" class="mb-1 mr-1" @click="createMarker" data-test="create-marker" />
         <MyButton title="Cancel" class="mb-1 mr-1" @click="hidePopup" />
       </div>
     </div>

@@ -75,6 +75,7 @@
         v-for="marker in markers"
         :key="marker.id"
         :lat-lng="marker"
+        data-test="marker"
       >
         <l-tooltip
           :options="{
