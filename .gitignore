@@ -24,3 +24,8 @@ pnpm-debug.log*
 
 # Storybook
 .storybook
+
+# Cypress
+cypress/integration/1-getting-started
+cypress/integration/2-advanced-examples
+

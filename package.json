@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "tailwind-config-viewer": "npx tailwind-config-viewer -o"
+    "tailwind-config-viewer": "npx tailwind-config-viewer -o",
+    "cypress": "npx cypress open"
   },
   "dependencies": {
     "@tailwindcss/postcss7-compat": "^2.0.2",
