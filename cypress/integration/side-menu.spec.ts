@@ -32,4 +32,24 @@ describe('Tests each option of the side menu', () => {
         cy.get('[data-test=marker-delete]').click()
     })
 
+    it('Creates a test Marker, and then searches for that Marker', () => {
+        cy.get('[data-test=map]').click('center')
+        cy.get('[data-test=input-marker-title]').type('marker-title')
+        cy.get('[data-test=create-marker]').click()
+
+        cy.get('[data-test=sidemenu-toggle-open]').click()
+        cy.get('[data-test=sidemenu-enable-search]').click()
+
+        cy.get('[data-test=search-input]').type('marker-title')
+        cy.get('[data-test=search-results]').should('contain', 'Never Foraged')
+
+        // Closes search and deletes the marker
+        cy.get('[data-test=search-cancel]').click()
+        cy.get('[data-test=sidemenu-enable-search]').click()
+
+        cy.get('.leaflet-marker-icon').click()
+        cy.get('[data-test=marker-delete]').click()
+
+    })
+
 })
