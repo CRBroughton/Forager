@@ -12,7 +12,7 @@
       </div>
       <div class="flex m-auto w-full justify-center">
         <MyButton title="Create" class="mb-1 mr-1" @click="createMarker" data-test="create-marker" />
-        <MyButton title="Cancel" class="mb-1 mr-1" @click="hidePopup" />
+        <MyButton title="Cancel" class="mb-1 mr-1" @click="hidePopup" data-test="create-marker-close" />
       </div>
     </div>
   </div>

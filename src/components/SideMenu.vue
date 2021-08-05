@@ -2,6 +2,7 @@
   <div v-if="sideMenuHidden" class="top-2 right-2 w-50 flex">
     <div
       @click="toggleSideMenu"
+      data-test="sidemenu-toggle-open"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
       <svg
@@ -23,6 +24,7 @@
   <div v-else class="top-2 right-2 w-50 flex">
     <div
       @click="toggleSideMenu"
+      data-test="sidemenu-toggle-close"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
       <svg
@@ -42,6 +44,7 @@
     </div>
     <div
       @click="showOptions"
+      data-test="sidemenu-show-options"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
       <svg
@@ -67,6 +70,7 @@
     </div>
     <div
       @click="returnHome"
+      data-test="sidemenu-return-home"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
       <svg
@@ -87,6 +91,7 @@
     <div
       v-if="tooltipVisible"
       @click="hideTooltips"
+      data-test="sidemenu-toggle-tooltips-off"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
       <svg
@@ -107,6 +112,7 @@
     <div
       v-else
       @click="hideTooltips"
+      data-test="sidemenu-toggle-tooltips-on"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
       <svg
@@ -126,6 +132,7 @@
     </div>
     <div
       @click="enableSearch"
+      data-test="sidemenu-enable-search"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 cursor-pointer"
       :class="searchMode && active"
     >
@@ -146,6 +153,7 @@
     </div>
     <div
       @click="enablePathFinder"
+      data-test="sidemenu-enable-pathfinder"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 cursor-pointer"
       :class="pathFinderMode && active"
     >
@@ -166,6 +174,7 @@
     </div>
     <div
       @click="donate"
+      data-test="sidemenu-show-donation"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
       <svg
