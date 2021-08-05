@@ -52,4 +52,21 @@ describe('Tests each option of the side menu', () => {
 
     })
 
+    it('Opens the donation panel, and then closes it', () => {
+        cy.get('[data-test=sidemenu-toggle-open]').click()
+        cy.get('[data-test=sidemenu-show-donation]').click()
+
+        cy.get('[data-test=donation-close]').click()
+    })
+
+    it('Opens the donation panel, goes to paypal and back into the app', () => {
+        cy.get('[data-test=sidemenu-toggle-open]').click()
+        cy.get('[data-test=sidemenu-show-donation]').click()
+        cy.get('[data-test=paypal]').click()
+
+        cy.url().should('include', 'paypal')
+
+        cy.go('back')
+    })
+
 })

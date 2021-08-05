@@ -30,6 +30,7 @@
                 title="Paypal"
                 url="https://paypal.com"
                 :image="paypalImage"
+                data-test="paypal"
               />
             </div>
             <div
@@ -69,6 +70,7 @@
                 title="Close"
                 class="mb-1 mr-1 ml-1 w-full"
                 @click="hideDonationScreen"
+                data-test="donation-close"
               />
             </div>
           </div>
