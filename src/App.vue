@@ -11,6 +11,7 @@
     id="locationselector"
     v-if="Object.keys(home).length === 0"
   />
+  <PWAUpdate id="pwa-update" />
   <transition name="shortFade">
     <search id="search" />
   </transition>
@@ -113,6 +114,7 @@ import DistanceViewer from "./components/DistanceViewer.vue";
 import MarkerPopup from "./components/MarkerPopup.vue";
 import DonationPopup from "@/components/DonationPopup.vue";
 import Search from "@/components/Search.vue";
+import PWAUpdate from "@/components/buttons/PWAUpdate.vue";
 
 import { toggleOptions, optionsVisible } from "./functions/OptionsMenu";
 import {
@@ -184,6 +186,7 @@ export default {
     MarkerPopup,
     DonationPopup,
     Search,
+    PWAUpdate,
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup() {
@@ -297,7 +300,8 @@ body,
   z-index: 3000;
   position: absolute;
 }
-#welcomescreen {
+#welcomescreen,
+#pwa-update {
   z-index: 5000;
   position: absolute;
 }

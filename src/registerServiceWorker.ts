@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 
 import { register } from "register-service-worker";
+import { applyUpdate, updateFound } from "@/functions/App";
 
 if (process.env.NODE_ENV === "production") {
   register(`${process.env.BASE_URL}service-worker.js`, {
@@ -18,13 +19,13 @@ if (process.env.NODE_ENV === "production") {
     },
     updatefound() {
       console.log("New content is downloading.");
+      updateFound.value = true;
     },
     updated(registration) {
-      if (window.confirm("A new version is available, update now?")) {
+      if (applyUpdate) {
         const worker = registration.waiting;
         worker.postMessage({ action: "SKIP_WAITING" });
-        // refresh the page or trigger a refresh programatically!
-        window.location.reload(true);
+        applyUpdate.value = false;
       }
     },
     offline() {
@@ -37,3 +38,5 @@ if (process.env.NODE_ENV === "production") {
     },
   });
 }
+
+export { updateFound, applyUpdate }

@@ -10,6 +10,9 @@ const deleteVisible = ref<boolean>(false);
 const path = ref<any>();
 const version = ref<string>("1.0.6");
 
+const updateFound = ref<boolean>(false);
+const applyUpdate = ref<boolean>(false);
+
 const showConsoleVersion = () => {
   console.log("%c Forager Version " + version.value + " ", "background-color:black");
 };
@@ -57,4 +60,6 @@ export {
   getGPS,
   showConsoleVersion,
   delay,
+  updateFound,
+  applyUpdate,
 };
