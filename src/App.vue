@@ -79,6 +79,7 @@
         data-test="marker"
       >
         <l-tooltip
+          data-test="marker-tooltip"
           :options="{
             permanent: true,
             interactive: false,

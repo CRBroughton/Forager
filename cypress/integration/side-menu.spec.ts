@@ -10,6 +10,9 @@ describe('Tests each option of the side menu', () => {
 
     it('Opens up the side menu', () => {
         cy.get('[data-test=sidemenu-toggle-open]').click()
+        
+        //checks the side menu is open
+        cy.get('[data-test=sidemenu-toggle-close]').should('exist');
     })
 
     it('Moves the user and returns the to the home location', () => {
@@ -24,9 +27,19 @@ describe('Tests each option of the side menu', () => {
         cy.get('[data-test=input-marker-title]').type('marker-title')
         cy.get('[data-test=create-marker]').click()
 
+        //checks to see if the marker exists
+        cy.get('[data-test=map]').should('contain', 'marker-title')
+
         cy.get('[data-test=sidemenu-toggle-open]').click()
         cy.get('[data-test=sidemenu-toggle-tooltips-off]').click()
+
+        //checks the tooltips are hidden
+        cy.get('[data-test=map]').should('not.contain', 'Never Foraged')
+
         cy.get('[data-test=sidemenu-toggle-tooltips-on]').click()
+
+        //checks the tooltips are shown
+        cy.get('[data-test=map]').should('contain', 'Never Foraged')
 
         cy.get('.leaflet-marker-icon').click()
         cy.get('[data-test=marker-delete]').click()
@@ -55,6 +68,9 @@ describe('Tests each option of the side menu', () => {
     it('Opens the donation panel, and then closes it', () => {
         cy.get('[data-test=sidemenu-toggle-open]').click()
         cy.get('[data-test=sidemenu-show-donation]').click()
+
+        //checks to see if the donation page opened successfully
+        cy.get('[data-test=donation-close').should('contain', 'Close')
 
         cy.get('[data-test=donation-close]').click()
     })
