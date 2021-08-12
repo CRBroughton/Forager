@@ -17,5 +17,8 @@ describe('Tests the welcome screen component and selects a location', () => {
         cy.get("[data-test=close-welcome-screen]").click()
 
         cy.get('[data-test=map]').click('center')
+
+        //checks that the welcome screen has been closed
+        cy.get('[data-test=map]').should('not.contain', '[data-test=welcome-screen');
     })
 })
