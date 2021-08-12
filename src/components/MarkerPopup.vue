@@ -1,7 +1,7 @@
 <template>
   <div
     class="w-full bottom-0 flex flex-wrap content-end sm:p-2 p-2"
-    v-if="markerPopupVisible"
+    v-if="markerPopupVisible" data-test="marker-popup"
   >
     <div
       class="w-full m-auto max-w-screen-md flex flex-col bg-gray-100 rounded-2xl shadow-2xl"
