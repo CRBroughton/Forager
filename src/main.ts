@@ -1,23 +1,17 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import "./registerServiceWorker";
-import "./index.css";
+import { createApp } from 'vue'
+import App from './App.vue'
 
-import {
-  LMap,
-  LTileLayer,
-  LMarker,
-  LTooltip,
-  LPolyline,
-} from "@vue-leaflet/vue-leaflet";
-import "leaflet/dist/leaflet.css";
+import './index.css'
 
-const app = createApp(App);
+// async function boot() {
+//   // eslint-disable-next-line n/prefer-global/process
+//   if (process.env.NODE_ENV === 'development') {
+//     const { worker } = await import('./mocks/browser')
+//     await worker.start()
+//   }
+// }
 
-app.component("l-map", LMap);
-app.component("l-tile-layer", LTileLayer);
-app.component("l-marker", LMarker);
-app.component("l-tooltip", LTooltip);
-app.component("l-polyline", LPolyline);
-
-app.mount("#app");
+const app = createApp(App)
+// boot().then(() => {
+app.mount('#app')
+// })

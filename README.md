@@ -1,54 +1,50 @@
-# Forager
+# My Vite Template
 
-Forager is a web based application for mapping publicly accessible foods. Forager is currently in early development, and has basic functionality.
+This is my Vite template, which includes:
 
-Forager utilises the below software stack:
-
-- [Vue 3](https://v3.vuejs.org/)
-- [Tailwind](https://tailwindcss.com/)
-- [Leaflet](https://leafletjs.com/)
-- [Localbase](https://github.com/dannyconnell/localbase)
-- [Workbox](https://developers.google.com/web/tools/workbox)
-
-Forager utilises [Workbox](https://developers.google.com/web/tools/workbox) to cache map images and the entire app on your device. For offline use, please ensure you have a minimum of 2GB as Forager will store a maximum of 100 map images on your device, and that you have already cached the desired map data. 
-
-Please note that if you exceed the cache limit, previously cached map data will be automatically deleted from your device. 
-
-To re-cache map data, simply be online and load the desired map location.
-
-Uncached maps will simply show a gray screen.
-
-All pinned locations are stored locally on your device using [Localbase](https://github.com/dannyconnell/localbase).
+- Vite
+- Vue 3.2
+- Vitest
+- VueUse
+- Typescript
+- MSW
+- ESLint (antfu/eslint-config)
+- unplugin-vue-components
+- unplugin-auto-import
+- vite-plugin-pwa
+- TailwindCSS
+- SASS
+- @/ Alias
 
 ## Installation
 
-Forager is a Progressive Web Application, and therefore can be installed via any browser. The URL for the live version is:
+It's recommended to use pnpm to install this template:
 
-[https://forager.crbroughton.me](https://forager.crbroughton.me)
-
-## Known bugs
-
-- Select location popup briefly appears during startup.
-
-## Project setup
 ```
-npm install
+pnpm i
 ```
 
-### Compiles and hot-reloads for development
+To use the dockerisation of this template first install your dependencies as normal, then run:
+
 ```
-npm run serve
+docker compose up -d
 ```
 
-### Compiles and minifies for production
+which will expose the docker container on port 4000. You'll no longer have to run `npm run dev`
+
+## Checking For Updates
+
+This template is regularly updated, however if you need to manually update a package, use the `pnpm:check` script, or run the below command:
+
 ```
-npm run build
+NPM_CHECK_INSTALLER=pnpm npm-check -u
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Recommended Extensions
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+I've included all the extensions I use on a daily basis. Feel free to disable
+or not install any that you feel you wouldn't use.
+
+## Type Support For `.vue` Imports in TS
+
+Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.

@@ -1,7 +1,12 @@
+<script  setup lang="ts">
+import { ref } from 'vue'
+
+const sideMenuHidden = ref(false)
+</script>
+
 <template>
-  <div v-if="sideMenuHidden" class="top-2 right-2 w-50 flex">
+  <div v-if="sideMenuHidden" class="absolute top-2 right-2 w-50 flex">
     <div
-      @click="toggleSideMenu"
       data-test="sidemenu-toggle-open"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
@@ -21,9 +26,8 @@
       </svg>
     </div>
   </div>
-  <div v-else class="top-2 right-2 w-50 flex">
+  <div v-else class="absolute top-2 right-2 w-50 flex flex-col">
     <div
-      @click="toggleSideMenu"
       data-test="sidemenu-toggle-close"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
@@ -43,7 +47,6 @@
       </svg>
     </div>
     <div
-      @click="showOptions"
       data-test="sidemenu-show-options"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
@@ -69,7 +72,6 @@
       </svg>
     </div>
     <div
-      @click="returnHome"
       data-test="sidemenu-return-home"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
@@ -89,8 +91,6 @@
       </svg>
     </div>
     <div
-      v-if="tooltipVisible"
-      @click="hideTooltips"
       data-test="sidemenu-toggle-tooltips-off"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
@@ -109,9 +109,8 @@
         />
       </svg>
     </div>
-    <div
+    <!-- <div
       v-else
-      @click="hideTooltips"
       data-test="sidemenu-toggle-tooltips-on"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
@@ -129,12 +128,10 @@
           d="M7 12m5 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
         />
       </svg>
-    </div>
+    </div> -->
     <div
-      @click="enableSearch"
       data-test="sidemenu-enable-search"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 cursor-pointer"
-      :class="searchMode && active"
     >
       <svg
         class="w-6 h-6 text-gray-500"
@@ -148,14 +145,12 @@
           stroke-linejoin="round"
           stroke-width="2"
           d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-        ></path>
+        />
       </svg>
     </div>
     <div
-      @click="enablePathFinder"
       data-test="sidemenu-enable-pathfinder"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 cursor-pointer"
-      :class="pathFinderMode && active"
     >
       <svg
         class="w-6 h-6 text-gray-500"
@@ -173,7 +168,6 @@
       </svg>
     </div>
     <div
-      @click="donate"
       data-test="sidemenu-show-donation"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
     >
@@ -194,66 +188,5 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import { ref } from "@vue/reactivity";
-import { defineComponent } from "@vue/runtime-core";
-import { pathFinderMode, enablePathFinder } from "@/functions/Pathfinder";
-import { donationPopupVisible, tooltipVisible } from "@/functions/SideMenu";
-import { searchMode, enableSearch } from "../functions/Search";
-import { optionsVisible } from "@/functions/OptionsMenu"
-
-export default defineComponent({
-  emits: ["returnHome", "hideTooltips", "showOptions", "enablePathFinder"],
-  setup(__, { emit }) {
-    const active = "border-red-500 border-2";
-    const sideMenuHidden = ref<boolean>(true);
-
-    const donate = () => {
-      optionsVisible.value = false;
-      donationPopupVisible.value = !donationPopupVisible.value;
-    };
-
-    const returnHome = () => {
-      emit("returnHome");
-      console.log("Returning Home...");
-    };
-
-    const hideTooltips = () => {
-      tooltipVisible.value = !tooltipVisible.value;
-      emit("hideTooltips");
-    };
-
-    const showOptions = () => {
-      emit("showOptions");
-    };
-
-    const notWorking = () => {
-      alert("Feature not yet implemented");
-    };
-
-    const toggleSideMenu = () => {
-      sideMenuHidden.value = !sideMenuHidden.value;
-    };
-
-    return {
-      donate,
-      returnHome,
-      hideTooltips,
-      showOptions,
-      notWorking,
-      enablePathFinder,
-      toggleSideMenu,
-      sideMenuHidden,
-      active,
-      pathFinderMode,
-      donationPopupVisible,
-      tooltipVisible,
-      searchMode,
-      enableSearch,
-    };
-  },
-});
-</script>
 
 <style scoped></style>
