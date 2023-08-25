@@ -31,11 +31,11 @@ export function mapBoxStore(vars?: Mapbox) {
       const { createItem } = usePocketBase()
 
       await createItem({
-        date: new Date().toDateString(),
-        lastForaged: new Date().toDateString(),
+        date: new Date().toISOString(),
+        lastForaged: new Date().toISOString(),
         lng: e.lngLat.lng,
         lat: e.lngLat.lat,
-        name: 'test',
+        name: 'date-test',
       })
 
       new mapboxgl.Marker()
