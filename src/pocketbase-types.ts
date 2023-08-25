@@ -36,6 +36,8 @@ export type ItemsRecord = {
 	date?: IsoDateString
 	lastForaged?: IsoDateString
 	field?: RecordIdString[]
+	lng?: number
+	lat?: number
 }
 
 export type UsersRecord = {

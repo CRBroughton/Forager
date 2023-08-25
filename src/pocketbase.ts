@@ -12,6 +12,7 @@ interface healthCheckResponse {
 
 export function usePocketBase() {
   const health = ref<healthCheckResponse>()
+  const items = ref<ItemsRecord[]>()
 
   const getHealth = async () => {
     try {
@@ -24,8 +25,34 @@ export function usePocketBase() {
     }
   }
 
+  const getItems = async () => {
+    try {
+      const response = await pb.collection('items').getFullList<ItemsRecord>()
+
+      items.value = response
+    }
+    catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
+  }
+
+  const createItem = async (data: ItemsRecord) => {
+    try {
+      await pb.collection('items').create(data)
+      await getItems()
+    }
+    catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
+  }
+
   return {
     health,
+    items,
     getHealth,
+    getItems,
+    createItem,
   }
 }

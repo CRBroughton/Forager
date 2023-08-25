@@ -3,15 +3,18 @@ import type { LngLatLike } from 'mapbox-gl'
 import { mapBoxStore } from './mapbox'
 
 const home: LngLatLike = [-0.12142408441471342, 50.840021634508254]
-const { initMapbox } = mapBoxStore({ home, container: 'map' })
+const { addMarker, addinitMarkers, initMapbox } = mapBoxStore({ home, container: 'map' })
 
 onMounted(() => {
   initMapbox()
+  addinitMarkers()
 })
 </script>
 
 <template>
-  <div id="map" />
+  <div
+    id="map" @click="addMarker()"
+  />
   <ServerHealth />
   <SideMenu />
 </template>
