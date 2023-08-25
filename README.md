@@ -1,50 +1,62 @@
-# My Vite Template
+# Forager
 
-This is my Vite template, which includes:
+Forager is a web based application for mapping publicly accessible foods. Forager is currently in early development, and has basic functionality.
 
-- Vite
-- Vue 3.2
-- Vitest
-- VueUse
-- Typescript
-- MSW
-- ESLint (antfu/eslint-config)
-- unplugin-vue-components
-- unplugin-auto-import
-- vite-plugin-pwa
-- TailwindCSS
-- SASS
-- @/ Alias
+Forager utilises the below software stack:
+
+- [Vue 3](https://v3.vuejs.org/)
+- [Tailwind](https://tailwindcss.com/)
+- [Mapbox](https://www.mapbox.com/)
+- [Pocketbase](https://github.com/pocketbase/pocketbase)
+- [Workbox](https://developers.google.com/web/tools/workbox)
+
+All pinned locations are stored via [Pocketbase](https://github.com/pocketbase/pocketbase).
+
 
 ## Installation
 
-It's recommended to use pnpm to install this template:
+Regardless of installation method, Forager requires a [Mapbox](https://www.mapbox.com/) API key.
 
+Forager is released as a single binary file, making installation easy. Simply
+download the binary for your architecture of choice and run the binary
+(optionally, move the binary into a $PATH DIR). 
+
+### Build from source
+
+Building from source requires:
+
+- both an active Mapbox account and API key
+- A Pocketbase server
+
+Dependant on your operating system's architecture, download the latest release of
+[Pocketbase](https://github.com/pocketbase/pocketbase) and extract the executable
+into the db folder. When running `ppnpm run pocketbase:serve` for the first time,
+the database migrations will ensure the correct tables are created.
+
+## Live Version
+
+Forager is a Progressive Web Application, and therefore can be installed via any browser. The URL for the live version is:
+
+[https://forager.crbroughton.me](https://forager.crbroughton.me)
+
+Please note that this live version may have restrictions during active development.
+
+## Project setup
 ```
 pnpm i
 ```
 
-To use the dockerisation of this template first install your dependencies as normal, then run:
-
+### Compiles and hot-reloads for front-end development
 ```
-docker compose up -d
-```
-
-which will expose the docker container on port 4000. You'll no longer have to run `npm run dev`
-
-## Checking For Updates
-
-This template is regularly updated, however if you need to manually update a package, use the `pnpm:check` script, or run the below command:
-
-```
-NPM_CHECK_INSTALLER=pnpm npm-check -u
+pnpm run dev
 ```
 
-## Recommended Extensions
+### Runs the backend server
+```
+pnpm run pocketbase:serve
+```
 
-I've included all the extensions I use on a daily basis. Feel free to disable
-or not install any that you feel you wouldn't use.
-
-## Type Support For `.vue` Imports in TS
-
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+### Compiles and minifies for production
+```
+pnpm run build
+```
