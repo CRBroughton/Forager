@@ -12,6 +12,7 @@ onMounted(() => {
 
 <template>
   <div id="map" />
+  <ServerHealth />
   <SideMenu />
 </template>
 

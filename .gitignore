@@ -7,3 +7,5 @@ dev-dist
 coverage
 src.bk
 public.bk
+db/pocketbase
+db/pb_data

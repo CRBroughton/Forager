@@ -11,11 +11,14 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "pocketbase:serve": "./db/pocketbase serve",
+    "pocketbase:types": "npx pocketbase-typegen --db ./db/pb_data/data.db --out ./src/pocketbase-types.ts"
   },
   "dependencies": {
     "@vueuse/core": "10.3.0",
     "mapbox-gl": "^2.15.0",
+    "pocketbase": "^0.16.0",
     "vue": "3.3.4"
   },
   "devDependencies": {
@@ -34,6 +37,7 @@
     "http-server": "14.1.1",
     "msw": "1.2.4",
     "npm-check": "6.0.1",
+    "pocketbase-typegen": "^1.1.12",
     "postcss": "8.4.28",
     "sass": "1.66.1",
     "tailwindcss": "3.3.3",
