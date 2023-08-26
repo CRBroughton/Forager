@@ -124,6 +124,20 @@ export function mapBoxStore(vars?: Mapbox) {
         },
       })
     })
+
+    const { items, getItems } = usePocketBase()
+    await getItems()
+
+    items.value?.forEach((item) => {
+      return new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        closeOnMove: false,
+        offset: 8,
+      }).setLngLat([item.lng!, item.lat!])
+        .setHTML(`<h3>${item.name}</h3>`)
+        .addTo(map!)
+    })
   }
 
   const addMarker = async () => {

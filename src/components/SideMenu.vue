@@ -6,7 +6,7 @@ import { mapBoxStore } from '@/mapbox'
 const { returnHome } = mapBoxStore()
 const home: LngLatLike = [-0.12142408441471342, 50.840021634508254]
 
-const sideMenuHidden = ref(false)
+const sideMenuHidden = ref(true)
 </script>
 
 <template>
@@ -14,6 +14,7 @@ const sideMenuHidden = ref(false)
     <div
       data-test="sidemenu-toggle-open"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
+      @click="sideMenuHidden = !sideMenuHidden"
     >
       <svg
         class="w-6 h-6 text-gray-500"
@@ -35,6 +36,7 @@ const sideMenuHidden = ref(false)
     <div
       data-test="sidemenu-toggle-close"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
+      @click="sideMenuHidden = !sideMenuHidden"
     >
       <svg
         class="w-6 h-6 text-gray-500"
