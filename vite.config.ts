@@ -16,17 +16,17 @@ export default defineConfig({
     Vue(),
     Components({ dts: true }),
     VitePWA({
-      registerType: 'prompt',
+      registerType: 'autoUpdate',
       devOptions: {
         enabled: true,
         type: 'module',
       },
       manifest: {
-        name: '<Application Name>',
-        short_name: '<Application Short Name >',
+        name: 'Forager',
+        short_name: 'Forager',
         theme_color: '#1976d2',
         background_color: '#fafafa',
-        display: 'standalone',
+        display: 'fullscreen',
         scope: './',
         start_url: './',
         icons: [
