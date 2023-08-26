@@ -81,6 +81,22 @@ export function mapBoxStore(vars?: Mapbox) {
           'circle-stroke-color': '#fff',
         },
       })
+
+      // Add label layer
+      map?.addLayer({
+        id: 'marker-labels',
+        type: 'symbol',
+        source: 'items',
+        layout: {
+          'text-field': ['get', 'description'],
+          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+          'text-variable-anchor': ['top'],
+          'text-radial-offset': 0.5,
+          'text-justify': 'auto',
+          'icon-image': ['get', 'icon'],
+        },
+      })
+
       // Add clustering layer
       map?.addLayer({
         id: 'clusters',
@@ -124,20 +140,6 @@ export function mapBoxStore(vars?: Mapbox) {
         },
       })
     })
-
-    const { items, getItems } = usePocketBase()
-    await getItems()
-
-    items.value?.forEach((item) => {
-      return new mapboxgl.Popup({
-        closeButton: false,
-        closeOnClick: false,
-        closeOnMove: false,
-        offset: 8,
-      }).setLngLat([item.lng!, item.lat!])
-        .setHTML(`<h3>${item.name}</h3>`)
-        .addTo(map!)
-    })
   }
 
   const addMarker = async () => {
@@ -157,8 +159,6 @@ export function mapBoxStore(vars?: Mapbox) {
 
       await createItem(newItem)
 
-      items.value?.push(newItem)
-
       // Get the GeoJSON source by ID
       const source = map?.getSource('items') as mapboxgl.GeoJSONSource
 
@@ -173,15 +173,6 @@ export function mapBoxStore(vars?: Mapbox) {
         type: 'FeatureCollection',
         features: itemLayer.value,
       })
-
-      return new mapboxgl.Popup({
-        closeButton: false,
-        closeOnClick: false,
-        closeOnMove: false,
-        offset: 8,
-      }).setLngLat([newItem.lng!, newItem.lat!])
-        .setHTML(`<h3>${newItem.name}</h3>`)
-        .addTo(map!)
     })
   }
 
