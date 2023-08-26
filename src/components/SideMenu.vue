@@ -1,12 +1,16 @@
 <script  setup lang="ts">
 import { ref } from 'vue'
-import type { LngLatLike } from 'mapbox-gl'
 import { mapBoxStore } from '@/mapbox'
 import { usePocketBase } from '@/pocketbase'
 
+// For default values for your props, use :
+// withDefaults(defineProps<Props>(), { msg: 'myDefaultValue' })}
+interface Props {
+  openSettings: () => void
+}
+const props = defineProps<Props>()
 const { returnHome } = mapBoxStore()
 const { logout } = usePocketBase()
-const home: LngLatLike = [-0.12142408441471342, 50.840021634508254]
 
 const sideMenuHidden = ref(true)
 </script>
@@ -55,9 +59,10 @@ const sideMenuHidden = ref(true)
         />
       </svg>
     </div>
-    <!-- <div
+    <div
       data-test="sidemenu-show-options"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
+      @click="props.openSettings"
     >
       <svg
         class="w-6 h-6 text-gray-500"
@@ -79,11 +84,11 @@ const sideMenuHidden = ref(true)
           d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
         />
       </svg>
-    </div> -->
+    </div>
     <div
       data-test="sidemenu-return-home"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
-      @click="returnHome(home)"
+      @click="returnHome()"
     >
       <svg
         class="w-6 h-6 text-gray-500"

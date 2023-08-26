@@ -10,6 +10,7 @@ declare module 'vue' {
     AddMarker: typeof import('./src/components/AddMarker.vue')['default']
     BaseButton: typeof import('./src/components/BaseButton.vue')['default']
     ServerHealth: typeof import('./src/components/ServerHealth.vue')['default']
+    SettingsMenu: typeof import('./src/components/settingsMenu.vue')['default']
     SideMenu: typeof import('./src/components/SideMenu.vue')['default']
   }
 }

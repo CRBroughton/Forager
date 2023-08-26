@@ -73,7 +73,6 @@ export default defineConfig({
       imports: [
         // presets
         'vue',
-        'vue-router',
         '@vueuse/core',
         'vitest',
       ],
@@ -83,11 +82,6 @@ export default defineConfig({
   resolve: {
     alias: [
       { find: '@', replacement: '/src' },
-    ],
-  },
-  optimizeDeps: {
-    include: [
-      'vue-router',
     ],
   },
 })

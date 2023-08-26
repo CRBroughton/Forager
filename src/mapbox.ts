@@ -187,8 +187,10 @@ export function mapBoxStore(vars?: Mapbox) {
     })
   }
 
-  const returnHome = (home: LngLatLike) => {
-    map?.flyTo({ center: home })
+  const returnHome = () => {
+    const { user } = usePocketBase()
+
+    map?.flyTo({ center: [user.value?.lng, user.value?.lat] })
   }
 
   return {

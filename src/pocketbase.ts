@@ -1,5 +1,5 @@
 import PocketBase from 'pocketbase'
-import type { ItemsRecord } from './pocketbase-types'
+import type { ItemsRecord, UsersRecord } from './pocketbase-types'
 
 export const isError = (err: unknown): err is Error => err instanceof Error
 
@@ -54,14 +54,20 @@ export function usePocketBase() {
     }
   }
 
-  // const getUserLngLat = async () => {
-  //   try {
-  //     const response = await pb.collection('users').getOne()
-  //   }
-  //   catch (error: unknown) {
-  //     console.log(error)
-  //   }
-  // }
+  const setUserLngLat = async () => {
+    try {
+      if (user.value && user.value.lat && user.value.lng) {
+        await pb.collection('users').update<UsersRecord>(user.value!.id, {
+          lng: user.value.lng,
+          lat: user.value.lat,
+        })
+      }
+    }
+    catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
+  }
 
   const getItems = async () => {
     try {
@@ -99,5 +105,6 @@ export function usePocketBase() {
     getHealth,
     getItems,
     createItem,
+    setUserLngLat,
   }
 }

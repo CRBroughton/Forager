@@ -3,9 +3,12 @@ import type { LngLatLike } from 'mapbox-gl'
 import { provideMapboxStore } from './mapbox'
 import { usePocketBase } from './pocketbase'
 
-const home: LngLatLike = [-0.12142408441471342, 50.840021634508254]
-const { initMapbox, moveToSelectedPosition, addMarkersOnLogin } = provideMapboxStore({ home, container: 'map' })
 const { pb, refresh, user, username, password, login } = usePocketBase()
+const home: LngLatLike = [
+  user.value?.lng ?? 0,
+  user.value?.lat ?? 0,
+]
+const { initMapbox, moveToSelectedPosition, addMarkersOnLogin } = provideMapboxStore({ home, container: 'map' })
 
 onMounted(async () => {
   await initMapbox()
@@ -27,6 +30,16 @@ function hideAddMarker() {
   markerUIHidden.value = true
 }
 
+const settingsMenu = ref(false)
+
+function closeSettingsMenu() {
+  settingsMenu.value = false
+}
+
+function openSettingsMenu() {
+  settingsMenu.value = true
+}
+
 async function loginInUser() {
   await login()
   await addMarkersOnLogin()
@@ -38,8 +51,11 @@ async function loginInUser() {
     <div
       id="map" @click="showAddMarker()"
     />
+    <SettingsMenu v-if="settingsMenu" @close="closeSettingsMenu" />
     <ServerHealth />
-    <SideMenu />
+    <SideMenu
+      :open-settings="openSettingsMenu"
+    />
     <AddMarker :hidden="markerUIHidden" @hide="hideAddMarker" />
   </div>
   <div v-if="!user" class="login">
