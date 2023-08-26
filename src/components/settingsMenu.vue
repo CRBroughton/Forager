@@ -24,7 +24,7 @@ const { user, setUserLngLat } = usePocketBase()
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .settings {
     width: 100%;
     height: 100%;
@@ -42,9 +42,26 @@ const { user, setUserLngLat } = usePocketBase()
     justify-content: center;
     align-items: center;
     height: 100vh;
+    max-width: 500px;
+    margin: 0 auto;
+    padding-inline: 1em;
 }
 
 input {
     height: 30px;
+    padding: 1em;
+    border-radius: 10px;
+    width: 100%;
+}
+
+button {
+  background: white;
+  padding: 1em 1.2em;
+  border-radius: 15px;
+  width: 100%;
+
+  &:hover {
+    background: rgb(240, 240, 240);
+  }
 }
 </style>

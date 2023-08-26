@@ -43,6 +43,7 @@ function openSettingsMenu() {
 async function loginInUser() {
   await login()
   await addMarkersOnLogin()
+  location.reload()
 }
 </script>
 
@@ -59,15 +60,32 @@ async function loginInUser() {
     <AddMarker :hidden="markerUIHidden" @hide="hideAddMarker" />
   </div>
   <div v-if="!user" class="login">
-    <input v-model="username" placeholder="enter username">
-    <input v-model="password" placeholder="enter password">
-    <button class="" @click="loginInUser()">
-      Login
-    </button>
+    <div class="login-inputs">
+      <h1 class="title">
+        Forager
+      </h1>
+      <input v-model="username" class="login-input" placeholder="enter username">
+      <input v-model="password" class="login-input" type="password" placeholder="enter password">
+      <button class="login-button" @click="loginInUser()">
+        Login
+      </button>
+    </div>
   </div>
 </template>
 
 <style>
+.mapboxgl-ctrl-group {
+  position: fixed;
+  top: 0;
+  left: 150px;
+}
+</style>
+
+<style scoped lang="scss">
+.title {
+  font-size: 32px;
+  font-weight: 500;
+}
 #map {
   height: 100vh;
   width: 100%;
@@ -83,9 +101,33 @@ async function loginInUser() {
   left: 0;
 }
 
-.mapboxgl-ctrl-group {
-  position: fixed;
-  top: 0;
-  left: 150px;
+.login-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    max-width: 500px;
+    margin: 0 auto;
+    padding-inline: 1em;
+}
+
+.login-input {
+    height: 30px;
+    padding: 1em;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.login-button {
+  background: white;
+  padding: 1em 1.2em;
+  border-radius: 15px;
+  width: 100%;
+
+  &:hover {
+    background: rgb(240, 240, 240);
+  }
 }
 </style>
