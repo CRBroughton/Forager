@@ -133,6 +133,20 @@ export function mapBoxStore(vars?: Mapbox) {
         'text-size': 12,
       },
     })
+
+    map?.addControl(
+      new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+        },
+
+        trackUserLocation: true,
+        showUserHeading: true,
+        showUserLocation: true,
+        showAccuracyCircle: false,
+
+      }),
+    )
   }
 
   const initMapbox = async () => {
