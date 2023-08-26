@@ -83,7 +83,7 @@ async function loginInUser() {
   left: 0;
 }
 
-.mapboxgl-ctrl {
+.mapboxgl-ctrl-group {
   position: fixed;
   top: 0;
   left: 150px;
