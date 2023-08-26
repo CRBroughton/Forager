@@ -15,6 +15,8 @@ interface Mapbox {
 let map: mapboxgl.Map | undefined
 
 export function mapBoxStore(vars?: Mapbox) {
+  const lng = ref()
+  const lat = ref()
   const translateItemToLayerItem = (items: ItemsRecord[]) => {
     const records = ref<Feature[]>([])
     items?.forEach((item) => {
@@ -142,37 +144,41 @@ export function mapBoxStore(vars?: Mapbox) {
     })
   }
 
-  const addMarker = async () => {
-    // Create a new marker.
-    map?.on('click', async (e: MapMouseEvent) => {
+  const moveToSelectedPosition = () => {
+    map?.on('click', (e: MapMouseEvent) => {
       map?.flyTo({ center: e.lngLat })
+      lng.value = e.lngLat.lng
+      lat.value = e.lngLat.lat
+    })
+  }
 
-      const { items, createItem } = usePocketBase()
+  const addMarker = async (lng: number, lat: number, name: string) => {
+    // Create a new marker.
+    const { items, createItem } = usePocketBase()
 
-      const newItem = {
-        date: new Date().toISOString(),
-        lastForaged: new Date().toISOString(),
-        lng: e.lngLat.lng,
-        lat: e.lngLat.lat,
-        name: 'date-test',
-      }
+    const newItem = {
+      date: new Date().toISOString(),
+      lastForaged: new Date().toISOString(),
+      lng,
+      lat,
+      name,
+    }
 
-      await createItem(newItem)
+    await createItem(newItem)
 
-      // Get the GeoJSON source by ID
-      const source = map?.getSource('items') as mapboxgl.GeoJSONSource
+    // Get the GeoJSON source by ID
+    const source = map?.getSource('items') as mapboxgl.GeoJSONSource
 
-      // Add the new feature to the source's data
+    // Add the new feature to the source's data
 
-      const itemLayer = ref<Feature[]>([])
+    const itemLayer = ref<Feature[]>([])
 
-      if (items.value)
-        itemLayer.value = translateItemToLayerItem(items.value)
+    if (items.value)
+      itemLayer.value = translateItemToLayerItem(items.value)
 
-      source.setData({
-        type: 'FeatureCollection',
-        features: itemLayer.value,
-      })
+    source.setData({
+      type: 'FeatureCollection',
+      features: itemLayer.value,
     })
   }
 
@@ -182,9 +188,24 @@ export function mapBoxStore(vars?: Mapbox) {
 
   return {
     map,
+    lat,
+    lng,
     initMapbox,
+    moveToSelectedPosition,
     addMarker,
     returnHome,
     addinitMarkers,
   }
+}
+
+const storeKey: InjectionKey<ReturnType<typeof mapBoxStore>> = Symbol('mapbox-store')
+
+export function provideMapboxStore(vars?: Mapbox) {
+  const store = mapBoxStore(vars)
+  provide(storeKey, store)
+  return store
+}
+
+export function injectMapboxStore() {
+  return inject(storeKey)!
 }
