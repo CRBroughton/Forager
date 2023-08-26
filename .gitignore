@@ -8,4 +8,5 @@ coverage
 src.bk
 public.bk
 db/pocketbase
+db/forager
 db/pb_data

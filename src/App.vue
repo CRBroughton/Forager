@@ -1,12 +1,20 @@
 <script setup lang="ts">
 import type { LngLatLike } from 'mapbox-gl'
 import { provideMapboxStore } from './mapbox'
+import { usePocketBase } from './pocketbase'
 
 const home: LngLatLike = [-0.12142408441471342, 50.840021634508254]
-const { initMapbox, moveToSelectedPosition } = provideMapboxStore({ home, container: 'map' })
+const { initMapbox, moveToSelectedPosition, addMarkersOnLogin } = provideMapboxStore({ home, container: 'map' })
+const { pb, refresh, user, username, password, login } = usePocketBase()
 
 onMounted(async () => {
   await initMapbox()
+
+  if (pb.authStore.token)
+    refresh()
+
+  if (user)
+    await addMarkersOnLogin()
 })
 
 const markerUIHidden = ref(true)
@@ -18,20 +26,44 @@ function showAddMarker() {
 function hideAddMarker() {
   markerUIHidden.value = true
 }
+
+async function loginInUser() {
+  await login()
+  await addMarkersOnLogin()
+}
 </script>
 
 <template>
-  <div
-    id="map" @click="showAddMarker()"
-  />
-  <ServerHealth />
-  <SideMenu />
-  <AddMarker :hidden="markerUIHidden" @hide="hideAddMarker" />
+  <div>
+    <div
+      id="map" @click="showAddMarker()"
+    />
+    <ServerHealth />
+    <SideMenu />
+    <AddMarker :hidden="markerUIHidden" @hide="hideAddMarker" />
+  </div>
+  <div v-if="!user" class="login">
+    <input v-model="username" placeholder="enter username">
+    <input v-model="password" placeholder="enter password">
+    <button class="" @click="loginInUser()">
+      Login
+    </button>
+  </div>
 </template>
 
 <style>
 #map {
   height: 100vh;
   width: 100%;
+}
+
+.login {
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(20px);
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 </style>

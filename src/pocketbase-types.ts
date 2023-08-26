@@ -35,7 +35,7 @@ export type ItemsRecord = {
 	name?: string
 	date?: IsoDateString
 	lastForaged?: IsoDateString
-	field?: RecordIdString[]
+	owners?: RecordIdString[]
 	lng?: number
 	lat?: number
 }
@@ -43,6 +43,8 @@ export type ItemsRecord = {
 export type UsersRecord = {
 	name?: string
 	avatar?: string
+	lng?: number
+	lat?: number
 }
 
 // Response types include system fields and match responses from the PocketBase API
