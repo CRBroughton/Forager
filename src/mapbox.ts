@@ -173,6 +173,15 @@ export function mapBoxStore(vars?: Mapbox) {
         type: 'FeatureCollection',
         features: itemLayer.value,
       })
+
+      return new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        closeOnMove: false,
+        offset: 8,
+      }).setLngLat([newItem.lng!, newItem.lat!])
+        .setHTML(`<h3>${newItem.name}</h3>`)
+        .addTo(map!)
     })
   }
 
