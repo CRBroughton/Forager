@@ -1,4 +1,4 @@
-import type { GeoJSONSource, LngLatLike, MapMouseEvent } from 'mapbox-gl'
+import type { LngLatLike, MapMouseEvent } from 'mapbox-gl'
 import type { Feature } from 'geojson'
 import mapboxgl from 'mapbox-gl'
 import { usePocketBase } from './pocketbase'
@@ -76,8 +76,8 @@ export function mapBoxStore(vars?: Mapbox) {
         filter: ['!', ['has', 'point_count']],
         paint: {
           'circle-color': '#11b4da',
-          'circle-radius': 4,
-          'circle-stroke-width': 1,
+          'circle-radius': 6,
+          'circle-stroke-width': 2,
           'circle-stroke-color': '#fff',
         },
       })
@@ -106,6 +106,8 @@ export function mapBoxStore(vars?: Mapbox) {
             750,
             40,
           ],
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#fff',
         },
       })
 
