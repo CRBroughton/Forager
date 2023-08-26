@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@antfu/eslint-config': 0.41.0
+  '@types/geojson': ^7946.0.10
   '@types/jest': ^29.5.4
   '@types/mapbox-gl': ^2.7.13
   '@types/node': ^20.5.6
@@ -42,6 +43,7 @@ dependencies:
 
 devDependencies:
   '@antfu/eslint-config': 0.41.0_qj3u6ezxe2airdzjq3nyoxe24m
+  '@types/geojson': 7946.0.10
   '@types/jest': 29.5.4
   '@types/mapbox-gl': 2.7.13
   '@types/node': 20.5.6
