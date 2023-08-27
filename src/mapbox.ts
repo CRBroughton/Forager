@@ -1,7 +1,7 @@
 import type { LngLatLike, MapMouseEvent } from 'mapbox-gl'
 import type { Feature } from 'geojson'
 import mapboxgl from 'mapbox-gl'
-import { injectPocketBaseStore, providePocketBaseStore, usePocketBase } from './pocketbase'
+import { usePocketBase } from './pocketbase'
 import type { ItemsRecord } from './pocketbase-types'
 
 const accessToken = import.meta.env.VITE_MAPBOX_KEY
