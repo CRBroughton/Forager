@@ -8,15 +8,19 @@ interface Props {
 }
 defineProps<Props>()
 
-defineEmits<Emits>()
+const emits = defineEmits<Emits>()
 interface Emits {
   (e: 'create', value: string): void
   (e: 'hide'): void
 }
 
-const { lng, lat, addMarker } = injectMapboxStore()
+const { lng, lat, addMarker, canMove } = injectMapboxStore()
 
 const input = ref('')
+function hide() {
+  canMove.value = true
+  emits('hide')
+}
 </script>
 
 <template>
@@ -33,7 +37,7 @@ const input = ref('')
       </div>
       <div class="flex m-auto w-full justify-center">
         <MyButton title="Create" class="mb-1 mr-1" data-test="create-marker" @click="addMarker(lng, lat, input)" />
-        <MyButton title="Cancel" class="mb-1 mr-1" data-test="create-marker-close" @click="$emit('hide', input)" />
+        <MyButton title="Cancel" class="mb-1 mr-1" data-test="create-marker-close" @click="hide" />
       </div>
     </div>
   </div>

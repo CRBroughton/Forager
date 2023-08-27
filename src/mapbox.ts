@@ -20,6 +20,7 @@ export function mapBoxStore(vars?: Mapbox) {
   const markerUIHidden = ref(true)
   const selectedItem = ref()
   const detailsHidden = ref(true)
+  const canMove = ref(true)
 
   const translateItemToLayerItem = (items: ItemsRecord[]) => {
     const records = ref<Feature[]>([])
@@ -54,10 +55,16 @@ export function mapBoxStore(vars?: Mapbox) {
   }
 
   const moveToSelectedPosition = () => {
+    if (canMove.value === false)
+      return
+
     map?.on('click', (e: MapMouseEvent) => {
-      map?.flyTo({ center: e.lngLat })
-      lng.value = e.lngLat.lng
-      lat.value = e.lngLat.lat
+      if (canMove.value === true) {
+        map?.flyTo({ center: e.lngLat })
+        lng.value = e.lngLat.lng
+        lat.value = e.lngLat.lat
+        canMove.value = false
+      }
     })
   }
 
@@ -170,10 +177,8 @@ export function mapBoxStore(vars?: Mapbox) {
     })
 
     map?.on('click', () => {
-      if (markerUIHidden.value === true)
-        return
-      moveToSelectedPosition()
       markerUIHidden.value = false
+      moveToSelectedPosition()
     })
 
     map?.on('click', 'unclustered-point', async (e) => {
@@ -264,6 +269,7 @@ export function mapBoxStore(vars?: Mapbox) {
     markerUIHidden,
     selectedItem,
     deleteMarker,
+    canMove,
   }
 }
 
