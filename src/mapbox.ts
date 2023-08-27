@@ -170,6 +170,8 @@ export function mapBoxStore(vars?: Mapbox) {
     })
 
     map?.on('click', () => {
+      if (markerUIHidden.value === true)
+        return
       moveToSelectedPosition()
       markerUIHidden.value = false
     })
