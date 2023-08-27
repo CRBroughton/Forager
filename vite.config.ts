@@ -24,7 +24,7 @@ export default defineConfig({
       manifest: {
         name: 'Forager',
         short_name: 'Forager',
-        theme_color: '#24f03f33',
+        theme_color: '#d3fcd9',
         background_color: '#fafafa',
         display: 'standalone',
         scope: './',
