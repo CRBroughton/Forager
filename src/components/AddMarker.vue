@@ -20,7 +20,7 @@ const input = ref('')
 </script>
 
 <template>
-  <div v-if="!hidden" class="absolute bottom-0 w-full p-3">
+  <div v-if="!hidden" class="add-item">
     <div class="max-w-sm flex flex-col m-auto rounded-xl">
       <div class="m-auto items-center w-full">
         <input
@@ -39,4 +39,21 @@ const input = ref('')
   </div>
 </template>
 
-  <style scoped></style>
+<style scoped>
+.add-item {
+    min-width: calc(100% - 2em);
+    height: auto;
+    background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(20px);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 1em;
+    margin-right: 1em;
+    padding: 1em;
+    border-radius: 15px;
+    gap: 1em;
+    display: flex;
+    flex-direction: column;
+}
+</style>
