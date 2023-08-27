@@ -16,6 +16,7 @@ export function usePocketBase() {
   const password = ref('')
   const health = ref<healthCheckResponse>()
   const items = ref<ItemsRecord[]>()
+  const selectedItemPocketbase = ref<ItemsRecord & { id: string }>()
 
   pb.authStore.onChange(() => user.value = pb.authStore.model)
 
@@ -81,9 +82,31 @@ export function usePocketBase() {
     }
   }
 
+  const getSelectedItem = async (selected: string) => {
+    try {
+      // or fetch only the first record that matches the specified filter
+      selectedItemPocketbase.value = await pb.collection('items').getFirstListItem(`name="${selected}"`)
+    }
+    catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
+  }
+
   const createItem = async (data: ItemsRecord) => {
     try {
       await pb.collection('items').create(data)
+      await getItems()
+    }
+    catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
+  }
+
+  const deleteItem = async (id: string) => {
+    try {
+      await pb.collection('items').delete(id)
       await getItems()
     }
     catch (error: unknown) {
@@ -106,5 +129,20 @@ export function usePocketBase() {
     getItems,
     createItem,
     setUserLngLat,
+    getSelectedItem,
+    selectedItemPocketbase,
+    deleteItem,
   }
+}
+
+const storeKey: InjectionKey<ReturnType<typeof usePocketBase>> = Symbol('pocketbase-store')
+
+export function providePocketBaseStore() {
+  const store = usePocketBase()
+  provide(storeKey, store)
+  return store
+}
+
+export function injectPocketBaseStore() {
+  return inject(storeKey)!
 }

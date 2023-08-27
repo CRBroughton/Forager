@@ -48,7 +48,7 @@ const { user, setUserLngLat } = usePocketBase()
 }
 
 input {
-    height: 30px;
+    height: 50px;
     padding: 1em;
     border-radius: 10px;
     width: 100%;

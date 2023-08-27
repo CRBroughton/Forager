@@ -1,30 +1,22 @@
 <script setup lang="ts">
 import type { LngLatLike } from 'mapbox-gl'
 import { provideMapboxStore } from './mapbox'
-import { usePocketBase } from './pocketbase'
+import { providePocketBaseStore } from './pocketbase'
 
-const { pb, refresh, user, username, password, login } = usePocketBase()
+const { pb, refresh, user, username, password, login } = providePocketBaseStore()
 const home: LngLatLike = [
   user.value?.lng ?? 0,
   user.value?.lat ?? 0,
 ]
-const { initMapbox, moveToSelectedPosition, addMarkersOnLogin } = provideMapboxStore({ home, container: 'map' })
+const { initMapbox, markerUIHidden } = provideMapboxStore({ home, container: 'map' })
 
 onMounted(async () => {
   if (pb.authStore.token)
     refresh()
 
-  if (user.value !== null) {
+  if (user.value !== null)
     await initMapbox()
-    await addMarkersOnLogin()
-  }
 })
-
-const markerUIHidden = ref(true)
-function showAddMarker() {
-  moveToSelectedPosition()
-  markerUIHidden.value = false
-}
 
 function hideAddMarker() {
   markerUIHidden.value = true
@@ -43,14 +35,13 @@ function openSettingsMenu() {
 async function loginInUser() {
   await login()
   location.reload()
-  await addMarkersOnLogin()
 }
 </script>
 
 <template>
   <div>
     <div
-      id="map" @click="showAddMarker()"
+      id="map"
     />
     <SettingsMenu v-if="settingsMenu" @close="closeSettingsMenu" />
     <ServerHealth />
@@ -58,6 +49,7 @@ async function loginInUser() {
       :open-settings="openSettingsMenu"
     />
     <AddMarker :hidden="markerUIHidden" @hide="hideAddMarker" />
+    <ItemDetails />
   </div>
   <div v-if="!user" class="login">
     <div class="login-inputs">
@@ -114,7 +106,7 @@ async function loginInUser() {
 }
 
 .login-input {
-    height: 30px;
+    height: 50px;
     padding: 1em;
     border-radius: 10px;
     width: 100%;
