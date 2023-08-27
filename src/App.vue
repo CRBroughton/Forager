@@ -86,7 +86,7 @@ async function loginInUser() {
 .login {
   width: 100%;
   height: 100%;
-  background: rgba(36, 240, 63, 0.2);
+  background: #24f03f33;
   backdrop-filter: blur(20px);
   position: absolute;
   top: 0;
