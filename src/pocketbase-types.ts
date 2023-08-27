@@ -38,6 +38,7 @@ export type ItemsRecord = {
 	owners?: RecordIdString[]
 	lng?: number
 	lat?: number
+	colour?: string
 }
 
 export type UsersRecord = {

@@ -30,6 +30,7 @@ export function mapBoxStore(vars?: Mapbox) {
           type: 'Feature',
           properties: {
             description: item.name,
+            colour: item.colour,
           },
           geometry: {
             type: 'Point',
@@ -96,7 +97,24 @@ export function mapBoxStore(vars?: Mapbox) {
         source: 'items',
         filter: ['!', ['has', 'point_count']],
         paint: {
-          'circle-color': '#11b4da',
+          // Color circles by ethnicity, using a `match` expression.
+          'circle-color': [
+            'match',
+            ['get', 'colour'],
+            'blue',
+            'blue',
+            'red',
+            'red',
+            'purple',
+            'purple',
+            'orange',
+            'orange',
+            'deeppink',
+            'deeppink',
+            'cadetblue',
+            'cadetblue',
+            /* other */ '#ccc',
+          ],
           'circle-radius': 6,
           'circle-stroke-width': 2,
           'circle-stroke-color': '#fff',
@@ -200,7 +218,7 @@ export function mapBoxStore(vars?: Mapbox) {
     })
   }
 
-  const addMarker = async (lng: number, lat: number, name: string) => {
+  const addMarker = async (lng: number, lat: number, name: string, colour: string) => {
     // Create a new marker.
     const { items, createItem, user } = usePocketBase()
 
@@ -211,6 +229,7 @@ export function mapBoxStore(vars?: Mapbox) {
       lat,
       name,
       owners: [user.value!.id],
+      colour,
     }
 
     await createItem(newItem)
