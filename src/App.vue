@@ -11,13 +11,13 @@ const home: LngLatLike = [
 const { initMapbox, moveToSelectedPosition, addMarkersOnLogin } = provideMapboxStore({ home, container: 'map' })
 
 onMounted(async () => {
-  await initMapbox()
-
   if (pb.authStore.token)
     refresh()
 
-  if (user)
+  if (user.value !== null) {
+    await initMapbox()
     await addMarkersOnLogin()
+  }
 })
 
 const markerUIHidden = ref(true)
@@ -42,8 +42,8 @@ function openSettingsMenu() {
 
 async function loginInUser() {
   await login()
-  await addMarkersOnLogin()
   location.reload()
+  await addMarkersOnLogin()
 }
 </script>
 
@@ -94,7 +94,7 @@ async function loginInUser() {
 .login {
   width: 100%;
   height: 100%;
-  background: rgba(255,255,255,0.5);
+  background: rgba(36, 240, 63, 0.2);
   backdrop-filter: blur(20px);
   position: absolute;
   top: 0;
