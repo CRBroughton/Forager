@@ -1,5 +1,6 @@
 import PocketBase from 'pocketbase'
 import type { ItemsRecord, UsersRecord } from './pocketbase-types'
+import type { ItemsRecordWithID } from './types'
 
 export const isError = (err: unknown): err is Error => err instanceof Error
 
@@ -15,8 +16,8 @@ export function usePocketBase() {
   const username = ref('')
   const password = ref('')
   const health = ref<healthCheckResponse>()
-  const items = ref<ItemsRecord[]>()
-  const selectedItemPocketbase = ref<ItemsRecord & { id: string }>()
+  const items = ref<ItemsRecordWithID[]>()
+  const selectedItemPocketbase = ref<ItemsRecordWithID>()
 
   pb.authStore.onChange(() => user.value = pb.authStore.model)
 
@@ -72,7 +73,7 @@ export function usePocketBase() {
 
   const getItems = async () => {
     try {
-      const response = await pb.collection('items').getFullList<ItemsRecord>()
+      const response = await pb.collection('items').getFullList<ItemsRecordWithID>()
 
       items.value = response
     }
@@ -82,10 +83,10 @@ export function usePocketBase() {
     }
   }
 
-  const getSelectedItem = async (selected: string) => {
+  const getSelectedItem = async (id: string) => {
     try {
       // or fetch only the first record that matches the specified filter
-      selectedItemPocketbase.value = await pb.collection('items').getFirstListItem(`name="${selected}"`)
+      selectedItemPocketbase.value = await pb.collection('items').getOne(id)
     }
     catch (error: unknown) {
       // eslint-disable-next-line no-console

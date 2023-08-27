@@ -2,7 +2,7 @@ import type { LngLatLike, MapMouseEvent } from 'mapbox-gl'
 import type { Feature } from 'geojson'
 import mapboxgl from 'mapbox-gl'
 import { usePocketBase } from './pocketbase'
-import type { ItemsRecord } from './pocketbase-types'
+import type { ItemsRecordWithID } from './types'
 
 const accessToken = import.meta.env.VITE_MAPBOX_KEY
 mapboxgl.accessToken = accessToken
@@ -22,13 +22,14 @@ export function mapBoxStore(vars?: Mapbox) {
   const detailsHidden = ref(true)
   const canMove = ref(true)
 
-  const translateItemToLayerItem = (items: ItemsRecord[]) => {
+  const translateItemToLayerItem = (items: ItemsRecordWithID[]) => {
     const records = ref<Feature[]>([])
     items?.forEach((item) => {
       if (item.lng && item.lat && item.name) {
         records.value.push({
           type: 'Feature',
           properties: {
+            id: item.id,
             description: item.name,
             colour: item.colour,
           },
@@ -202,7 +203,7 @@ export function mapBoxStore(vars?: Mapbox) {
     map?.on('click', 'unclustered-point', async (e) => {
       markerUIHidden.value = true
       detailsHidden.value = false
-      selectedItem.value = e.features![0].properties!.description
+      selectedItem.value = e.features![0].properties!.id
     })
 
     // Change the cursor to a pointer when the mouse is over the places layer.
