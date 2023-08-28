@@ -180,19 +180,27 @@ export function mapBoxStore(vars?: Mapbox) {
         },
       })
 
+      const geoLocator = new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+        },
+
+        trackUserLocation: true,
+        showUserHeading: true,
+        showUserLocation: true,
+        showAccuracyCircle: false,
+
+      })
+
       map?.addControl(
-        new mapboxgl.GeolocateControl({
-          positionOptions: {
-            enableHighAccuracy: true,
-          },
-
-          trackUserLocation: true,
-          showUserHeading: true,
-          showUserLocation: true,
-          showAccuracyCircle: false,
-
-        }),
+        geoLocator,
       )
+
+      geoLocator.on('geolocate', () => {
+        map?.flyTo({
+          zoom: map.getZoom(),
+        })
+      })
     })
 
     map?.on('click', () => {
