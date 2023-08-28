@@ -3,12 +3,11 @@ import { usePocketBase } from '@/pocketbase'
 
 const { health, getHealth } = usePocketBase()
 
-onMounted(() => getHealth())
-
+setInterval(getHealth, 30000)
 const serverStatus = computed(() => {
   return {
     online: health.value?.code === 200,
-    offline: health.value?.code !== 200,
+    offline: health.value?.code !== 200 || health.value === undefined,
   }
 })
 </script>
@@ -19,7 +18,7 @@ const serverStatus = computed(() => {
       class="health"
       :class="serverStatus"
     />
-    Server Status
+    <div>Server Status</div>
   </div>
 </template>
 
