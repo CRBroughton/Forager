@@ -7,14 +7,19 @@ interface Emits {
 defineEmits<Emits>()
 
 const { user, setUserLngLat } = usePocketBase()
+
+const lng = ref(user.value?.lng ?? 0)
+const lat = ref(user.value?.lat ?? 0)
+const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 0)
 </script>
 
 <template>
   <div class="settings">
     <div class="settings-inputs">
-      <input v-if="user && user.lng" v-model="user.lng" placeholder="lng">
-      <input v-if="user && user.lat" v-model="user.lat" placeholder="lat">
-      <button @click="setUserLngLat()">
+      {{ hasNoLngLat }}
+      <input v-if="user" v-model="lng" placeholder="lng">
+      <input v-if="user" v-model="lat" placeholder="lat">
+      <button :class="{ disabled: hasNoLngLat }" :disabled="hasNoLngLat" @click="setUserLngLat()">
         Update Location
       </button>
       <button @click="$emit('close')">
@@ -63,5 +68,9 @@ button {
   &:hover {
     background: rgb(240, 240, 240);
   }
+}
+
+.disabled {
+  background: red;
 }
 </style>
