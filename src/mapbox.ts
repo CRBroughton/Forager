@@ -75,7 +75,7 @@ export function mapBoxStore(vars?: Mapbox) {
       container: vars!.container,
       style: 'mapbox://styles/mapbox/outdoors-v12',
       center: vars!.home,
-      zoom: 12,
+      zoom: 14,
     })
 
     map.on('load', async () => {
@@ -116,7 +116,7 @@ export function mapBoxStore(vars?: Mapbox) {
             'cadetblue',
             /* other */ '#ccc',
           ],
-          'circle-radius': 6,
+          'circle-radius': 8,
           'circle-stroke-width': 2,
           'circle-stroke-color': '#fff',
         },
@@ -282,7 +282,7 @@ export function mapBoxStore(vars?: Mapbox) {
 
   const returnHome = () => {
     const { user } = usePocketBase()
-    map?.flyTo({ center: [user.value?.lng, user.value?.lat], zoom: 12 })
+    map?.flyTo({ center: [user.value?.lng, user.value?.lat], zoom: 14 })
   }
 
   return {
