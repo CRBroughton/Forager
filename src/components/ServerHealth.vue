@@ -3,6 +3,8 @@ import { usePocketBase } from '@/pocketbase'
 
 const { health, getHealth } = usePocketBase()
 
+onMounted(() => getHealth())
+
 setInterval(getHealth, 30000)
 const serverStatus = computed(() => {
   return {
