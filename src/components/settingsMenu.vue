@@ -16,7 +16,6 @@ const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 
 <template>
   <div class="settings">
     <div class="settings-inputs">
-      {{ hasNoLngLat }}
       <input v-if="user" v-model="lng" placeholder="lng">
       <input v-if="user" v-model="lat" placeholder="lat">
       <button :class="{ disabled: hasNoLngLat }" :disabled="hasNoLngLat" @click="setUserLngLat()">
