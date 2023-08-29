@@ -48,8 +48,12 @@ async function loginInUser() {
     <SideMenu
       :open-settings="openSettingsMenu"
     />
-    <AddMarker :hidden="markerUIHidden" @hide="hideAddMarker" />
-    <ItemDetails />
+    <Transition name="slide">
+      <AddMarker :hidden="markerUIHidden" @hide="hideAddMarker" />
+    </Transition>
+    <Transition name="slide">
+      <ItemDetails />
+    </Transition>
   </div>
   <div v-if="!user" class="login">
     <div class="login-inputs">
@@ -121,5 +125,18 @@ async function loginInUser() {
   &:hover {
     background: rgb(240, 240, 240);
   }
+}
+
+.slide-enter-active {
+  transition: all 0.2s ease-out;
+}
+
+.slide-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateY(100%);
 }
 </style>
