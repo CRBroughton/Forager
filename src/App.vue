@@ -43,7 +43,9 @@ async function loginInUser() {
     <div
       id="map"
     />
-    <SettingsMenu v-if="settingsMenu" @close="closeSettingsMenu" />
+    <Transition name="slide">
+      <SettingsMenu v-if="settingsMenu" @close="closeSettingsMenu" />
+    </Transition>
     <ServerHealth />
     <SideMenu
       :open-settings="openSettingsMenu"
