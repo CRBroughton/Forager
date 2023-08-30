@@ -14,11 +14,10 @@ interface Emits {
   (e: 'hide'): void
 }
 
-const { lng, lat, addMarker, canMove } = injectMapboxStore()
+const { lng, lat, addMarker } = injectMapboxStore()
 
 const input = ref('')
 function hide() {
-  canMove.value = true
   emits('hide')
 }
 

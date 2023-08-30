@@ -20,7 +20,6 @@ export function mapBoxStore(vars?: Mapbox) {
   const markerUIHidden = ref(true)
   const selectedItem = ref()
   const detailsHidden = ref(true)
-  const canMove = ref(true)
 
   const translateItemToLayerItem = (items: ItemsRecordWithID[]) => {
     const records = ref<Feature[]>([])
@@ -54,20 +53,6 @@ export function mapBoxStore(vars?: Mapbox) {
       itemLayer.value = translateItemToLayerItem(items.value)
 
     return itemLayer.value
-  }
-
-  const moveToSelectedPosition = () => {
-    if (canMove.value === false)
-      return
-
-    map?.on('click', (e: MapMouseEvent) => {
-      if (canMove.value === true) {
-        map?.flyTo({ center: e.lngLat })
-        lng.value = e.lngLat.lng
-        lat.value = e.lngLat.lat
-        canMove.value = false
-      }
-    })
   }
 
   const initMapbox = async () => {
@@ -203,9 +188,11 @@ export function mapBoxStore(vars?: Mapbox) {
       })
     })
 
-    map?.on('click', () => {
+    map?.on('click', (e: MapMouseEvent) => {
       markerUIHidden.value = false
-      moveToSelectedPosition()
+      map?.flyTo({ center: e.lngLat })
+      lng.value = e.lngLat.lng
+      lat.value = e.lngLat.lat
     })
 
     map?.on('click', 'unclustered-point', async (e) => {
@@ -290,14 +277,12 @@ export function mapBoxStore(vars?: Mapbox) {
     lat,
     lng,
     initMapbox,
-    moveToSelectedPosition,
     addMarker,
     returnHome,
     addinitMarkers,
     markerUIHidden,
     selectedItem,
     deleteMarker,
-    canMove,
   }
 }
 
