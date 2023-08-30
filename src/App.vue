@@ -90,6 +90,7 @@ async function loginInUser() {
 }
 
 .login {
+  z-index: 1000;
   width: 100%;
   height: 100%;
   background: #24f03f33;
