@@ -36,8 +36,13 @@ function selectColour(colour: string) {
 <template>
   <div v-if="!hidden" class="add-item">
     <div class="max-w-sm flex flex-col m-auto rounded-xl">
+      <h1>Create new item</h1>
       <div class="m-auto items-center w-full">
-        Selected Colour: {{ selectedColour }}
+        <div class="my-2">
+          Selected Colour: {{
+            selectedColour.length > 0 ? selectedColour : 'None selected'
+          }}
+        </div>
         <div class="colour-selector">
           <div
             v-for="colour in colours"
@@ -71,18 +76,23 @@ function selectColour(colour: string) {
 </template>
 
 <style scoped>
+h1 {
+  font-size: 1.2em;
+}
 .add-item {
-    min-width: calc(100% - 2em);
+    z-index: 10;
+    min-width: calc(100% - 1em);
     height: auto;
     background: rgba(255,255,255,0.3);
     backdrop-filter: blur(20px);
     position: absolute;
     bottom: 0;
     left: 0;
-    margin-left: 1em;
-    margin-right: 1em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
     padding: 1em;
-    border-radius: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
     gap: 1em;
     display: flex;
     flex-direction: column;

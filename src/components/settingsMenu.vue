@@ -16,8 +16,15 @@ const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 
 <template>
   <div class="settings">
     <div class="settings-inputs">
-      <input v-if="user" v-model="lng" placeholder="lng">
-      <input v-if="user" v-model="lat" placeholder="lat">
+      <h1>Settings</h1>
+      <p class="w-full text-left">
+        Longitude
+      </p>
+      <input v-if="user" v-model="lng" placeholder="Longitude">
+      <p class="text-left w-full">
+        Latitude
+      </p>
+      <input v-if="user" v-model="lat" placeholder="Latitude">
       <button :class="{ disabled: hasNoLngLat }" :disabled="hasNoLngLat" @click="setUserLngLat()">
         Update Location
       </button>
@@ -29,6 +36,9 @@ const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 
 </template>
 
 <style scoped lang="scss">
+h1 {
+  font-size: 1.2em;
+}
 .settings {
     z-index: 1000;
     width: 100%;

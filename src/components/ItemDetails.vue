@@ -27,7 +27,7 @@ function deleteItem() {
 <template>
   <div v-if="selectedItemPocketbase" class="item-details">
     <div>
-      Name: {{ selectedItemPocketbase.name }}
+      <h1>{{ selectedItemPocketbase.name }}</h1>
     </div>
     <div>
       Last Foraged: {{ new Date(selectedItemPocketbase.lastForaged!).toDateString() }}
@@ -47,18 +47,23 @@ function deleteItem() {
 </template>
 
 <style scoped lang="scss">
+h1 {
+  font-size: 1.2em;
+}
 .item-details {
-    min-width: calc(100% - 2em);
+    z-index: 10;
+    min-width: calc(100% - 1em);
     height: auto;
     background: rgba(255,255,255,0.3);
     backdrop-filter: blur(20px);
     position: absolute;
     bottom: 0;
     left: 0;
-    margin-left: 1em;
-    margin-right: 1em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
     padding: 1em;
-    border-radius: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
     gap: 1em;
     display: flex;
     flex-direction: column;
