@@ -4,7 +4,7 @@ import { injectPocketBaseStore } from '@/pocketbase'
 
 const { selectedItem, deleteMarker } = injectMapboxStore()
 
-const { getSelectedItem, selectedItemPocketbase } = injectPocketBaseStore()
+const { getSelectedItem, selectedItemPocketbase, updateForageDate } = injectPocketBaseStore()
 
 watch(() => selectedItem.value, () => {
   if (selectedItem.value !== undefined)
@@ -29,9 +29,15 @@ function deleteItem() {
     <div>
       Name: {{ selectedItemPocketbase.name }}
     </div>
+    <div>
+      Last Foraged: {{ new Date(selectedItemPocketbase.lastForaged!).toDateString() }}
+    </div>
     <div class="item-detail-buttons">
       <button @click="deleteItem">
         Delete
+      </button>
+      <button @click="updateForageDate">
+        Forage Now
       </button>
       <button @click="clearSelected">
         Close

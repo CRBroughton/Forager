@@ -117,6 +117,22 @@ export function usePocketBase() {
     }
   }
 
+  const updateForageDate = async () => {
+    try {
+      selectedItemPocketbase.value = {
+        ...selectedItemPocketbase.value!,
+        lastForaged: new Date().toISOString(),
+      }
+      await pb.collection('items').update<ItemsRecordWithID>(selectedItemPocketbase.value!.id, {
+        ...selectedItemPocketbase.value!,
+      })
+    }
+    catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
+  }
+
   return {
     pb,
     user,
@@ -134,6 +150,7 @@ export function usePocketBase() {
     getSelectedItem,
     selectedItemPocketbase,
     deleteItem,
+    updateForageDate,
   }
 }
 
