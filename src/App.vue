@@ -3,7 +3,7 @@ import type { LngLatLike } from 'mapbox-gl'
 import { provideMapboxStore } from './mapbox'
 import { providePocketBaseStore } from './pocketbase'
 
-const { pb, refresh, user, username, password, login } = providePocketBaseStore()
+const { pb, refresh, user, username, password, login, updateDisclaimerAgreement } = providePocketBaseStore()
 const home: LngLatLike = [
   user.value?.lng ?? 0,
   user.value?.lat ?? 0,
@@ -33,13 +33,34 @@ function openSettingsMenu() {
 
 async function loginInUser() {
   await login()
+}
+
+async function agree() {
+  await updateDisclaimerAgreement()
   location.reload()
+  await initMapbox()
 }
 </script>
 
 <template>
-  <Disclamer v-if="user && !user.disclaimerAgreed" />
-  <div v-else>
+  <div v-if="!user" class="login">
+    <LoginForm>
+      <input v-model="username" class="login-input" placeholder="enter username">
+      <input v-model="password" class="login-input" type="password" placeholder="enter password">
+      <button class="login-button" @click="loginInUser()">
+        Login
+      </button>
+    </LoginForm>
+  </div>
+  <div v-if="user && !user.disclaimerAgreed" class="login">
+    <LoginForm>
+      <Disclaimer />
+      <button class="login-button" @click="agree">
+        I understand
+      </button>
+    </LoginForm>
+  </div>
+  <div v-if="user && user.disclaimerAgreed">
     <div
       id="map"
     />
@@ -57,18 +78,6 @@ async function loginInUser() {
       <ItemDetails />
     </Transition>
   </div>
-  <div v-if="!user" class="login">
-    <div class="login-inputs">
-      <h1 class="title">
-        Forager
-      </h1>
-      <input v-model="username" class="login-input" placeholder="enter username">
-      <input v-model="password" class="login-input" type="password" placeholder="enter password">
-      <button class="login-button" @click="loginInUser()">
-        Login
-      </button>
-    </div>
-  </div>
 </template>
 
 <style>
@@ -80,10 +89,6 @@ async function loginInUser() {
 </style>
 
 <style scoped lang="scss">
-.title {
-  font-size: 32px;
-  font-weight: 500;
-}
 #map {
   height: 100vh;
   width: 100%;
@@ -98,18 +103,6 @@ async function loginInUser() {
   position: absolute;
   top: 0;
   left: 0;
-}
-
-.login-inputs {
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    max-width: 500px;
-    margin: 0 auto;
-    padding-inline: 1em;
 }
 
 .login-input {

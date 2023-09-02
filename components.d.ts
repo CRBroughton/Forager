@@ -9,8 +9,10 @@ declare module 'vue' {
   export interface GlobalComponents {
     AddMarker: typeof import('./src/components/AddMarker.vue')['default']
     BaseButton: typeof import('./src/components/BaseButton.vue')['default']
+    Disclaimer: typeof import('./src/components/Disclaimer.vue')['default']
     Disclamer: typeof import('./src/components/Disclamer.vue')['default']
     ItemDetails: typeof import('./src/components/ItemDetails.vue')['default']
+    LoginForm: typeof import('./src/components/LoginForm.vue')['default']
     Marker: typeof import('./src/components/Marker.vue')['default']
     ServerHealth: typeof import('./src/components/ServerHealth.vue')['default']
     SettingsMenu: typeof import('./src/components/settingsMenu.vue')['default']
