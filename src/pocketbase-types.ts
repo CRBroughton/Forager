@@ -54,6 +54,7 @@ export type UsersRecord = {
 	avatar?: string
 	lng?: number
 	lat?: number
+	disclaimerAgreed?: boolean
 }
 
 // Response types include system fields and match responses from the PocketBase API

@@ -133,6 +133,18 @@ export function usePocketBase() {
     }
   }
 
+  const updateDisclaimerAgreement = async () => {
+    try {
+      await pb.collection('users').update<UsersRecord>(user.value!.id, {
+        disclaimerAgreed: true,
+      })
+    }
+    catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
+  }
+
   return {
     pb,
     user,
@@ -151,6 +163,7 @@ export function usePocketBase() {
     selectedItemPocketbase,
     deleteItem,
     updateForageDate,
+    updateDisclaimerAgreement,
   }
 }
 

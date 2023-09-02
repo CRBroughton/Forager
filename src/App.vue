@@ -11,11 +11,10 @@ const home: LngLatLike = [
 const { initMapbox, markerUIHidden } = provideMapboxStore({ home, container: 'map' })
 
 onMounted(async () => {
-  if (pb.authStore.token)
+  if (pb.authStore.token && user.value && user.value.disclaimerAgreed) {
+    initMapbox()
     refresh()
-
-  if (user.value !== null)
-    await initMapbox()
+  }
 })
 
 function hideAddMarker() {
@@ -39,7 +38,8 @@ async function loginInUser() {
 </script>
 
 <template>
-  <div>
+  <Disclamer v-if="user && !user.disclaimerAgreed" />
+  <div v-else>
     <div
       id="map"
     />
