@@ -22,12 +22,25 @@ function deleteItem() {
     clearSelected()
   }
 }
+
+const fullscreenImg = ref(false)
+const previewImg = computed(() => {
+  return {
+    'item-img': fullscreenImg.value === false,
+    'fullscreen-img': fullscreenImg.value === true,
+  }
+})
 </script>
 
 <template>
   <div v-if="selectedItemPocketbase" class="item-details">
-    <div>
+    <div class="name-and-img">
       <h1>{{ selectedItemPocketbase.name }}</h1>
+      <Teleport to="body" :disabled="previewImg['item-img']">
+        <div class="ml-auto" :class="{ 'blur-preview': fullscreenImg, 'preview-image-container ': fullscreenImg }">
+          <img :src="selectedItemPocketbase.imageURL" :class="previewImg" @click="fullscreenImg = !fullscreenImg">
+        </div>
+      </Teleport>
     </div>
     <div class="item-forage-details">
       <p>Last Foraged: {{ new Date(selectedItemPocketbase.lastForaged!).toDateString() }}</p>
@@ -49,6 +62,35 @@ function deleteItem() {
 </template>
 
 <style scoped lang="scss">
+.blur-preview {
+  background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(4px);
+}
+.preview-image-container {
+  padding: 0.2em;
+  z-index: 100000;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+}
+.fullscreen-img {
+  width: 100%;
+  max-width: 1000px;
+  object-fit: contain;
+}
+.name-and-img {
+  display: flex;
+}
+.item-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-left: auto;
+}
 h1 {
   font-size: 1.2em;
 }

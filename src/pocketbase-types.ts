@@ -42,6 +42,7 @@ export type ItemsRecord = {
 	colour?: string
 	startMonth?: string
 	endMonth?: string
+	imageURL?: string
 }
 
 export type PolygonsRecord<Tcoords = unknown> = {

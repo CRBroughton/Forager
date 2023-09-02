@@ -33,6 +33,8 @@ function selectColour(colour: string) {
   }
   selectedColour.value = colour
 }
+
+const imageURL = ref('')
 </script>
 
 <template>
@@ -67,6 +69,7 @@ function selectColour(colour: string) {
           placeholder="Please Enter Object Name"
           data-test="input-marker-title"
         >
+        <input v-model="imageURL" type="text" class="w-full flex my-5 py-3 shadow-xl border-gray-200 border cursor-pointer outline-none focus:outline-none text-center rounded-xl focus:ring-2 focus:ring-gray-400" placeholder="enter image URL">
         <div class="month-selector">
           <select v-model="selectedStartMonth" name="start">
             <option v-for="month in months" :key="month" :value="month">
@@ -82,7 +85,7 @@ function selectColour(colour: string) {
       </div>
 
       <div class="flex m-auto w-full justify-center">
-        <MyButton title="Create" class="mb-1 mr-1" data-test="create-marker" @click="addMarker(lng, lat, input, selectedColour, selectedStartMonth, selectedEndMonth)" />
+        <MyButton title="Create" class="mb-1 mr-1" data-test="create-marker" @click="addMarker(lng, lat, input, selectedColour, selectedStartMonth, selectedEndMonth, imageURL)" />
         <MyButton title="Cancel" class="mb-1 mr-1" data-test="create-marker-close" @click="hide" />
       </div>
     </div>
