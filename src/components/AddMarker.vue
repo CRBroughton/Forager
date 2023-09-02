@@ -15,13 +15,15 @@ interface Emits {
 }
 
 const { lng, lat, addMarker } = injectMapboxStore()
-
+const selectedStartMonth = ref('January')
+const selectedEndMonth = ref('December')
 const input = ref('')
 function hide() {
   emits('hide')
 }
 
 const colours = ['red', 'blue', 'purple', 'deeppink', 'cadetblue']
+const months = ['January', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 const selectedColour = ref('')
 function selectColour(colour: string) {
@@ -65,17 +67,29 @@ function selectColour(colour: string) {
           placeholder="Please Enter Object Name"
           data-test="input-marker-title"
         >
+        <div class="month-selector">
+          <select v-model="selectedStartMonth" name="start">
+            <option v-for="month in months" :key="month" :value="month">
+              {{ month }}
+            </option>
+          </select>
+          <select v-model="selectedEndMonth" name="end">
+            <option v-for="month in months" :key="month" :value="month">
+              {{ month }}
+            </option>
+          </select>
+        </div>
       </div>
 
       <div class="flex m-auto w-full justify-center">
-        <MyButton title="Create" class="mb-1 mr-1" data-test="create-marker" @click="addMarker(lng, lat, input, selectedColour)" />
+        <MyButton title="Create" class="mb-1 mr-1" data-test="create-marker" @click="addMarker(lng, lat, input, selectedColour, selectedStartMonth, selectedEndMonth)" />
         <MyButton title="Cancel" class="mb-1 mr-1" data-test="create-marker-close" @click="hide" />
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 h1 {
   font-size: 1.2em;
 }
@@ -123,5 +137,19 @@ h1 {
 
 .disabled {
   background: rgb(196, 196, 196);
+}
+
+.month-selector {
+  text-align: center;
+  gap: 1em;
+  display: flex;
+  margin-bottom: 20px;
+
+  select {
+    width: 100%;
+    background: white;
+    padding: 1em 0.8em;
+    border-radius: 10px;
+  }
 }
 </style>

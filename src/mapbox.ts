@@ -111,7 +111,7 @@ export function mapBoxStore(vars?: Mapbox) {
     })
   }
 
-  const addMarker = async (lng: number, lat: number, name: string, colour: string) => {
+  const addMarker = async (lng: number, lat: number, name: string, colour: string, startMonth: string, endMonth: string) => {
     // Create a new marker.
     const { items, createItem, user } = usePocketBase()
 
@@ -123,6 +123,8 @@ export function mapBoxStore(vars?: Mapbox) {
       name,
       owners: [user.value!.id],
       colour,
+      startMonth,
+      endMonth,
     }
 
     await createItem(newItem)

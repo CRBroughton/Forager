@@ -29,8 +29,10 @@ function deleteItem() {
     <div>
       <h1>{{ selectedItemPocketbase.name }}</h1>
     </div>
-    <div>
-      Last Foraged: {{ new Date(selectedItemPocketbase.lastForaged!).toDateString() }}
+    <div class="item-forage-details">
+      <p>Last Foraged: {{ new Date(selectedItemPocketbase.lastForaged!).toDateString() }}</p>
+      <p> Start Month: {{ selectedItemPocketbase.startMonth || 'Not Set' }}</p>
+      <p>End Month: {{ selectedItemPocketbase.endMonth || 'Not Set' }}</p>
     </div>
     <div class="item-detail-buttons">
       <button @click="deleteItem">
@@ -84,5 +86,10 @@ button {
   &:hover {
     background: rgb(240, 240, 240);
   }
+}
+
+.item-forage-details {
+  display: flex;
+  flex-direction: column;
 }
 </style>
