@@ -33,6 +33,7 @@ function openSettingsMenu() {
 
 async function loginInUser() {
   await login()
+  location.reload()
 }
 
 async function agree() {
