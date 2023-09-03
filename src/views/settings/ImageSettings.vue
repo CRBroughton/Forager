@@ -10,7 +10,7 @@ const imageName = ref('')
 </script>
 
 <template>
-  <SettingsWrapper>
+  <SettingsWrapper style="background: #d3fcd9;">
     <template #heading>
       Images
     </template>
@@ -62,6 +62,17 @@ const imageName = ref('')
 
   svg {
     color: white;
+  }
+}
+
+button {
+  background: white;
+  padding: 1em 1.2em;
+  border-radius: 15px;
+  width: 100%;
+
+  &:hover {
+    background: rgb(240, 240, 240);
   }
 }
 </style>
