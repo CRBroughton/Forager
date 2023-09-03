@@ -3,14 +3,16 @@ import type { LngLatLike } from 'mapbox-gl'
 import { provideMapboxStore } from './mapbox'
 import { providePocketBaseStore } from './pocketbase'
 
-const { pb, refresh, user, username, password, login, updateDisclaimerAgreement } = providePocketBaseStore()
+const { pb, refresh, user, username, password, passwordConfirm, isCreatingAccount, login, updateDisclaimerAgreement, createAccount, canCreateAccount } = providePocketBaseStore()
 const home: LngLatLike = [
   user.value?.lng ?? 0,
   user.value?.lat ?? 0,
 ]
 const { initMapbox, markerUIHidden } = provideMapboxStore({ home, container: 'map' })
 
+const canCreateAccounts = ref<boolean | undefined>(false)
 onMounted(async () => {
+  canCreateAccounts.value = await canCreateAccount()
   if (pb.authStore.token && user.value && user.value.disclaimerAgreed) {
     initMapbox()
     refresh()
@@ -48,8 +50,25 @@ async function agree() {
     <LoginForm>
       <input v-model="username" class="login-input" placeholder="enter username">
       <input v-model="password" class="login-input" type="password" placeholder="enter password">
-      <button class="login-button" @click="loginInUser()">
+      <input
+        v-if="isCreatingAccount"
+        v-model="passwordConfirm" class="login-button" placeholder="confirm password"
+      >
+      <button v-if="!isCreatingAccount" class="login-button" @click="loginInUser()">
         Login
+      </button>
+      <button v-if="!isCreatingAccount && canCreateAccounts" class="login-button" @click="isCreatingAccount = !isCreatingAccount">
+        Create New Account
+      </button>
+      <button v-if="isCreatingAccount" class="login-button" @click="createAccount()">
+        Create Account
+      </button>
+      <button
+        v-if="isCreatingAccount"
+        class="login-button" @click="isCreatingAccount = !isCreatingAccount
+        "
+      >
+        Back
       </button>
     </LoginForm>
   </div>

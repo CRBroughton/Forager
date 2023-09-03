@@ -1,5 +1,5 @@
 import PocketBase from 'pocketbase'
-import type { ItemsRecord, UsersRecord } from './pocketbase-types'
+import type { ItemsRecord, ServicesRecord, UsersRecord } from './pocketbase-types'
 import type { ItemsRecordWithID } from './types'
 
 export const isError = (err: unknown): err is Error => err instanceof Error
@@ -15,6 +15,8 @@ export function usePocketBase() {
   const user = ref(pb.authStore.model)
   const username = ref('')
   const password = ref('')
+  const passwordConfirm = ref('')
+  const isCreatingAccount = ref(false)
   const health = ref<healthCheckResponse>()
   const items = ref<ItemsRecordWithID[]>()
   const selectedItemPocketbase = ref<ItemsRecordWithID>()
@@ -40,6 +42,33 @@ export function usePocketBase() {
   const login = async () => {
     try {
       await pb.collection('users').authWithPassword(username.value, password.value)
+    }
+    catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
+  }
+
+  const createAccount = async () => {
+    try {
+      await pb.collection('users').create({
+        username: username.value,
+        password: password.value,
+        passwordConfirm: passwordConfirm.value,
+      })
+
+      await login()
+    }
+    catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
+  }
+
+  const canCreateAccount = async () => {
+    try {
+      const services = await pb.collection('services').getFullList<ServicesRecord>()
+      return services[0].canCreateAccounts
     }
     catch (error: unknown) {
       // eslint-disable-next-line no-console
@@ -150,11 +179,15 @@ export function usePocketBase() {
     user,
     username,
     password,
+    passwordConfirm,
+    isCreatingAccount,
     health,
     items,
     login,
     logout,
     refresh,
+    createAccount,
+    canCreateAccount,
     getHealth,
     getItems,
     createItem,

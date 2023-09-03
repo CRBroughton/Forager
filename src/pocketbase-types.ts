@@ -3,6 +3,7 @@
 */
 
 export enum Collections {
+	Services = "Services",
 	Items = "items",
 	Polygons = "polygons",
 	Users = "users",
@@ -32,6 +33,10 @@ export type AuthSystemFields<T = never> = {
 
 // Record types for each collection
 
+export type ServicesRecord = {
+	canCreateAccounts?: boolean
+}
+
 export type ItemsRecord = {
 	name?: string
 	date?: IsoDateString
@@ -59,6 +64,7 @@ export type UsersRecord = {
 }
 
 // Response types include system fields and match responses from the PocketBase API
+export type ServicesResponse<Texpand = unknown> = Required<ServicesRecord> & BaseSystemFields<Texpand>
 export type ItemsResponse<Texpand = unknown> = Required<ItemsRecord> & BaseSystemFields<Texpand>
 export type PolygonsResponse<Tcoords = unknown, Texpand = unknown> = Required<PolygonsRecord<Tcoords>> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
@@ -66,12 +72,14 @@ export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSyste
 // Types containing all Records and Responses, useful for creating typing helper functions
 
 export type CollectionRecords = {
+	Services: ServicesRecord
 	items: ItemsRecord
 	polygons: PolygonsRecord
 	users: UsersRecord
 }
 
 export type CollectionResponses = {
+	Services: ServicesResponse
 	items: ItemsResponse
 	polygons: PolygonsResponse
 	users: UsersResponse
