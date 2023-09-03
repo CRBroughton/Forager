@@ -175,24 +175,16 @@ export function usePocketBase() {
     }
   }
 
-  const getAllImages = async () => {
-    try {
-      images.value = await pb.collection('images').getFullList<ImagesRecordWithID>()
-    }
-    catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
-    }
+  interface UserImage {
+    name: string
+    url: string
   }
-
-  const createImage = async (imageURL: string, name: string) => {
+  const createImage = async (img: UserImage) => {
+    const images = user.value?.images ? [...user.value?.images, img] : [img]
     try {
-      await pb.collection('images').create<ImagesRecordWithID>({
-        name,
-        imageURL,
+      await pb.collection('users').update<UsersRecord<UserImage[]>>(user.value!.id, {
+        images,
       })
-
-      await getAllImages()
     }
     catch (error: unknown) {
       // eslint-disable-next-line no-console
@@ -224,7 +216,6 @@ export function usePocketBase() {
     updateForageDate,
     updateDisclaimerAgreement,
     createImage,
-    getAllImages,
     images,
   }
 }

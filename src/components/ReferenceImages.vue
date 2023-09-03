@@ -1,27 +1,29 @@
 <script setup lang="ts">
-import type { ImagesRecordWithID } from '@/types'
-
 interface Emits {
   (e: 'change', url: string | undefined): void
 }
+interface UserImage {
+  name: string
+  url: string
+}
 interface Props {
-  images: ImagesRecordWithID[]
+  images: UserImage[]
 }
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
 const selectedImage = ref<string | undefined>('')
-function selectImage(image: ImagesRecordWithID) {
-  selectedImage.value = image.id
-  emit('change', image.imageURL)
+function selectImage(image: UserImage) {
+  selectedImage.value = image.url
+  emit('change', image.url)
 }
 </script>
 
 <template>
   <div class="images-container">
-    <div v-for="image in props.images" :key="image.id" class="image-container">
-      <img class="image-icon" :class="{ selected: selectedImage === image.id }" :src="image.imageURL" @click="selectImage(image)">
+    <div v-for="image in props.images" :key="image.url" class="image-container">
+      <img class="image-icon" :class="{ selected: selectedImage === image.url }" :src="image.url" @click="selectImage(image)">
       {{ image.name }}
     </div>
   </div>

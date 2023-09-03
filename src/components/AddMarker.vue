@@ -16,7 +16,7 @@ interface Emits {
 }
 
 const { lng, lat, addMarker } = injectMapboxStore()
-const { getAllImages, images } = injectPocketBaseStore()
+const { user } = injectPocketBaseStore()
 const selectedStartMonth = ref('January')
 const selectedEndMonth = ref('December')
 const input = ref('')
@@ -37,10 +37,6 @@ function selectColour(colour: string) {
 }
 
 const imageURL = ref<string | undefined>('')
-
-onMounted(async () => {
-  await getAllImages()
-})
 </script>
 
 <template>
@@ -75,7 +71,7 @@ onMounted(async () => {
           placeholder="Please Enter Object Name"
           data-test="input-marker-title"
         >
-        <ReferenceImages :images="images" @change="imageURL = $event" />
+        <ReferenceImages :images="user?.images" @change="imageURL = $event" />
         <div class="month-selector">
           <select v-model="selectedStartMonth" name="start">
             <option v-for="month in months" :key="month" :value="month">

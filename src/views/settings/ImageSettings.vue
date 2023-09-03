@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import { injectSettingsStore } from '@/views/settings/settingsStore'
-import { usePocketBase } from '@/pocketbase'
+import { injectPocketBaseStore } from '@/pocketbase'
 
 const { toggleImageMenu } = injectSettingsStore()
-const { createImage, getAllImages, images } = usePocketBase()
-
-onMounted(async () => {
-  await getAllImages()
-})
+const { user, createImage } = injectPocketBaseStore()
 
 const imageURL = ref('')
 const imageName = ref('')
@@ -20,8 +16,8 @@ const imageName = ref('')
     </template>
     <template #content>
       <div class="image-grid">
-        <div v-for="image in images" :key="image.imageURL">
-          <img v-if="image" class="add-new-image" :src="image.imageURL">
+        <div v-for="image in user?.images" :key="image">
+          <img v-if="image" class="add-new-image" :src="image.url">
           <p>{{ image.name }}</p>
         </div>
       </div>
@@ -29,7 +25,7 @@ const imageName = ref('')
     <template #buttons>
       <input v-model="imageURL" class="login-input" placeholder="Enter Image URL">
       <input v-model="imageName" class="login-input" placeholder="Enter Image Name">
-      <button :disabled="imageURL.length === 0 || imageName.length === 0" @click="createImage(imageURL, imageName)">
+      <button :disabled="imageURL.length === 0 || imageName.length === 0" @click="createImage({ name: imageName, url: imageURL })">
         Create New Image
       </button>
       <button @click="toggleImageMenu">

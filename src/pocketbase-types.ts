@@ -61,12 +61,13 @@ export type PolygonsRecord<Tcoords = unknown> = {
 	owners?: RecordIdString[]
 }
 
-export type UsersRecord = {
+export type UsersRecord<Timages = unknown> = {
 	name?: string
 	avatar?: string
 	lng?: number
 	lat?: number
 	disclaimerAgreed?: boolean
+	images?: null | Timages
 }
 
 // Response types include system fields and match responses from the PocketBase API
@@ -74,7 +75,7 @@ export type ServicesResponse<Texpand = unknown> = Required<ServicesRecord> & Bas
 export type ImagesResponse<Texpand = unknown> = Required<ImagesRecord> & BaseSystemFields<Texpand>
 export type ItemsResponse<Texpand = unknown> = Required<ItemsRecord> & BaseSystemFields<Texpand>
 export type PolygonsResponse<Tcoords = unknown, Texpand = unknown> = Required<PolygonsRecord<Tcoords>> & BaseSystemFields<Texpand>
-export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
+export type UsersResponse<Timages = unknown, Texpand = unknown> = Required<UsersRecord<Timages>> & AuthSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
 
