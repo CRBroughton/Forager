@@ -1,8 +1,15 @@
 {
-    "extends": [
-      "@antfu"
-    ],
-    "rules": {
-      "no-console": "error"
-    }
+  "extends": [
+    "@antfu"
+  ],
+  "rules": {
+    "no-console": "error",
+    "no-restricted-syntax": [
+      "error",
+      "TSEnumDeclaration",
+      "ClassDeclaration",
+      "Decorator",
+      "TSAnyKeyword"
+    ]
+  }
 }
