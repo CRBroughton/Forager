@@ -17,9 +17,9 @@ export function createGeolocator(map: mapboxgl.Map) {
     geoLocator,
   )
 
-  geoLocator.on('geolocate', () => {
-    map?.flyTo({
-      zoom: map.getZoom(),
-    })
-  })
+  // geoLocator.on('geolocate', () => {
+  //   map?.flyTo({
+  //     zoom: map.getZoom(),
+  //   })
+  // })
 }
