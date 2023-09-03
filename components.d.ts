@@ -14,7 +14,7 @@ declare module 'vue' {
     ItemDetails: typeof import('./src/components/ItemDetails.vue')['default']
     LoginForm: typeof import('./src/components/LoginForm.vue')['default']
     ServerHealth: typeof import('./src/components/ServerHealth.vue')['default']
-    SettingsMenu: typeof import('./src/components/settingsMenu.vue')['default']
+    SettingsMenu: typeof import('./src/views/settings/settingsMenu.vue')['default']
     SettingsWrapper: typeof import('./src/views/settings/SettingsWrapper.vue')['default']
     SideMenu: typeof import('./src/components/SideMenu.vue')['default']
   }
