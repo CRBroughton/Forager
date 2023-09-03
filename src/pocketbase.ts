@@ -185,9 +185,10 @@ export function usePocketBase() {
     }
   }
 
-  const createImage = async (imageURL: string) => {
+  const createImage = async (imageURL: string, name: string) => {
     try {
       await pb.collection('images').create<ImagesRecordWithID>({
+        name,
         imageURL,
       })
 

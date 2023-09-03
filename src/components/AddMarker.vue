@@ -39,8 +39,7 @@ function selectColour(colour: string) {
 const imageURL = ref<string | undefined>('')
 
 onMounted(async () => {
-  if (images.value.length === 0)
-    await getAllImages()
+  await getAllImages()
 })
 </script>
 

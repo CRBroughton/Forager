@@ -10,6 +10,7 @@ onMounted(async () => {
 })
 
 const imageURL = ref('')
+const imageName = ref('')
 </script>
 
 <template>
@@ -27,7 +28,8 @@ const imageURL = ref('')
     </template>
     <template #buttons>
       <input v-model="imageURL" class="login-input" placeholder="Enter Image URL">
-      <button @click="createImage(imageURL)">
+      <input v-model="imageName" class="login-input" placeholder="Enter Image Name">
+      <button :disabled="imageURL.length === 0 || imageName.length === 0" @click="createImage(imageURL, imageName)">
         Create New Image
       </button>
       <button @click="toggleImageMenu">
