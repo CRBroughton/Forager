@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { usePocketBase } from '@/pocketbase'
+import { provideSettingsStore } from '@/views/settings/settingsStore'
 
 interface Emits {
   (e: 'close'): void
@@ -7,6 +8,7 @@ interface Emits {
 defineEmits<Emits>()
 
 const { user, setUserLngLat } = usePocketBase()
+const { imagesOpen, toggleImageMenu } = provideSettingsStore()
 
 const lng = ref(user.value?.lng ?? 0)
 const lat = ref(user.value?.lat ?? 0)
@@ -14,9 +16,11 @@ const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 
 </script>
 
 <template>
-  <div class="settings">
-    <div class="settings-inputs">
-      <h1>Settings</h1>
+  <SettingsWrapper>
+    <template #heading>
+      Settings
+    </template>
+    <template #content>
       <p class="w-full text-left">
         Longitude
       </p>
@@ -25,14 +29,20 @@ const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 
         Latitude
       </p>
       <input v-if="user" v-model="lat" placeholder="Latitude">
+    </template>
+    <template #buttons>
+      <button @click="toggleImageMenu">
+        Images
+      </button>
+      <ImageSettings v-if="imagesOpen" />
       <button :class="{ disabled: hasNoLngLat }" :disabled="hasNoLngLat" @click="setUserLngLat()">
         Update Location
       </button>
       <button @click="$emit('close')">
         Close
       </button>
-    </div>
-  </div>
+    </template>
+  </SettingsWrapper>
 </template>
 
 <style scoped lang="scss">
