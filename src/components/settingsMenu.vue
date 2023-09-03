@@ -34,7 +34,9 @@ const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 
       <button @click="toggleImageMenu">
         Images
       </button>
-      <ImageSettings v-if="imagesOpen" />
+      <Transition name="slide">
+        <ImageSettings v-if="imagesOpen" />
+      </Transition>
       <button :class="{ disabled: hasNoLngLat }" :disabled="hasNoLngLat" @click="setUserLngLat()">
         Update Location
       </button>
@@ -92,5 +94,18 @@ button {
 
 .disabled {
   background: red;
+}
+
+.slide-enter-active {
+  transition: all 0.2s ease-out;
+}
+
+.slide-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateX(100%);
 }
 </style>
