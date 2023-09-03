@@ -1,36 +1,9 @@
-<script setup lang="ts">
-import { usePocketBase } from '@/pocketbase'
-
-interface Emits {
-  (e: 'close'): void
-}
-defineEmits<Emits>()
-
-const { user, setUserLngLat } = usePocketBase()
-
-const lng = ref(user.value?.lng ?? 0)
-const lat = ref(user.value?.lat ?? 0)
-const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 0)
-</script>
-
 <template>
   <div class="settings">
     <div class="settings-inputs">
-      <h1>Settings</h1>
-      <p class="w-full text-left">
-        Longitude
-      </p>
-      <input v-if="user" v-model="lng" placeholder="Longitude">
-      <p class="text-left w-full">
-        Latitude
-      </p>
-      <input v-if="user" v-model="lat" placeholder="Latitude">
-      <button :class="{ disabled: hasNoLngLat }" :disabled="hasNoLngLat" @click="setUserLngLat()">
-        Update Location
-      </button>
-      <button @click="$emit('close')">
-        Close
-      </button>
+      <h1><slot name="heading" /></h1>
+      <slot name="content" />
+      <slot name="buttons" />
     </div>
   </div>
 </template>

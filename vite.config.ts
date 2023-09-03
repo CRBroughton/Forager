@@ -14,7 +14,7 @@ export default defineConfig({
   },
   plugins: [
     Vue(),
-    Components({ dts: true }),
+    Components({ dirs: ['src/components', 'src/views'], dts: true }),
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: {

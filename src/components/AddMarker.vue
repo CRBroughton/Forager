@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import MyButton from './BaseButton.vue'
 import { injectMapboxStore } from '@/mapbox'
+import { injectPocketBaseStore } from '@/pocketbase'
 
 interface Props {
   hidden: boolean
@@ -15,6 +16,7 @@ interface Emits {
 }
 
 const { lng, lat, addMarker } = injectMapboxStore()
+const { getAllImages, images } = injectPocketBaseStore()
 const selectedStartMonth = ref('January')
 const selectedEndMonth = ref('December')
 const input = ref('')
@@ -34,7 +36,11 @@ function selectColour(colour: string) {
   selectedColour.value = colour
 }
 
-const imageURL = ref('')
+const imageURL = ref<string | undefined>('')
+
+onMounted(async () => {
+  await getAllImages()
+})
 </script>
 
 <template>
@@ -69,7 +75,7 @@ const imageURL = ref('')
           placeholder="Please Enter Object Name"
           data-test="input-marker-title"
         >
-        <input v-model="imageURL" type="text" class="w-full flex my-5 py-3 shadow-xl border-gray-200 border cursor-pointer outline-none focus:outline-none text-center rounded-xl focus:ring-2 focus:ring-gray-400" placeholder="enter image URL">
+        <ReferenceImages :images="images" @change="imageURL = $event" />
         <div class="month-selector">
           <select v-model="selectedStartMonth" name="start">
             <option v-for="month in months" :key="month" :value="month">
@@ -85,7 +91,7 @@ const imageURL = ref('')
       </div>
 
       <div class="flex m-auto w-full justify-center">
-        <MyButton title="Create" class="mb-1 mr-1" data-test="create-marker" @click="addMarker(lng, lat, input, selectedColour, selectedStartMonth, selectedEndMonth, imageURL)" />
+        <MyButton title="Create" class="mb-1 mr-1" data-test="create-marker" @click="addMarker(lng, lat, input, selectedColour, selectedStartMonth, selectedEndMonth, imageURL!)" />
         <MyButton title="Cancel" class="mb-1 mr-1" data-test="create-marker-close" @click="hide" />
       </div>
     </div>
@@ -93,6 +99,10 @@ const imageURL = ref('')
 </template>
 
 <style scoped lang="scss">
+.marker-container {
+  max-height: 50%;
+
+}
 h1 {
   font-size: 1.2em;
 }
@@ -113,6 +123,8 @@ h1 {
     gap: 1em;
     display: flex;
     flex-direction: column;
+    max-height: 50%;
+    overflow: scroll;
 }
 
 .colour-selector {
