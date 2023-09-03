@@ -13,6 +13,7 @@ declare module 'vue' {
     ImageSettings: typeof import('./src/views/settings/ImageSettings.vue')['default']
     ItemDetails: typeof import('./src/components/ItemDetails.vue')['default']
     LoginForm: typeof import('./src/components/LoginForm.vue')['default']
+    ReferenceImages: typeof import('./src/components/ReferenceImages.vue')['default']
     ServerHealth: typeof import('./src/components/ServerHealth.vue')['default']
     SettingsMenu: typeof import('./src/views/settings/settingsMenu.vue')['default']
     SettingsWrapper: typeof import('./src/views/settings/SettingsWrapper.vue')['default']

@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase'
-import type { ImagesRecord, ItemsRecord, ServicesRecord, UsersRecord } from './pocketbase-types'
-import type { ItemsRecordWithID } from './types'
+import type { ItemsRecord, ServicesRecord, UsersRecord } from './pocketbase-types'
+import type { ImagesRecordWithID, ItemsRecordWithID } from './types'
 
 export const isError = (err: unknown): err is Error => err instanceof Error
 
@@ -20,7 +20,7 @@ export function usePocketBase() {
   const health = ref<healthCheckResponse>()
   const items = ref<ItemsRecordWithID[]>()
   const selectedItemPocketbase = ref<ItemsRecordWithID>()
-  const images = ref<ImagesRecord[]>([])
+  const images = ref<ImagesRecordWithID[]>([])
 
   pb.authStore.onChange(() => user.value = pb.authStore.model)
 
@@ -177,7 +177,7 @@ export function usePocketBase() {
 
   const getAllImages = async () => {
     try {
-      images.value = await pb.collection('images').getFullList<ImagesRecord>()
+      images.value = await pb.collection('images').getFullList<ImagesRecordWithID>()
     }
     catch (error: unknown) {
       // eslint-disable-next-line no-console
@@ -187,7 +187,7 @@ export function usePocketBase() {
 
   const createImage = async (imageURL: string) => {
     try {
-      await pb.collection('images').create<ImagesRecord>({
+      await pb.collection('images').create<ImagesRecordWithID>({
         imageURL,
       })
 
