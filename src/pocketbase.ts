@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase'
 import type { ItemsRecord, ServicesRecord, UsersRecord } from './pocketbase-types'
-import type { ImagesRecordWithID, ItemsRecordWithID } from './types'
+import type { ItemsRecordWithID } from './types'
 
 export const isError = (err: unknown): err is Error => err instanceof Error
 
@@ -20,7 +20,6 @@ export function usePocketBase() {
   const health = ref<healthCheckResponse>()
   const items = ref<ItemsRecordWithID[]>()
   const selectedItemPocketbase = ref<ItemsRecordWithID>()
-  const images = ref<ImagesRecordWithID[]>([])
 
   pb.authStore.onChange(() => user.value = pb.authStore.model)
 
@@ -216,7 +215,6 @@ export function usePocketBase() {
     updateForageDate,
     updateDisclaimerAgreement,
     createImage,
-    images,
   }
 }
 
