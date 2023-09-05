@@ -18,7 +18,6 @@ export function usePocketBase() {
   const passwordConfirm = ref('')
   const isCreatingAccount = ref(false)
   const health = ref<healthCheckResponse>()
-  const items = ref<ItemsRecordWithID[]>()
   const selectedItemPocketbase = ref<ItemsRecordWithID>()
 
   pb.authStore.onChange(() => user.value = pb.authStore.model)
@@ -102,15 +101,15 @@ export function usePocketBase() {
   }
 
   const getItems = async () => {
+    let response: ItemsRecordWithID[] = []
     try {
-      const response = await pb.collection('items').getFullList<ItemsRecordWithID>()
-
-      items.value = response
+      response = await pb.collection('items').getFullList<ItemsRecordWithID>()
     }
     catch (error: unknown) {
       // eslint-disable-next-line no-console
       console.log(error)
     }
+    return response
   }
 
   const getSelectedItem = async (id: string) => {
@@ -191,6 +190,24 @@ export function usePocketBase() {
     }
   }
 
+  const deleteAllMarkers = async (items: ItemsRecordWithID[]) => {
+    const promises: Promise<boolean>[] = []
+    try {
+      // eslint-disable-next-line no-console
+      console.log(items)
+      items.forEach((item) => {
+        promises.push(
+          pb.collection('items').delete(item.id),
+        )
+      })
+      Promise.all(promises)
+    }
+    catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
+  }
+
   return {
     pb,
     user,
@@ -199,7 +216,6 @@ export function usePocketBase() {
     passwordConfirm,
     isCreatingAccount,
     health,
-    items,
     login,
     logout,
     refresh,
@@ -215,6 +231,7 @@ export function usePocketBase() {
     updateForageDate,
     updateDisclaimerAgreement,
     createImage,
+    deleteAllMarkers,
   }
 }
 

@@ -8,7 +8,7 @@ interface Emits {
 defineEmits<Emits>()
 
 const { user, setUserLngLat } = usePocketBase()
-const { imagesOpen, toggleImageMenu } = provideSettingsStore()
+const { imagesOpen, toggleImageMenu, accountSettingsOpen, toggleAccountMenu } = provideSettingsStore()
 
 const lng = ref(user.value?.lng ?? 0)
 const lat = ref(user.value?.lat ?? 0)
@@ -31,6 +31,12 @@ const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 
       <input v-if="user" v-model="lat" placeholder="Latitude">
     </template>
     <template #buttons>
+      <button @click="toggleAccountMenu">
+        Account
+      </button>
+      <Transition name="slide">
+        <AccountSettings v-if="accountSettingsOpen" />
+      </Transition>
       <button @click="toggleImageMenu">
         Images
       </button>

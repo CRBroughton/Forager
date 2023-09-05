@@ -22,6 +22,7 @@ export function mapBoxStore(vars?: Mapbox) {
   const markerUIHidden = ref(true)
   const selectedItem = ref()
   const detailsHidden = ref(true)
+  const items = ref<ItemsRecordWithID[]>([])
 
   const translateItemToLayerItem = (items: ItemsRecordWithID[]) => {
     const records = ref<Feature[]>([])
@@ -45,9 +46,9 @@ export function mapBoxStore(vars?: Mapbox) {
     return records.value
   }
   const addinitMarkers = async () => {
-    const { items, getItems } = usePocketBase()
+    const { getItems } = usePocketBase()
 
-    await getItems()
+    items.value = await getItems()
 
     const itemLayer = ref<Feature[]>([])
 
@@ -113,7 +114,7 @@ export function mapBoxStore(vars?: Mapbox) {
 
   const addMarker = async (lng: number, lat: number, name: string, colour: string, startMonth: string, endMonth: string, imageURL: string) => {
     // Create a new marker.
-    const { items, createItem, user } = usePocketBase()
+    const { createItem, user } = usePocketBase()
 
     const newItem = {
       date: new Date().toISOString(),
@@ -147,7 +148,7 @@ export function mapBoxStore(vars?: Mapbox) {
   }
 
   const deleteMarker = async (id: string) => {
-    const { items, getItems, deleteItem } = usePocketBase()
+    const { getItems, deleteItem } = usePocketBase()
 
     await deleteItem(id)
 
@@ -183,6 +184,7 @@ export function mapBoxStore(vars?: Mapbox) {
     markerUIHidden,
     selectedItem,
     deleteMarker,
+    items,
   }
 }
 
