@@ -6,6 +6,8 @@ import { injectMapboxStore } from '@/mapbox'
 const { toggleAccountMenu } = injectSettingsStore()
 const { deleteAllMarkers } = injectPocketBaseStore()
 const { items } = injectMapboxStore()
+
+const confirmDeletion = ref(false)
 </script>
 
 <template>
@@ -14,8 +16,14 @@ const { items } = injectMapboxStore()
       Account
     </template>
     <template #buttons>
-      <button @click="deleteAllMarkers(items)">
+      <button v-if="!confirmDeletion" @click="confirmDeletion = !confirmDeletion">
         Delete All Markers
+      </button>
+      <button v-if="confirmDeletion" @click="deleteAllMarkers(items)">
+        Delete All Markers (Confirm)
+      </button>
+      <button v-if="confirmDeletion" @click="confirmDeletion = !confirmDeletion">
+        Cancel Deletion (Go Back)
       </button>
       <button @click="toggleAccountMenu">
         Return to main menu

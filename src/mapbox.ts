@@ -114,7 +114,7 @@ export function mapBoxStore(vars?: Mapbox) {
 
   const addMarker = async (lng: number, lat: number, name: string, colour: string, startMonth: string, endMonth: string, imageURL: string) => {
     // Create a new marker.
-    const { createItem, user } = usePocketBase()
+    const { createItem, getItems, user } = usePocketBase()
 
     const newItem = {
       date: new Date().toISOString(),
@@ -130,6 +130,7 @@ export function mapBoxStore(vars?: Mapbox) {
     }
 
     await createItem(newItem)
+    items.value = await getItems()
 
     // Get the GeoJSON source by ID
     const source = map?.getSource('items') as mapboxgl.GeoJSONSource
@@ -152,7 +153,7 @@ export function mapBoxStore(vars?: Mapbox) {
 
     await deleteItem(id)
 
-    await getItems()
+    items.value = await getItems()
 
     const itemLayer = ref<Feature[]>([])
 

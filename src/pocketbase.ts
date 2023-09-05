@@ -126,7 +126,6 @@ export function usePocketBase() {
   const createItem = async (data: ItemsRecord) => {
     try {
       await pb.collection('items').create(data)
-      await getItems()
     }
     catch (error: unknown) {
       // eslint-disable-next-line no-console
