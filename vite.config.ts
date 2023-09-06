@@ -25,7 +25,7 @@ export default defineConfig({
         name: 'Forager',
         short_name: 'Forager',
         theme_color: '#d3fcd9',
-        background_color: '#fafafa',
+        background_color: '#d3fcd9',
         display: 'standalone',
         scope: './',
         start_url: './',
