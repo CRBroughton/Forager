@@ -31,8 +31,8 @@ export default defineConfig({
         start_url: './',
         icons: [
           {
-            src: 'manifest-icon-192.maskable.png',
-            sizes: '192x192',
+            src: 'assets/manifest-icon-512.maskable.png',
+            sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable any',
           },
