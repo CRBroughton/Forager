@@ -39,7 +39,7 @@ const imageURL = ref<string | undefined>('')
 </script>
 
 <template>
-  <div v-if="!hidden" class="add-item">
+  <div v-if="!hidden" class="absolute m-auto bottom-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-lg w-[calc(100% - 1em)] mx-4 rounded-tr-xl rounded-tl-xl p-4 max-h-[45%] overflow-scroll">
     <div class="max-w-sm flex flex-col m-auto rounded-xl">
       <h1>Create new item</h1>
       <div class="m-auto items-center w-full">
@@ -104,27 +104,6 @@ const imageURL = ref<string | undefined>('')
 h1 {
   font-size: 1.2em;
 }
-.add-item {
-    z-index: 10;
-    min-width: calc(100% - 1em);
-    height: auto;
-    background: rgba(255,255,255,0.3);
-    backdrop-filter: blur(20px);
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
-    padding: 1em;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    gap: 1em;
-    display: flex;
-    flex-direction: column;
-    max-height: 50%;
-    overflow: scroll;
-}
-
 .colour-selector {
   display: flex;
   gap: .5em;
