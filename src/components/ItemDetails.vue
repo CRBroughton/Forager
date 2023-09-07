@@ -48,15 +48,15 @@ const previewImg = computed(() => {
       <p>End Month: {{ selectedItemPocketbase.endMonth || 'Not Set' }}</p>
     </div>
     <div class="item-detail-buttons">
-      <button @click="deleteItem">
+      <BaseButton @click="deleteItem">
         Delete
-      </button>
-      <button @click="updateForageDate">
+      </BaseButton>
+      <BaseButton @click="updateForageDate">
         Forage Now
-      </button>
-      <button @click="clearSelected">
+      </BaseButton>
+      <BaseButton @click="clearSelected">
         Close
-      </button>
+      </BaseButton>
     </div>
   </div>
 </template>
@@ -117,17 +117,6 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 1em;
-}
-
-button {
-  background: white;
-  padding: 1em 1.2em;
-  border-radius: 15px;
-  width: 100%;
-
-  &:hover {
-    background: rgb(240, 240, 240);
-  }
 }
 
 .item-forage-details {

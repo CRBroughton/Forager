@@ -42,17 +42,6 @@ input {
     width: 100%;
 }
 
-button {
-  background: white;
-  padding: 1em 1.2em;
-  border-radius: 15px;
-  width: 100%;
-
-  &:hover {
-    background: rgb(240, 240, 240);
-  }
-}
-
 .disabled {
   background: red;
 }

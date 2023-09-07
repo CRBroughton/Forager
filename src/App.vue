@@ -55,30 +55,30 @@ async function agree() {
         v-if="isCreatingAccount"
         v-model="passwordConfirm" class="login-button" placeholder="confirm password"
       >
-      <button v-if="!isCreatingAccount" class="login-button" @click="loginInUser()">
+      <BaseButton v-if="!isCreatingAccount" @click="loginInUser()">
         Login
-      </button>
-      <button v-if="!isCreatingAccount && canCreateAccounts" class="login-button" @click="isCreatingAccount = !isCreatingAccount">
+      </BaseButton>
+      <BaseButton v-if="!isCreatingAccount && canCreateAccounts" @click="isCreatingAccount = !isCreatingAccount">
         Create New Account
-      </button>
-      <button v-if="isCreatingAccount" class="login-button" @click="createAccount()">
+      </BaseButton>
+      <BaseButton v-if="isCreatingAccount" @click="createAccount()">
         Create Account
-      </button>
-      <button
+      </BaseButton>
+      <BaseButton
         v-if="isCreatingAccount"
-        class="login-button" @click="isCreatingAccount = !isCreatingAccount
+        @click="isCreatingAccount = !isCreatingAccount
         "
       >
         Back
-      </button>
+      </BaseButton>
     </LoginForm>
   </div>
   <div v-if="user && !user.disclaimerAgreed" class="login">
     <LoginForm>
       <Disclaimer />
-      <button class="login-button" @click="agree">
+      <BaseButton @click="agree">
         I understand
-      </button>
+      </BaseButton>
     </LoginForm>
   </div>
   <div v-if="user && user.disclaimerAgreed">
@@ -132,18 +132,6 @@ async function agree() {
     border-radius: 10px;
     width: 100%;
 }
-
-.login-button {
-  background: white;
-  padding: 1em 1.2em;
-  border-radius: 15px;
-  width: 100%;
-
-  &:hover {
-    background: rgb(240, 240, 240);
-  }
-}
-
 .slide-enter-active {
   transition: all 0.2s ease-out;
 }

@@ -16,18 +16,18 @@ const confirmDeletion = ref(false)
       Account
     </template>
     <template #buttons>
-      <button v-if="!confirmDeletion" @click="confirmDeletion = !confirmDeletion">
+      <BaseButton v-if="!confirmDeletion" @click="confirmDeletion = !confirmDeletion">
         Delete All Markers
-      </button>
-      <button v-if="confirmDeletion" @click="deleteAllMarkers(items)">
+      </BaseButton>
+      <BaseButton v-if="confirmDeletion" @click="deleteAllMarkers(items)">
         Delete All Markers (Confirm)
-      </button>
-      <button v-if="confirmDeletion" @click="confirmDeletion = !confirmDeletion">
+      </BaseButton>
+      <BaseButton v-if="confirmDeletion" @click="confirmDeletion = !confirmDeletion">
         Cancel Deletion (Go Back)
-      </button>
-      <button @click="toggleAccountMenu">
+      </BaseButton>
+      <BaseButton @click="toggleAccountMenu">
         Return to main menu
-      </button>
+      </BaseButton>
     </template>
   </SettingsWrapper>
 </template>
@@ -59,17 +59,6 @@ const confirmDeletion = ref(false)
 
   svg {
     color: white;
-  }
-}
-
-button {
-  background: white;
-  padding: 1em 1.2em;
-  border-radius: 15px;
-  width: 100%;
-
-  &:hover {
-    background: rgb(240, 240, 240);
   }
 }
 </style>

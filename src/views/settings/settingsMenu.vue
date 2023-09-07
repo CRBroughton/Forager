@@ -31,24 +31,24 @@ const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 
       <input v-if="user" v-model="lat" placeholder="Latitude">
     </template>
     <template #buttons>
-      <button @click="toggleAccountMenu">
+      <BaseButton @click="toggleAccountMenu">
         Account
-      </button>
+      </BaseButton>
       <Transition name="slide">
         <AccountSettings v-if="accountSettingsOpen" />
       </Transition>
-      <button @click="toggleImageMenu">
+      <BaseButton @click="toggleImageMenu">
         Images
-      </button>
+      </BaseButton>
       <Transition name="slide">
         <ImageSettings v-if="imagesOpen" />
       </Transition>
-      <button :class="{ disabled: hasNoLngLat }" :disabled="hasNoLngLat" @click="setUserLngLat()">
+      <BaseButton :class="{ disabled: hasNoLngLat }" :disabled="hasNoLngLat" @click="setUserLngLat()">
         Update Location
-      </button>
-      <button @click="$emit('close')">
+      </BaseButton>
+      <BaseButton @click="$emit('close')">
         Close
-      </button>
+      </BaseButton>
     </template>
   </SettingsWrapper>
 </template>
@@ -85,17 +85,6 @@ input {
     padding: 1em;
     border-radius: 10px;
     width: 100%;
-}
-
-button {
-  background: white;
-  padding: 1em 1.2em;
-  border-radius: 15px;
-  width: 100%;
-
-  &:hover {
-    background: rgb(240, 240, 240);
-  }
 }
 
 .disabled {

@@ -25,12 +25,12 @@ const imageName = ref('')
     <template #buttons>
       <input v-model="imageURL" class="login-input" placeholder="Enter Image URL">
       <input v-model="imageName" class="login-input" placeholder="Enter Image Name">
-      <button :disabled="imageURL.length === 0 || imageName.length === 0" @click="createImage({ name: imageName, url: imageURL })">
+      <BaseButton :disabled="imageURL.length === 0 || imageName.length === 0" @click="createImage({ name: imageName, url: imageURL })">
         Create New Image
-      </button>
-      <button @click="toggleImageMenu">
+      </BaseButton>
+      <BaseButton @click="toggleImageMenu">
         Return to main menu
-      </button>
+      </BaseButton>
     </template>
   </SettingsWrapper>
 </template>
@@ -62,17 +62,6 @@ const imageName = ref('')
 
   svg {
     color: white;
-  }
-}
-
-button {
-  background: white;
-  padding: 1em 1.2em;
-  border-radius: 15px;
-  width: 100%;
-
-  &:hover {
-    background: rgb(240, 240, 240);
   }
 }
 </style>

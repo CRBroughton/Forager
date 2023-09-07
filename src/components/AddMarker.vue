@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import MyButton from './BaseButton.vue'
 import { injectMapboxStore } from '@/mapbox'
 import { injectPocketBaseStore } from '@/pocketbase'
 
@@ -85,10 +84,13 @@ const imageURL = ref<string | undefined>('')
           </select>
         </div>
       </div>
-
-      <div class="flex m-auto w-full justify-center">
-        <MyButton title="Create" class="mb-1 mr-1" data-test="create-marker" @click="addMarker(lng, lat, input, selectedColour, selectedStartMonth, selectedEndMonth, imageURL!)" />
-        <MyButton title="Cancel" class="mb-1 mr-1" data-test="create-marker-close" @click="hide" />
+      <div class="flex gap-4 m-auto w-full justify-center">
+        <BaseButton @click="addMarker(lng, lat, input, selectedColour, selectedStartMonth, selectedEndMonth, imageURL!)">
+          Create
+        </BaseButton>
+        <BaseButton @click="hide">
+          Cancel
+        </BaseButton>
       </div>
     </div>
   </div>
