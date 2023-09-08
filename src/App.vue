@@ -86,7 +86,7 @@ async function agree() {
       id="map"
     />
     <Transition name="slide">
-      <SettingsMenu v-show="settingsMenu" @close="closeSettingsMenu" />
+      <SettingsMenu v-if="settingsMenu" @close="closeSettingsMenu" />
     </Transition>
     <ServerHealth />
     <SideMenu

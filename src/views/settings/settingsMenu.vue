@@ -35,13 +35,13 @@ const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 
         Account
       </BaseButton>
       <Transition name="slide">
-        <AccountSettings v-show="accountSettingsOpen" />
+        <AccountSettings v-if="accountSettingsOpen" />
       </Transition>
       <BaseButton @click="toggleImageMenu">
         Images
       </BaseButton>
       <Transition name="slide">
-        <ImageSettings v-show="imagesOpen" />
+        <ImageSettings v-if="imagesOpen" />
       </Transition>
       <BaseButton :class="{ disabled: hasNoLngLat }" :disabled="hasNoLngLat" @click="setUserLngLat()">
         Update Location
