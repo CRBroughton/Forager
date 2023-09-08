@@ -144,14 +144,10 @@ export function usePocketBase() {
     }
   }
 
-  const updateForageDate = async () => {
+  const updateForageDate = async (id: string) => {
     try {
-      selectedItemPocketbase.value = {
-        ...selectedItemPocketbase.value!,
+      selectedItemPocketbase.value = await pb.collection('items').update<ItemsRecordWithID>(id, {
         lastForaged: new Date().toISOString(),
-      }
-      await pb.collection('items').update<ItemsRecordWithID>(selectedItemPocketbase.value!.id, {
-        ...selectedItemPocketbase.value!,
       })
     }
     catch (error: unknown) {

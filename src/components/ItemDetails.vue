@@ -2,7 +2,7 @@
 import { injectMapboxStore } from '@/mapbox'
 import { injectPocketBaseStore } from '@/pocketbase'
 
-const { selectedItem, deleteMarker } = injectMapboxStore()
+const { selectedItem, deleteMarker, updateMarkerLayer } = injectMapboxStore()
 
 const { getSelectedItem, selectedItemPocketbase, updateForageDate } = injectPocketBaseStore()
 
@@ -20,6 +20,13 @@ function deleteItem() {
   if (selectedItemPocketbase.value) {
     deleteMarker(selectedItemPocketbase.value.id)
     clearSelected()
+  }
+}
+
+async function forageItem() {
+  if (selectedItemPocketbase.value) {
+    await updateForageDate(selectedItemPocketbase.value.id)
+    await updateMarkerLayer()
   }
 }
 
@@ -51,7 +58,7 @@ const previewImg = computed(() => {
       <BaseButton @click="deleteItem">
         Delete
       </BaseButton>
-      <BaseButton @click="updateForageDate">
+      <BaseButton @click="forageItem">
         Forage Now
       </BaseButton>
       <BaseButton @click="clearSelected">

@@ -26,14 +26,17 @@ export function mapBoxStore(vars?: Mapbox) {
 
   const translateItemToLayerItem = (items: ItemsRecordWithID[]) => {
     const records = ref<Feature[]>([])
+
+    const todaysDate = new Date().toLocaleDateString()
     items?.forEach((item) => {
+      const foragedDate = new Date(item.lastForaged!).toLocaleDateString()
       if (item.lng && item.lat && item.name) {
         records.value.push({
           type: 'Feature',
           properties: {
             id: item.id,
             description: item.name,
-            colour: item.colour,
+            colour: todaysDate === foragedDate ? 'gray' : item.colour,
           },
           geometry: {
             type: 'Point',
@@ -118,7 +121,7 @@ export function mapBoxStore(vars?: Mapbox) {
 
     const newItem = {
       date: new Date().toISOString(),
-      lastForaged: new Date().toISOString(),
+      lastForaged: undefined,
       lng,
       lat,
       name,
@@ -169,6 +172,24 @@ export function mapBoxStore(vars?: Mapbox) {
     })
   }
 
+  const updateMarkerLayer = async () => {
+    const { getItems } = usePocketBase()
+
+    items.value = await getItems()
+
+    const itemLayer = ref<Feature[]>([])
+
+    const source = map?.getSource('items') as mapboxgl.GeoJSONSource
+
+    if (items.value)
+      itemLayer.value = translateItemToLayerItem(items.value)
+
+    source.setData({
+      type: 'FeatureCollection',
+      features: itemLayer.value,
+    })
+  }
+
   const returnHome = () => {
     const { user } = usePocketBase()
     map?.flyTo({ center: [user.value?.lng, user.value?.lat], zoom: 14 })
@@ -186,6 +207,7 @@ export function mapBoxStore(vars?: Mapbox) {
     selectedItem,
     deleteMarker,
     items,
+    updateMarkerLayer,
   }
 }
 
