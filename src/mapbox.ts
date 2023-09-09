@@ -27,16 +27,29 @@ export function mapBoxStore(vars?: Mapbox) {
   const translateItemToLayerItem = (items: ItemsRecordWithID[]) => {
     const records = ref<Feature[]>([])
 
-    const todaysDate = new Date().toLocaleDateString()
-    items?.forEach((item) => {
+    const setItemForageColour = (item: ItemsRecordWithID) => {
+      const today = new Date().toLocaleDateString()
       const foragedDate = new Date(item.lastForaged!).toLocaleDateString()
+
+      if (item.colour && foragedDate !== today)
+        return item.colour
+
+      if (item.lastForaged) {
+        if (today === foragedDate)
+          return 'gray'
+      }
+
+      return 'gray'
+    }
+
+    items?.forEach((item) => {
       if (item.lng && item.lat && item.name) {
         records.value.push({
           type: 'Feature',
           properties: {
             id: item.id,
             description: item.name,
-            colour: todaysDate === foragedDate ? 'gray' : item.colour,
+            colour: setItemForageColour(item),
           },
           geometry: {
             type: 'Point',
