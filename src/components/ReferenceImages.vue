@@ -7,6 +7,7 @@ interface Emits {
 
 interface Props {
   images: UserImage[]
+  new: boolean
 }
 
 const props = defineProps<Props>()
@@ -21,6 +22,7 @@ function selectImage(image: UserImage) {
 
 <template>
   <div class="images-container">
+    <slot />
     <div v-for="image in props.images" :key="image.url" class="image-container">
       <img class="image-icon" :class="{ selected: selectedImage?.url === image.url }" :src="image.url" @click="selectImage(image)">
       {{ image.name }}
