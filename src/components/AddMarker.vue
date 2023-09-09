@@ -21,6 +21,7 @@ const selectedStartMonth = ref('January')
 const selectedEndMonth = ref('December')
 const input = ref('')
 function hide() {
+  input.value = ''
   emits('hide')
 }
 
