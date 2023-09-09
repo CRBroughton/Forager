@@ -16,7 +16,7 @@ const sideMenuHidden = ref(true)
 </script>
 
 <template>
-  <div class="absolute top-2 right-2 w-50 flex">
+  <div class="absolute top-0 right-0 w-50 flex overflow-hidden p-2">
     <Transition name="slide">
       <div
         v-if="sideMenuHidden"
@@ -41,7 +41,7 @@ const sideMenuHidden = ref(true)
       </div>
     </Transition>
   </div>
-  <div class="absolute top-2 right-2 w-50 flex flex-col">
+  <div class="absolute top-0 right-0 w-50 flex flex-col overflow-hidden p-2">
     <Transition name="slide">
       <div
         v-if="!sideMenuHidden"
