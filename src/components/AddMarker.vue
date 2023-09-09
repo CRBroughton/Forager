@@ -49,7 +49,7 @@ function setSelectedItem(event: UserImage) {
 </script>
 
 <template>
-  <div v-if="!hidden" class="absolute m-auto bottom-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-lg w-[calc(100% - 1em)] mx-4 rounded-tr-xl rounded-tl-xl p-4 max-h-[45%] overflow-scroll md:bottom-2 md:left-2 md:w-2/3 md:h-auto  md:rounded-br-xl md:rounded-bl-xl md:overflow-visible md:max-h-fit md:px-0 md:m-0 md:max-w-md">
+  <div v-if="!hidden" class="absolute overflow-scroll m-auto bottom-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-lg w-[calc(100% - 1em)] mx-4 rounded-tr-xl rounded-tl-xl p-4 max-h-[45%]  md:bottom-2 md:left-2 md:w-2/3 md:h-auto  md:rounded-br-xl md:rounded-bl-xl md:px-0 md:m-0 md:max-w-md md:max-h-[50%] md:overflow-scroll">
     <div class="max-w-sm flex flex-col m-auto rounded-xl md:max-w-none md:mx-4">
       <div class="flex">
         <h1>Create new item</h1>
