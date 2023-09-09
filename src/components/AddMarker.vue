@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { injectMapboxStore } from '@/mapbox'
 import { injectPocketBaseStore } from '@/pocketbase'
+import type { UserImage } from '@/types'
 
 interface Props {
   hidden: boolean
@@ -36,6 +37,11 @@ function selectColour(colour: string) {
 }
 
 const imageURL = ref<string | undefined>('')
+
+function setSelectedItem(event: UserImage) {
+  imageURL.value = event.url
+  input.value = event.name
+}
 </script>
 
 <template>
@@ -70,7 +76,7 @@ const imageURL = ref<string | undefined>('')
           placeholder="Please Enter Object Name"
           data-test="input-marker-title"
         >
-        <ReferenceImages :images="user?.images" @change="imageURL = $event" />
+        <ReferenceImages :images="user?.images" @change="setSelectedItem" />
         <div class="month-selector">
           <select v-model="selectedStartMonth" name="start">
             <option v-for="month in months" :key="month" :value="month">

@@ -53,7 +53,7 @@ async function agree() {
       <input v-model="password" class="login-input" type="password" placeholder="enter password">
       <input
         v-if="isCreatingAccount"
-        v-model="passwordConfirm" class="login-button" placeholder="confirm password"
+        v-model="passwordConfirm" class="login-input" placeholder="confirm password" type="password"
       >
       <BaseButton v-if="!isCreatingAccount" @click="loginInUser()">
         Login
