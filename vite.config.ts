@@ -1,14 +1,10 @@
-import { defineConfig } from 'vitest/config'
 import Vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
-  test: {
-    globals: true,
-    environment: 'happy-dom',
-  },
   server: {
     port: 4000,
   },
