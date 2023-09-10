@@ -11,3 +11,6 @@ db/pocketbase
 db/forager
 db/pb_data
 .env
+**/*.exe
+**/*.zip
+db/forager
