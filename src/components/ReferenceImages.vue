@@ -51,7 +51,7 @@ const isSliced = ref(true)
       </div>
     </Transition>
   </div>
-  <div class="w-full bg-white flex my-4 justify-center items-center rounded-xl" @click="isSliced = !isSliced">
+  <div v-if="props.images.length > 5" class="w-full bg-white flex my-4 justify-center items-center rounded-xl" @click="isSliced = !isSliced">
     <svg v-if="isSliced" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6l-6-6l1.41-1.42Z" /></svg>
 
     <svg v-if="!isSliced" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6l-6 6l1.41 1.41Z" /></svg>
