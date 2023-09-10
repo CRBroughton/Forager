@@ -17,6 +17,7 @@ func init() {
 			Name:     "Services",
 			Type:     models.CollectionTypeBase,
 			ViewRule: types.Pointer(""),
+			ListRule: types.Pointer(""),
 			System:   false,
 			Schema: schema.NewSchema(
 				&schema.SchemaField{

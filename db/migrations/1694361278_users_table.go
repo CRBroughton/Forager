@@ -21,7 +21,7 @@ func init() {
 			&schema.SchemaField{
 				Name:     "lng",
 				Type:     schema.FieldTypeNumber,
-				Required: true,
+				Required: false,
 				System:   false,
 			},
 		)
@@ -30,7 +30,7 @@ func init() {
 			&schema.SchemaField{
 				Name:     "lat",
 				Type:     schema.FieldTypeNumber,
-				Required: true,
+				Required: false,
 				System:   false,
 			},
 		)
@@ -39,7 +39,7 @@ func init() {
 			&schema.SchemaField{
 				Name:     "disclaimerAgreed",
 				Type:     schema.FieldTypeBool,
-				Required: true,
+				Required: false,
 				System:   false,
 			},
 		)
@@ -48,7 +48,7 @@ func init() {
 			&schema.SchemaField{
 				Name:     "images",
 				Type:     schema.FieldTypeJson,
-				Required: true,
+				Required: false,
 				System:   false,
 			},
 		)

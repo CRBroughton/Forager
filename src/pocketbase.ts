@@ -54,6 +54,7 @@ export function usePocketBase() {
         username: username.value,
         password: password.value,
         passwordConfirm: passwordConfirm.value,
+        images: [],
       })
 
       await login()
