@@ -13,7 +13,7 @@ func init() {
 	m.Register(func(db dbx.Builder) error {
 		dao := daos.New(db)
 
-		ownerOnly := types.Pointer("@request.auth.id != '' && owners.id ?= @request.auth.id")
+		ownerOnly := types.Pointer("@request.auth.id != '' && owner.id ?= @request.auth.id")
 		usersCollection, err := dao.FindCollectionByNameOrId("users")
 
 		if err != nil {
