@@ -19,9 +19,12 @@ const { lng, lat, addMarker } = injectMapboxStore()
 const { user } = injectPocketBaseStore()
 const selectedStartMonth = ref('January')
 const selectedEndMonth = ref('December')
+const creatingNewItem = ref(false)
+
 const input = ref('')
 function hide() {
   input.value = ''
+  creatingNewItem.value = false
   emits('hide')
 }
 
@@ -46,50 +49,66 @@ function setSelectedItem(event: UserImage) {
 </script>
 
 <template>
-  <div v-if="!hidden" class="absolute m-auto bottom-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-lg w-[calc(100% - 1em)] mx-4 rounded-tr-xl rounded-tl-xl p-4 max-h-[45%] overflow-scroll md:bottom-2 md:left-2 md:w-2/3 md:h-auto  md:rounded-br-xl md:rounded-bl-xl md:overflow-visible md:max-h-fit md:px-0 md:m-0 md:max-w-md">
+  <div v-if="!hidden" class="absolute overflow-scroll m-auto bottom-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-lg w-[calc(100% - 1em)] mx-4 rounded-tr-xl rounded-tl-xl p-4 max-h-[45%]  md:bottom-2 md:left-2 md:w-2/3 md:h-auto  md:rounded-br-xl md:rounded-bl-xl md:px-0 md:m-0 md:max-w-md md:max-h-[50%] md:overflow-scroll">
     <div class="max-w-sm flex flex-col m-auto rounded-xl md:max-w-none md:mx-4">
-      <h1>Create new item</h1>
-      <div class="m-auto items-center w-full">
-        <div class="my-2">
-          Selected Colour: {{
-            selectedColour.length > 0 ? selectedColour : 'None selected'
-          }}
+      <div class="flex">
+        <h1>Create new item</h1>
+        <div v-if="creatingNewItem" class="ml-auto bg-white rounded-full" @click="creatingNewItem = !creatingNewItem">
+          <svg class="text-gray-500" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6l6 6l1.41-1.42Z" /></svg>
         </div>
-        <div class="colour-selector">
-          <div
-            v-for="colour in colours"
-            :key="colour"
-            class="colour-choice"
-            :class="{ disabled: selectedColour.length > 0 }"
-            :disabled="selectedColour.length > 0"
-            @click="selectColour(colour)"
-          >
-            <div
-              class="colour-dot"
-              :style="{ background: colour }"
-            />
+      </div>
+      <div class="m-auto items-center w-full overflow-hidden">
+        <Transition name="slide" mode="out-in">
+          <div v-if="!creatingNewItem">
+            <ReferenceImages :new="creatingNewItem" :images="user?.images" @change="setSelectedItem">
+              <div class="h-16 w-16 min-w-[4rem] min-h-[4rem] bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer text-gray-500" @click="creatingNewItem = !creatingNewItem">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2Z" /></svg>
+              </div>
+            </ReferenceImages>
           </div>
-        </div>
-        <input
-          v-model="input"
-          type="text"
-          class="w-full flex my-5 py-3 shadow-xl border-gray-200 border cursor-pointer outline-none focus:outline-none text-center rounded-xl focus:ring-2 focus:ring-gray-400"
-          placeholder="Please Enter Object Name"
-          data-test="input-marker-title"
-        >
-        <ReferenceImages :images="user?.images" @change="setSelectedItem" />
-        <div class="month-selector">
-          <select v-model="selectedStartMonth" name="start">
-            <option v-for="month in months" :key="month" :value="month">
-              {{ month }}
-            </option>
-          </select>
-          <select v-model="selectedEndMonth" name="end">
-            <option v-for="month in months" :key="month" :value="month">
-              {{ month }}
-            </option>
-          </select>
-        </div>
+
+          <div v-else-if="creatingNewItem">
+            <div class="my-2">
+              Selected Colour: {{
+                selectedColour.length > 0 ? selectedColour : 'None selected'
+              }}
+            </div>
+            <div class="colour-selector">
+              <div
+                v-for="colour in colours"
+                :key="colour"
+                class="colour-choice"
+                :class="{ disabled: selectedColour.length > 0 }"
+                :disabled="selectedColour.length > 0"
+                @click="selectColour(colour)"
+              >
+                <div
+                  class="colour-dot"
+                  :style="{ background: colour }"
+                />
+              </div>
+            </div>
+            <input
+              v-model="input"
+              type="text"
+              class="w-full flex my-5 py-3 shadow-xl border-gray-200 border cursor-pointer outline-none focus:outline-none text-center rounded-xl focus:ring-2 focus:ring-gray-400"
+              placeholder="Please Enter Object Name"
+              data-test="input-marker-title"
+            >
+            <div class="month-selector">
+              <select v-model="selectedStartMonth" name="start">
+                <option v-for="month in months" :key="month" :value="month">
+                  {{ month }}
+                </option>
+              </select>
+              <select v-model="selectedEndMonth" name="end">
+                <option v-for="month in months" :key="month" :value="month">
+                  {{ month }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </Transition>
       </div>
       <div class="flex gap-4 m-auto w-full justify-center">
         <BaseButton @click="addMarker(lng, lat, input, selectedColour, selectedStartMonth, selectedEndMonth, imageURL!)">
@@ -150,5 +169,18 @@ h1 {
     padding: 1em 0.8em;
     border-radius: 10px;
   }
+}
+
+.slide-enter-active {
+  transition: all 0.2s ease-out;
+}
+
+.slide-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateY(100%);
 }
 </style>

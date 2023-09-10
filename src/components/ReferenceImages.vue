@@ -7,6 +7,7 @@ interface Emits {
 
 interface Props {
   images: UserImage[]
+  new: boolean
 }
 
 const props = defineProps<Props>()
@@ -17,14 +18,43 @@ function selectImage(image: UserImage) {
   selectedImage.value = image
   emit('change', image)
 }
+
+const isSliced = ref(true)
 </script>
 
 <template>
-  <div class="images-container">
-    <div v-for="image in props.images" :key="image.url" class="image-container">
-      <img class="image-icon" :class="{ selected: selectedImage?.url === image.url }" :src="image.url" @click="selectImage(image)">
-      {{ image.name }}
-    </div>
+  <div class="overflow-hidden">
+    <Transition name="slide" mode="out-in">
+      <div v-if="!isSliced">
+        <div class="grid gap-4 grid-cols-3 my-4">
+          <div class="flex flex-col justify-center items-center">
+            <slot />
+            <p>Create</p>
+          </div>
+          <div v-for="image in props.images" :key="image.url" class="flex flex-col justify-center items-center">
+            <img class="image-icon" :class="{ selected: selectedImage?.url === image.url }" :src="image.url" @click="selectImage(image)">
+            {{ image.name }}
+          </div>
+        </div>
+      </div>
+      <div v-else-if="isSliced">
+        <div class="grid gap-4 grid-cols-3 my-4">
+          <div class="flex flex-col justify-center items-center">
+            <slot />
+            <p>Create</p>
+          </div>
+          <div v-for="image in props.images.slice(0, 5)" :key="image.url" class="flex flex-col justify-center items-center">
+            <img class="image-icon" :class="{ selected: selectedImage?.url === image.url }" :src="image.url" @click="selectImage(image)">
+            {{ image.name }}
+          </div>
+        </div>
+      </div>
+    </Transition>
+  </div>
+  <div class="w-full bg-white flex my-4 justify-center items-center rounded-xl" @click="isSliced = !isSliced">
+    <svg v-if="isSliced" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6l-6-6l1.41-1.42Z" /></svg>
+
+    <svg v-if="!isSliced" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6l-6 6l1.41 1.41Z" /></svg>
   </div>
 </template>
 
@@ -54,5 +84,18 @@ function selectImage(image: UserImage) {
 
 .selected {
     outline: 3px solid blue;
+}
+
+.slide-enter-active {
+  transition: all 0.2s ease-out;
+}
+
+.slide-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateY(100%);
 }
 </style>

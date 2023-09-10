@@ -11,18 +11,14 @@ const imageName = ref('')
 
 <template>
   <SettingsWrapper style="background: #d3fcd9;">
-    <template #heading>
+    <div class="settings-inputs">
       Images
-    </template>
-    <template #content>
-      <div class="image-grid">
-        <div v-for="image in user?.images" :key="image">
+      <div class="grid grid-cols-3 gap-4">
+        <div v-for="image in user?.images" :key="image" class="flex flex-col items-center justify-center">
           <img v-if="image" class="add-new-image" :src="image.url">
           <p>{{ image.name }}</p>
         </div>
       </div>
-    </template>
-    <template #buttons>
       <input v-model="imageURL" class="login-input" placeholder="Enter Image URL">
       <input v-model="imageName" class="login-input" placeholder="Enter Image Name">
       <BaseButton :disabled="imageURL.length === 0 || imageName.length === 0" @click="createImage({ name: imageName, url: imageURL })">
@@ -31,11 +27,22 @@ const imageName = ref('')
       <BaseButton @click="toggleImageMenu">
         Return to main menu
       </BaseButton>
-    </template>
+    </div>
   </SettingsWrapper>
 </template>
 
 <style scoped lang="scss">
+.settings-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    justify-content: center;
+    align-items: center;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 1em;
+    min-height: 100vh;
+}
 .login-input {
     height: 50px;
     padding: 1em;

@@ -12,10 +12,8 @@ const confirmDeletion = ref(false)
 
 <template>
   <SettingsWrapper style="background: #d3fcd9;">
-    <template #heading>
+    <div class="settings-inputs">
       Account
-    </template>
-    <template #buttons>
       <BaseButton v-if="!confirmDeletion" @click="confirmDeletion = !confirmDeletion">
         Delete All Markers
       </BaseButton>
@@ -28,11 +26,22 @@ const confirmDeletion = ref(false)
       <BaseButton @click="toggleAccountMenu">
         Return to main menu
       </BaseButton>
-    </template>
+    </div>
   </SettingsWrapper>
 </template>
 
 <style scoped lang="scss">
+.settings-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    justify-content: center;
+    align-items: center;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 1em;
+    height: 100vh;
+}
 .login-input {
     height: 50px;
     padding: 1em;

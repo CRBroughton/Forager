@@ -1,10 +1,6 @@
 <template>
   <div class="settings">
-    <div class="settings-inputs">
-      <h1><slot name="heading" /></h1>
-      <slot name="content" />
-      <slot name="buttons" />
-    </div>
+    <slot />
   </div>
 </template>
 
@@ -21,7 +17,7 @@ h1 {
     position: absolute;
     top: 0;
     left: 0;
-    overflow: hidden;
+    overflow: scroll;
 }
 
 .settings-inputs {
@@ -30,10 +26,9 @@ h1 {
     gap: 1em;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     max-width: 500px;
     margin: 0 auto;
-    padding-inline: 1em;
+    padding: 1em;
 }
 
 input {

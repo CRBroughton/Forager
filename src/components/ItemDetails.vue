@@ -50,7 +50,7 @@ const previewImg = computed(() => {
       </Teleport>
     </div>
     <div class="item-forage-details">
-      <p>Last Foraged: {{ new Date(selectedItemPocketbase.lastForaged!).toDateString() }}</p>
+      <p>Last Foraged: {{ selectedItemPocketbase.lastForaged ? new Date(selectedItemPocketbase.lastForaged!).toDateString() : 'Never' }}</p>
       <p> Start Month: {{ selectedItemPocketbase.startMonth || 'Not Set' }}</p>
       <p>End Month: {{ selectedItemPocketbase.endMonth || 'Not Set' }}</p>
     </div>
