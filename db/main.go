@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"log"
 	"os"
 	"strings"
@@ -13,6 +14,9 @@ import (
 
 	_ "github.com/crbroughton/forager/migrations"
 )
+
+//go:embed all:dist
+var distDir embed.FS
 
 func main() {
 	app := pocketbase.New()
@@ -28,7 +32,7 @@ func main() {
 
 	app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
 		// serves static files from the /market/dist directory
-		subFs := echo.MustSubFS(e.Router.Filesystem, "../dist")
+		subFs := echo.MustSubFS(distDir, "dist")
 		e.Router.GET("/*", apis.StaticDirectoryHandler(subFs, false))
 
 		return nil
