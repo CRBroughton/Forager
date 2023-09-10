@@ -17,10 +17,8 @@ const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 
 
 <template>
   <SettingsWrapper>
-    <template #heading>
+    <div class="settings-inputs">
       Settings
-    </template>
-    <template #content>
       <p class="w-full text-left">
         Longitude
       </p>
@@ -29,8 +27,6 @@ const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 
         Latitude
       </p>
       <input v-if="user" v-model="lat" placeholder="Latitude">
-    </template>
-    <template #buttons>
       <BaseButton @click="toggleAccountMenu">
         Account
       </BaseButton>
@@ -49,11 +45,21 @@ const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 
       <BaseButton @click="$emit('close')">
         Close
       </BaseButton>
-    </template>
+    </div>
   </SettingsWrapper>
 </template>
 
 <style scoped lang="scss">
+.settings-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    justify-content: center;
+    align-items: center;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 1em;
+}
 h1 {
   font-size: 1.2em;
 }
