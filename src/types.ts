@@ -7,4 +7,5 @@ export interface ItemsRecordWithID extends ItemsRecord {
 export interface UserImage {
   name: string
   url: string
+  colour: string
 }

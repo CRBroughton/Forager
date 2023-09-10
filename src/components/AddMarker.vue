@@ -36,6 +36,7 @@ const selectedColour = ref('red')
 function setSelectedItem(event: UserImage) {
   imageURL.value = event.url
   input.value = event.name
+  selectedColour.value = event.colour
 }
 </script>
 

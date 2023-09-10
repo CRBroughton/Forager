@@ -32,7 +32,7 @@ const isSliced = ref(true)
             <p>Create</p>
           </div>
           <div v-for="image in props.images" :key="image.url" class="flex flex-col justify-center items-center">
-            <img class="image-icon" :class="{ selected: selectedImage?.url === image.url }" :src="image.url" @click="selectImage(image)">
+            <img class="image-icon" :class="{ selected: selectedImage?.url === image.url }" :src="image.url" :style="`outline: 3px solid ${image.colour && selectedImage?.url !== image.url}`" @click="selectImage(image)">
             {{ image.name }}
           </div>
         </div>
@@ -44,7 +44,7 @@ const isSliced = ref(true)
             <p>Create</p>
           </div>
           <div v-for="image in props.images.slice(0, 5)" :key="image.url" class="flex flex-col justify-center items-center">
-            <img class="image-icon" :class="{ selected: selectedImage?.url === image.url }" :src="image.url" @click="selectImage(image)">
+            <img class="image-icon" :class="{ selected: selectedImage?.url === image.url }" :style="`outline: 3px solid ${image.colour}`" :src="image.url" @click="selectImage(image)">
             {{ image.name }}
           </div>
         </div>
@@ -75,15 +75,15 @@ const isSliced = ref(true)
     align-items: center;
 }
 .image-icon {
-    min-width: 60px;
-    min-height: 60px;
-    width: 60px;
-    height: 60px;
+    min-width: 64px;
+    min-height: 64px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
 }
 
 .selected {
-    outline: 3px solid blue;
+    outline: 3px solid blue !important;
 }
 
 .slide-enter-active {
