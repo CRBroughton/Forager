@@ -171,6 +171,7 @@ export function usePocketBase() {
   interface UserImage {
     name: string
     url: string
+    colour: string
   }
   const createImage = async (img: UserImage) => {
     const images = user.value?.images ? [...user.value?.images, img] : [img]

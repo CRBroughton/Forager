@@ -7,6 +7,13 @@ const { user, createImage } = injectPocketBaseStore()
 
 const imageURL = ref('')
 const imageName = ref('')
+const selectedColour = ref('red')
+
+const submitButtonDisabled = computed(() => {
+  return imageURL.value.length === 0
+  || imageName.value.length === 0
+  || selectedColour.value.length === 0
+})
 </script>
 
 <template>
@@ -15,13 +22,14 @@ const imageName = ref('')
       Images
       <div class="grid grid-cols-3 gap-4">
         <div v-for="image in user?.images" :key="image" class="flex flex-col items-center justify-center">
-          <img v-if="image" class="add-new-image" :src="image.url">
+          <img v-if="image" class="add-new-image" :src="image.url" :style="`outline: 3px solid ${image.colour}`">
           <p>{{ image.name }}</p>
         </div>
       </div>
+      <ColourSelector :selected-colour="selectedColour" @change="selectedColour = $event" />
       <input v-model="imageURL" class="login-input" placeholder="Enter Image URL">
       <input v-model="imageName" class="login-input" placeholder="Enter Image Name">
-      <BaseButton :disabled="imageURL.length === 0 || imageName.length === 0" @click="createImage({ name: imageName, url: imageURL })">
+      <BaseButton :class="{ disabled: submitButtonDisabled }" :disabled="submitButtonDisabled" @click="createImage({ name: imageName, url: imageURL, colour: selectedColour })">
         Create New Image
       </BaseButton>
       <BaseButton @click="toggleImageMenu">
@@ -70,5 +78,9 @@ const imageName = ref('')
   svg {
     color: white;
   }
+}
+
+.disabled {
+  background: rgb(241, 241, 241);
 }
 </style>

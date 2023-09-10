@@ -28,19 +28,10 @@ function hide() {
   emits('hide')
 }
 
-const colours = ['red', 'blue', 'purple', 'deeppink', 'cadetblue']
 const months = ['January', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
-const selectedColour = ref('')
-function selectColour(colour: string) {
-  if (selectedColour.value) {
-    selectedColour.value = ''
-    return
-  }
-  selectedColour.value = colour
-}
-
 const imageURL = ref<string | undefined>('')
+const selectedColour = ref('red')
 
 function setSelectedItem(event: UserImage) {
   imageURL.value = event.url
@@ -68,26 +59,7 @@ function setSelectedItem(event: UserImage) {
           </div>
 
           <div v-else-if="creatingNewItem">
-            <div class="my-2">
-              Selected Colour: {{
-                selectedColour.length > 0 ? selectedColour : 'None selected'
-              }}
-            </div>
-            <div class="colour-selector">
-              <div
-                v-for="colour in colours"
-                :key="colour"
-                class="colour-choice"
-                :class="{ disabled: selectedColour.length > 0 }"
-                :disabled="selectedColour.length > 0"
-                @click="selectColour(colour)"
-              >
-                <div
-                  class="colour-dot"
-                  :style="{ background: colour }"
-                />
-              </div>
-            </div>
+            <ColourSelector :selected-colour="selectedColour" @change="selectedColour = $event" />
             <input
               v-model="input"
               type="text"
@@ -129,32 +101,6 @@ function setSelectedItem(event: UserImage) {
 }
 h1 {
   font-size: 1.2em;
-}
-.colour-selector {
-  display: flex;
-  gap: .5em;
-  margin-bottom: 20px;
-  cursor: pointer;
-}
-
-.colour-choice {
-  width: 50px;
-  background: rgb(255, 255, 255);
-  border-radius: 15px;
-  padding: 5px;
-
-}
-
-.colour-dot {
-  width: 15px;
-  height: 15px;
-  min-width: 15px;
-  min-height: 15px;
-  border-radius: 15px;
-}
-
-.disabled {
-  background: rgb(196, 196, 196);
 }
 
 .month-selector {
