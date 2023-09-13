@@ -13,6 +13,7 @@ declare module 'vue' {
     ColourSelector: typeof import('./src/components/ColourSelector.vue')['default']
     Disclaimer: typeof import('./src/components/Disclaimer.vue')['default']
     ImageSettings: typeof import('./src/views/settings/ImageSettings.vue')['default']
+    InformationMark: typeof import('./src/components/InformationMark.vue')['default']
     ItemDetails: typeof import('./src/components/ItemDetails.vue')['default']
     LoginForm: typeof import('./src/components/LoginForm.vue')['default']
     ReferenceImages: typeof import('./src/components/ReferenceImages.vue')['default']

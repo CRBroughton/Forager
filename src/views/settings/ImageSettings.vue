@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { injectSettingsStore } from '@/views/settings/settingsStore'
 import { injectPocketBaseStore } from '@/pocketbase'
+import { createPopup } from '@/tippy'
 
 const { toggleImageMenu } = injectSettingsStore()
 const { user, createImage } = injectPocketBaseStore()
@@ -14,12 +15,24 @@ const submitButtonDisabled = computed(() => {
   || imageName.value.length === 0
   || selectedColour.value.length === 0
 })
+
+const [createItemPopup, imageSettingsRef] = createPopup()
+
+watch(() => imageSettingsRef.value, () => {
+  if (imageSettingsRef.value === null)
+    return
+
+  createItemPopup('#imageSettings', 'Add your images here, then start creating items on the map!')
+})
 </script>
 
 <template>
   <SettingsWrapper style="background: #d3fcd9;">
     <div class="settings-inputs">
-      Images
+      <div class="flex gap-2">
+        Images
+        <InformationMark id="imageSettings" ref="imageSettingsRef" />
+      </div>
       <div class="grid grid-cols-3 gap-4">
         <div v-for="image in user?.images" :key="image" class="flex flex-col items-center justify-center">
           <img v-if="image" class="add-new-image" :src="image.url" :style="`outline: 3px solid ${image.colour}`">

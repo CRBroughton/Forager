@@ -46,7 +46,6 @@ export default defineConfig({
         // presets
         'vue',
         '@vueuse/core',
-        'vitest',
       ],
     }),
   ],

@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { injectMapboxStore } from '@/mapbox'
 import { injectPocketBaseStore } from '@/pocketbase'
 import type { UserImage } from '@/types'
+import { createPopup } from '@/tippy'
 
 interface Props {
   hidden: boolean
@@ -14,6 +15,15 @@ interface Emits {
   (e: 'create', value: string): void
   (e: 'hide'): void
 }
+
+const [createItemPopup, createItemRef] = createPopup()
+
+watch(() => createItemRef.value, () => {
+  if (createItemRef.value === null)
+    return
+
+  createItemPopup('#newItem', 'Creates a new item, either from your images, or an arbitrary item')
+})
 
 const { lng, lat, addMarker } = injectMapboxStore()
 const { user } = injectPocketBaseStore()
@@ -43,11 +53,12 @@ function setSelectedItem(event: UserImage) {
 <template>
   <div v-if="!hidden" class="absolute overflow-scroll m-auto bottom-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-lg w-[calc(100% - 1em)] mx-4 rounded-tr-xl rounded-tl-xl p-4 max-h-[45%]  md:bottom-2 md:left-2 md:w-2/3 md:h-auto  md:rounded-br-xl md:rounded-bl-xl md:px-0 md:m-0 md:max-w-md md:max-h-[50%] md:overflow-scroll">
     <div class="max-w-sm flex flex-col m-auto rounded-xl md:max-w-none md:mx-4">
-      <div class="flex">
+      <div class="flex gap-2">
         <h1>Create new item</h1>
-        <div v-if="creatingNewItem" class="ml-auto bg-white rounded-full" @click="creatingNewItem = !creatingNewItem">
-          <svg class="text-gray-500" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6l6 6l1.41-1.42Z" /></svg>
-        </div>
+        <InformationMark id="newItem" ref="createItemRef" />
+      </div>
+      <div v-if="creatingNewItem" class="ml-auto bg-white rounded-full" @click="creatingNewItem = !creatingNewItem">
+        <svg class="text-gray-500" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6l6 6l1.41-1.42Z" /></svg>
       </div>
       <div class="m-auto items-center w-full overflow-hidden">
         <Transition name="slide" mode="out-in">
