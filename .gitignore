@@ -8,6 +8,9 @@ coverage
 src.bk
 public.bk
 db/pocketbase
-db/forager
+db/forager.*
 db/pb_data
 .env
+**/*.exe
+**/*.zip
+db/forager

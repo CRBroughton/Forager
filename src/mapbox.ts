@@ -138,7 +138,7 @@ export function mapBoxStore(vars?: Mapbox) {
       lng,
       lat,
       name,
-      owners: [user.value!.id],
+      owner: user.value!.id,
       colour,
       startMonth,
       endMonth,
