@@ -11,9 +11,6 @@
     "type:check": "vue-tsc --noEmit ",
     "lint:check": "eslint \"src/*.{vue,ts,js}\"",
     "lint:fix": "eslint \"src/*.{vue,ts,js}\" --fix",
-    "test": "vitest",
-    "test:ui": "vitest --ui",
-    "test:coverage": "vitest run --coverage",
     "serve": "vite preview",
     "pocketbase:serve": "./db/pocketbase serve",
     "pocketbase:types": "npx pocketbase-typegen --db ./db/pb_data/data.db --out ./src/pocketbase-types.ts"
@@ -22,6 +19,7 @@
     "@vueuse/core": "10.4.1",
     "mapbox-gl": "^2.15.0",
     "pocketbase": "^0.18.0",
+    "tippy.js": "^6.3.7",
     "vue": "3.3.4"
   },
   "devDependencies": {
