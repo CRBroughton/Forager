@@ -1,44 +1,14 @@
 <template>
-  <div class="settings">
-    <slot />
+  <div class="absolute top-0 left-0 w-screen h-screen z-50 flex justify-center overflow-scroll settings">
+    <div class="w-full md:w-2/3">
+      <slot />
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-h1 {
-  font-size: 1.2em;
-}
 .settings {
-    z-index: 1000;
-    width: 100%;
-    height: 100%;
     background: rgba(255,255,255,0.5);
     backdrop-filter: blur(20px);
-    position: absolute;
-    top: 0;
-    left: 0;
-    overflow: scroll;
-}
-
-.settings-inputs {
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-    justify-content: center;
-    align-items: center;
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 1em;
-}
-
-input {
-    height: 50px;
-    padding: 1em;
-    border-radius: 10px;
-    width: 100%;
-}
-
-.disabled {
-  background: red;
 }
 </style>

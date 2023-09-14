@@ -28,26 +28,40 @@ watch(() => imageSettingsRef.value, () => {
 
 <template>
   <SettingsWrapper style="background: #d3fcd9;">
-    <div class="settings-inputs">
-      <div class="flex gap-2">
-        Images
+    <div class="flex flex-col gap-4 overflow-scroll p-4 h-screen">
+      <div class="flex gap-2 items-center">
+        <h1 class="text-2xl font-medium">
+          Images
+        </h1>
         <InformationMark id="imageSettings" ref="imageSettingsRef" />
       </div>
-      <div class="grid grid-cols-3 gap-4">
+      <hr class="h-[1px] min-h-[1px] w-full bg-gray-400 border-0">
+      <h2 class="text-md font-medium">
+        Saved Images
+      </h2>
+      <div class="grid grid-cols-3 gap-4 max-w-sm justify-center">
         <div v-for="image in user?.images" :key="image" class="flex flex-col items-center justify-center">
           <img v-if="image" class="add-new-image" :src="image.url" :style="`outline: 3px solid ${image.colour}`">
           <p>{{ image.name }}</p>
         </div>
       </div>
-      <ColourSelector :selected-colour="selectedColour" @change="selectedColour = $event" />
-      <input v-model="imageURL" class="login-input" placeholder="Enter Image URL">
-      <input v-model="imageName" class="login-input" placeholder="Enter Image Name">
-      <BaseButton :class="{ disabled: submitButtonDisabled }" :disabled="submitButtonDisabled" @click="createImage({ name: imageName, url: imageURL, colour: selectedColour })">
+      <hr class="h-[1px] min-h-[1px] w-full bg-gray-400 border-0">
+      <h2 class="text-md font-medium">
         Create New Image
-      </BaseButton>
-      <BaseButton @click="toggleImageMenu">
-        Return to main menu
-      </BaseButton>
+      </h2>
+      <ColourSelector :selected-colour="selectedColour" @change="selectedColour = $event" />
+      <div class="flex flex-col gap-4">
+        <input v-model="imageURL" class="login-input" placeholder="Enter Image URL">
+        <input v-model="imageName" class="login-input" placeholder="Enter Image Name">
+      </div>
+      <div class="flex flex-col gap-4 w-full mt-auto">
+        <BaseButton :class="{ disabled: submitButtonDisabled }" :disabled="submitButtonDisabled" @click="createImage({ name: imageName, url: imageURL, colour: selectedColour })">
+          Create New Image
+        </BaseButton>
+        <BaseButton @click="toggleImageMenu">
+          Return to main menu
+        </BaseButton>
+      </div>
     </div>
   </SettingsWrapper>
 </template>
@@ -58,7 +72,6 @@ watch(() => imageSettingsRef.value, () => {
     flex-direction: column;
     gap: 1em;
     justify-content: center;
-    align-items: center;
     max-width: 500px;
     margin: 0 auto;
     padding: 1em;
