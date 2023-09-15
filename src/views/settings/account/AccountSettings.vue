@@ -13,7 +13,9 @@ const confirmDeletion = ref(false)
 <template>
   <SettingsWrapper style="background: #d3fcd9;">
     <div class="settings-inputs">
-      Account
+      <h2 class="text-2xl font-medium">
+        Account
+      </h2>
       <BaseButton v-if="!confirmDeletion" @click="confirmDeletion = !confirmDeletion">
         Delete All Markers
       </BaseButton>

@@ -17,8 +17,10 @@ const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 
 
 <template>
   <SettingsWrapper>
-    <div class="settings-inputs">
-      Settings
+    <div class="settings-inputs ">
+      <h2 class="text-2xl font-medium">
+        Settings
+      </h2>
       <p class="w-full text-left">
         Longitude
       </p>
