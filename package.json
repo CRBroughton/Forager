@@ -23,24 +23,24 @@
     "vue": "3.3.4"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "0.41.0",
+    "@antfu/eslint-config": "0.42.0",
     "@types/geojson": "^7946.0.10",
-    "@types/mapbox-gl": "^2.7.13",
-    "@types/node": "^20.6.0",
+    "@types/mapbox-gl": "^2.7.14",
+    "@types/node": "^20.6.1",
     "@vitejs/plugin-vue": "4.3.4",
     "@vue/test-utils": "2.4.1",
     "autoprefixer": "10.4.15",
     "eslint": "8.49.0",
     "pocketbase-typegen": "^1.1.13",
     "postcss": "8.4.29",
-    "sass": "1.66.1",
+    "sass": "1.67.0",
     "tailwindcss": "3.3.3",
     "typescript": "5.2.2",
     "unplugin-auto-import": "0.16.6",
     "unplugin-vue-components": "0.25.2",
     "vite": "4.4.9",
     "vite-plugin-pwa": "^0.16.5",
-    "vue-tsc": "1.8.10"
+    "vue-tsc": "1.8.11"
   },
   "msw": {
     "workerDirectory": "public"
