@@ -1,6 +1,6 @@
 <template>
-  <div class="absolute top-0 left-0 w-screen h-screen z-50 flex justify-center overflow-scroll settings">
-    <div class="w-full md:w-2/3">
+  <div class="absolute top-0 left-0 w-screen h-screen z-50 flex justify-center overflow-scroll settings md:w-[500px] md:right-0 md:left-auto">
+    <div class="w-full md:w-full">
       <div class="flex flex-col gap-4 overflow-scroll p-4 h-screen">
         <div class="flex gap-2 items-center">
           <h1 class="text-2xl font-medium">
