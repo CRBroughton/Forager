@@ -21,7 +21,7 @@ const sideMenuHidden = ref(true)
       <div
         v-if="sideMenuHidden"
         data-test="sidemenu-toggle-open"
-        class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
+        class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full border-gray-200 border cursor-pointer"
         @click="sideMenuHidden = !sideMenuHidden"
       >
         <svg
@@ -46,7 +46,7 @@ const sideMenuHidden = ref(true)
       <div
         v-if="!sideMenuHidden"
         data-test="sidemenu-toggle-close"
-        class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
+        class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full  border-gray-200 border cursor-pointer"
         @click="sideMenuHidden = !sideMenuHidden"
       >
         <svg
@@ -69,7 +69,7 @@ const sideMenuHidden = ref(true)
       <div
         v-if="!sideMenuHidden"
         data-test="sidemenu-show-options"
-        class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
+        class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full  border-gray-200 border cursor-pointer"
         @click="props.openSettings"
       >
         <svg
@@ -98,7 +98,7 @@ const sideMenuHidden = ref(true)
       <div
         v-if="!sideMenuHidden"
         data-test="sidemenu-return-home"
-        class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
+        class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full  border-gray-200 border cursor-pointer"
         @click="returnHome()"
       >
         <svg
@@ -197,7 +197,7 @@ const sideMenuHidden = ref(true)
     <Transition name="slide">
       <div
         v-if="!sideMenuHidden"
-        class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
+        class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full  border-gray-200 border cursor-pointer"
         @click="logout"
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="m17 8l-1.4 1.4l1.6 1.6H9v2h8.2l-1.6 1.6L17 16l4-4l-4-4M5 5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h7v-2H5V5Z" /></svg>
