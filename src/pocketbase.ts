@@ -134,6 +134,23 @@ export function usePocketBase() {
     }
   }
 
+  const createItems = async (items: ItemsRecordWithID[]) => {
+    const promises: Promise<boolean>[] = []
+
+    try {
+      items.forEach(async (item) => {
+        promises.push(
+          pb.collection('items').create(item, { requestKey: null }),
+        )
+      })
+      Promise.all(promises)
+    }
+    catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
+  }
+
   const deleteItem = async (id: string) => {
     try {
       await pb.collection('items').delete(id)
@@ -229,6 +246,7 @@ export function usePocketBase() {
     updateDisclaimerAgreement,
     createImage,
     deleteAllMarkers,
+    createItems,
   }
 }
 
