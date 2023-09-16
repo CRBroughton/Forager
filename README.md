@@ -2,6 +2,7 @@
 
 Forager is a web based application for mapping publicly accessible foods.
 
+
 Foragers current functionality includes:
 
 - Pinning locations of interest as dots
@@ -30,6 +31,31 @@ All pinned locations are stored via [Pocketbase](https://github.com/pocketbase/p
     injury that may occur, be it through the act of foraging, consuming
     foraged foods, or any other activity.
 
+## Screenshots
+
+### Add Markers
+
+<img src="screenshots/mobile_create_marker.png" alt="drawing" width="300"/>
+
+<br/>
+
+### Alternative Add Markers
+
+<img src="screenshots/mobile_alt_create_marker.png" alt="drawing" width="300"/>
+
+<br/>
+
+### Settings Menu
+
+<img src="screenshots/settings_menu.png" alt="drawing" width="300"/>
+
+<br/>
+
+### Images Menu
+
+<img src="screenshots/image_menu.png" alt="drawing" width="300"/>
+
+<br/>
 
 ## Installation
 
