@@ -32,7 +32,7 @@ const isSliced = ref(true)
             <p>Create</p>
           </div>
           <div v-for="image in props.images" :key="image.url" class="flex flex-col justify-center items-center">
-            <img class="image-icon" :class="{ selected: selectedImage?.url === image.url }" :src="image.url" :style="`outline: 3px solid ${image.colour && selectedImage?.url !== image.url}`" @click="selectImage(image)">
+            <img class="image-icon object-cover" :class="{ selected: selectedImage?.url === image.url }" :src="image.url" :style="`outline: 3px solid ${image.colour && selectedImage?.url !== image.url}`" @click="selectImage(image)">
             {{ image.name }}
           </div>
         </div>
@@ -44,7 +44,7 @@ const isSliced = ref(true)
             <p>Create</p>
           </div>
           <div v-for="image in props.images.slice(0, 5)" :key="image.url" class="flex flex-col justify-center items-center">
-            <img class="image-icon" :class="{ selected: selectedImage?.url === image.url }" :style="`outline: 3px solid ${image.colour}`" :src="image.url" @click="selectImage(image)">
+            <img class="image-icon object-cover" :class="{ selected: selectedImage?.url === image.url }" :style="`outline: 3px solid ${image.colour}`" :src="image.url" @click="selectImage(image)">
             {{ image.name }}
           </div>
         </div>
