@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
+    "tailwind-config-viewer": "tailwind-config-viewer -o",
     "go:build": "npm run build && rm -rf db/dist && mv dist db/ && cd db && go build",
     "go:build:mac": "npm run build && rm -rf db/dist && mv dist db/ && cd db && GOOS=darwin GOARCH=amd64 go build -o forager.app",
     "go:build:windows": "npm run build && rm -rf db/dist && mv dist db/ && cd db && GOOS=windows GOARCH=amd64 go build -o forager.exe",
