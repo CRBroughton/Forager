@@ -69,7 +69,7 @@ Forager can then be installed via the following methods:
 
 ### Single binary installation
 
-Following Pocketbase's philosophy, Forager can be installed a,s a single binary,
+Following Pocketbase's philosophy, Forager can be installed as a single binary,
 which will include all of the application (minus the database, which is generated on first start-up).
 
 To install Forager using this method, perform the following actions:
@@ -96,7 +96,7 @@ You can utilise Pocketbase via a domain you own; Check [Pocketbases Going to Pro
 
 Development of Forager requires:
 
-- both an active Mapbox account and API key
+- An active Mapbox account and API key
 - A Pocketbase server
 - All of the previously mentioned software requirements
 
