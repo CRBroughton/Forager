@@ -33,24 +33,46 @@ All pinned locations are stored via [Pocketbase](https://github.com/pocketbase/p
 
 ## Installation
 
-Regardless of installation method, Forager requires a [Mapbox](https://www.mapbox.com/) API key. Provide your API key via the `.env` file, which you can generate
-by copying the existing `.env.example` file.
+Regardless of installation method, you will require the following to build Forager:
 
-Once provided, you can build the front-end by running `pnpm run build`
+- npm
+- pnpm
+- go 1.20+ (this is version Forager is built against)
 
-Forager requires a running instance of [Pocketbase](https://github.com/pocketbase/pocketbase).
+Forager can then be installed via the following methods:
+
+### Single binary installation
+
+Following Pocketbase's philosophy, Forager can be installed a,s a single binary,
+which will include all of the application (minus the database, which is generated on first start-up).
+
+To install Forager using this method, perform the following actions:
+
+- Clone this repository
+- `cd` into the repository and run `pnpm i`
+- Provide your [Mapbox](https://www.mapbox.com/) key to the `.env` file
+- Run `pnpm run go:build` to produce a linux arm64 binary
+
+There are other commands available in the `package.json` to produce various binaries.
+
+
+### Separated installation
+
+You can install Forager using a more traditional setup, with the compiled front-end
+assets served through a reverse-proxy like NGINX, and a hosted instance of [Pocketbase](https://github.com/pocketbase/pocketbase).
 
 You can deploy the built front-end via Netlify, or any other deployment option
 that supports static pages.
 
 You can utilise Pocketbase via a domain you own; Check [Pocketbases Going to Production documentation](https://pocketbase.io/docs/going-to-production/).
 
-### Build from source
+### Development
 
-Building from source requires:
+Development of Forager requires:
 
 - both an active Mapbox account and API key
 - A Pocketbase server
+- All of the previously mentioned software requirements
 
 Dependant on your operating system's architecture, download the latest release of
 [Pocketbase](https://github.com/pocketbase/pocketbase) and extract the executable
@@ -59,34 +81,21 @@ the database migrations will ensure the correct tables are created.
 
 ## Progressive Web Application (PWA)
 
-Forager is a Progressive Web Application (PWA), and therefore can be installed via any browser. The URL for the live version is:
+Forager is a Progressive Web Application (PWA), and therefore can be installed via any browser, however requires an active connection to your [Pocketbase](https://github.com/pocketbase/pocketbase) instance.
 
-[https://forager.crbroughton.me](https://forager.crbroughton.me)
+## FAQ
 
-Please note that this live version may have restrictions during active development,
-assume data is not persistent on this instance.
+### Do you provide an official Forager instance?
 
-## Project setup
-```
-pnpm i
-```
+The official instance of Forager is https://forager.crbroughton.me - This instance
+will regularly be reset, so only use this instance to see if you are interested in
+Forager as an application.
 
-### Compiles and hot-reloads for front-end development
-```
-pnpm run dev
-```
+### Where is the old version of Forager?
 
-### Runs the backend server
-```
-pnpm run pocketbase:serve
-```
+The previous version of Forager was an entirely offline application, 
+however this version lacked in features and was
+somewhat buggy, therefor has been replaced with this version.
 
-### Create Pocketbase types
-```
-pnpm run pocketbase:types
-```
-
-### Compiles and minifies for production
-```
-pnpm run build
-```
+If you are interested in this version, checkout the master branch and checkout
+the last commit from 2021.
