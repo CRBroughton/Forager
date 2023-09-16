@@ -45,7 +45,7 @@ const previewImg = computed(() => {
       <h1>{{ selectedItemPocketbase.name }}</h1>
       <Teleport v-if="selectedItemPocketbase.imageURL" to="body" :disabled="previewImg['item-img']">
         <div class="ml-auto" :class="{ 'blur-preview': fullscreenImg, 'preview-image-container ': fullscreenImg }" @click="fullscreenImg = !fullscreenImg">
-          <img :src="selectedItemPocketbase.imageURL" :class="previewImg">
+          <img :src="selectedItemPocketbase.imageURL" class="object-cover" :class="previewImg">
         </div>
       </Teleport>
     </div>

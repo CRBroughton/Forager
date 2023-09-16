@@ -39,7 +39,7 @@ watch(() => imageSettingsRef.value, () => {
     </h2>
     <div class="grid grid-cols-3 gap-4 max-w-sm justify-center">
       <div v-for="image in user?.images" :key="image" class="flex flex-col items-center justify-center">
-        <img v-if="image" class="add-new-image" :src="image.url" :style="`outline: 3px solid ${image.colour}`">
+        <img v-if="image" class="add-new-image object-cover" :src="image.url" :style="`outline: 3px solid ${image.colour}`">
         <p>{{ image.name }}</p>
       </div>
     </div>
