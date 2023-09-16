@@ -3,7 +3,7 @@ import type { LngLatLike } from 'mapbox-gl'
 import { provideMapboxStore } from './mapbox'
 import { providePocketBaseStore } from './pocketbase'
 
-const { pb, refresh, user, username, password, passwordConfirm, isCreatingAccount, login, updateDisclaimerAgreement, createAccount, canCreateAccount, getItems } = providePocketBaseStore()
+const { pb, refresh, user, username, password, passwordConfirm, isCreatingAccount, login, updateDisclaimerAgreement, createAccount, canCreateAccount } = providePocketBaseStore()
 const home: LngLatLike = [
   user.value?.lng ?? 0,
   user.value?.lat ?? 0,
@@ -14,9 +14,8 @@ const canCreateAccounts = ref<boolean | undefined>(false)
 onMounted(async () => {
   canCreateAccounts.value = await canCreateAccount()
   if (pb.authStore.token && user.value && user.value.disclaimerAgreed) {
-    initMapbox()
-    refresh()
-    await getItems()
+    await initMapbox()
+    await refresh()
   }
 })
 
