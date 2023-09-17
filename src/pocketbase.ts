@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase'
 import type { ItemsRecord, ServicesRecord, UsersRecord } from './pocketbase-types'
-import type { ItemsRecordWithID } from './types'
+import type { ItemsRecordWithID, UserRecordWithID } from './types'
 
 export const isError = (err: unknown): err is Error => err instanceof Error
 
@@ -58,6 +58,23 @@ export function usePocketBase() {
       })
 
       await login()
+    }
+    catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
+  }
+
+  const updateAccountData = async (data: UserRecordWithID) => {
+    try {
+      selectedItemPocketbase.value = await pb.collection('users').update<ItemsRecordWithID>(user.value?.id, {
+        images: data.images,
+        lat: data.lat,
+        lng: data.lng,
+        name: data.name,
+        email: data.email,
+
+      })
     }
     catch (error: unknown) {
       // eslint-disable-next-line no-console
@@ -140,7 +157,10 @@ export function usePocketBase() {
     try {
       items.forEach(async (item) => {
         promises.push(
-          pb.collection('items').create(item, { requestKey: null }),
+          pb.collection('items').create(
+            { ...item, owner: user.value?.id },
+            { requestKey: null },
+          ),
         )
       })
       Promise.all(promises)
@@ -247,6 +267,7 @@ export function usePocketBase() {
     createImage,
     deleteAllMarkers,
     createItems,
+    updateAccountData,
   }
 }
 

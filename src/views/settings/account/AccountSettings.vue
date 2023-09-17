@@ -2,11 +2,11 @@
 import { injectSettingsStore } from '@/views/settings/settingsStore'
 import { injectPocketBaseStore } from '@/pocketbase'
 import { injectMapboxStore } from '@/mapbox'
-import type { ItemsRecordWithID } from '@/types'
+import type { ItemsRecordWithID, UserRecordWithID } from '@/types'
 
 const { isSupported } = useFileSystemAccess()
 const { toggleAccountMenu } = injectSettingsStore()
-const { deleteAllMarkers, createItems } = injectPocketBaseStore()
+const { deleteAllMarkers, createItems, updateAccountData, user } = injectPocketBaseStore()
 const { items } = injectMapboxStore()
 
 const confirmDeletion = ref(false)
@@ -31,7 +31,7 @@ const res = useFileSystemAccess({
   }],
   excludeAcceptAllOption: true,
 })
-const externalItems = res.data
+const data = res.data
 
 const isUploading = ref(false)
 
@@ -39,8 +39,9 @@ async function uploadMarkerdata() {
   try {
     isUploading.value = true
     await res.open()
-    const value = JSON.parse(externalItems.value as string) as ItemsRecordWithID[]
+    const value = JSON.parse(data.value as string) as ItemsRecordWithID[]
     await createItems(value)
+    location.reload()
   }
   catch (error) {
     // eslint-disable-next-line no-console
@@ -48,6 +49,44 @@ async function uploadMarkerdata() {
   }
   finally {
     isUploading.value = false
+  }
+}
+
+const downloadingAccountData = ref(false)
+async function downloadAccountData() {
+  try {
+    downloadingAccountData.value = true
+    const link = document.createElement('a') as HTMLAnchorElement
+    const file = new Blob([JSON.stringify(user.value)], { type: 'application/json' })
+
+    link.href = URL.createObjectURL(file)
+    link.download = `${new Date().toLocaleDateString()}_user_data.json`
+    link.click()
+  }
+  catch (error: unknown) {
+    // eslint-disable-next-line no-console
+    console.log(error)
+  }
+  finally {
+    downloadingAccountData.value = false
+  }
+}
+
+const isUploadingAccountData = ref(false)
+async function uploadAccountData() {
+  try {
+    isUploadingAccountData.value = true
+    await res.open()
+    const value = JSON.parse(data.value as string) as UserRecordWithID
+    await updateAccountData(value)
+    location.reload()
+  }
+  catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error)
+  }
+  finally {
+    isUploadingAccountData.value = false
   }
 }
 </script>
@@ -65,6 +104,12 @@ async function uploadMarkerdata() {
     </BaseButton>
     <BaseButton v-if="isSupported" @click="uploadMarkerdata">
       {{ isUploading === true ? 'Uploading...' : 'Upload Marker Data' }}
+    </BaseButton>
+    <BaseButton v-if="isSupported" @click="downloadAccountData">
+      Download Account Data
+    </BaseButton>
+    <BaseButton v-if="isSupported" @click="uploadAccountData">
+      Upload Account Data
     </BaseButton>
     <BaseButton v-if="confirmDeletion" @click="deleteAllMarkers(items)">
       Delete All Markers (Confirm)

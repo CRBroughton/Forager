@@ -1,6 +1,11 @@
-import type { ItemsRecord } from './pocketbase-types'
+import type { ItemsRecord, UsersRecord } from './pocketbase-types'
 
 export interface ItemsRecordWithID extends ItemsRecord {
+  id: string
+}
+
+export interface UserRecordWithID extends UsersRecord {
+  email: string
   id: string
 }
 
