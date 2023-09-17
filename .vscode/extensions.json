@@ -1,19 +1,16 @@
 {
   "recommendations": [
-    "Vue.volar", 
-    "bradlc.vscode-tailwindcss", 
+    "Vue.volar",
+    "bradlc.vscode-tailwindcss",
     "dbaeumer.vscode-eslint",
     "usernamehw.errorlens",
     "mhutchie.git-graph",
     "eamodio.gitlens",
-    "ritwickdey.liveserver",
-    "abusaidm.html-snippets",
-    "sidthesloth.html5-boilerplate",
-    "dracula-theme.theme-dracula",
-    "antfu.vite",
-    "antfu.browse-lite",
     "vscode-icons-team.vscode-icons",
     "formulahendry.auto-rename-tag",
-    "adpyke.codesnap",
-    "ms-azuretools.vscode-docker"]
+    "vivaxy.vscode-conventional-commits",
+    "golang.go",
+    "afzalsayed96.icones",
+    "Vue.vscode-typescript-vue-plugin",
+  ]
 }
