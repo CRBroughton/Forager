@@ -94,20 +94,20 @@ async function uploadAccountData() {
     <template #title>
       Account
     </template>
-    <BaseButton v-if="!confirmDeletion" @click="confirmDeletion = !confirmDeletion">
-      Delete All Markers
+    <BaseButton v-if="isSupported" @click="downloadAccountData">
+      Download Account Data
     </BaseButton>
     <BaseButton v-if="isSupported" @click="downloadMarkerData">
       Download Marker Data
     </BaseButton>
+    <BaseButton v-if="isSupported" @click="uploadAccountData">
+      {{ isUploadingAccountData === true ? 'Uploading...' : 'Upload Account Data' }}
+    </BaseButton>
     <BaseButton v-if="isSupported" @click="uploadMarkerdata">
       {{ isUploading === true ? 'Uploading...' : 'Upload Marker Data' }}
     </BaseButton>
-    <BaseButton v-if="isSupported" @click="downloadAccountData">
-      Download Account Data
-    </BaseButton>
-    <BaseButton v-if="isSupported" @click="uploadAccountData">
-      {{ isUploadingAccountData === true ? 'Uploading...' : 'Upload Account Data' }}
+    <BaseButton v-if="!confirmDeletion" @click="confirmDeletion = !confirmDeletion">
+      Delete All Markers
     </BaseButton>
     <BaseButton v-if="confirmDeletion" @click="deleteAllMarkers(items)">
       Delete All Markers (Confirm)
