@@ -41,7 +41,6 @@ async function uploadMarkerdata() {
     await res.open()
     const value = JSON.parse(data.value as string) as ItemsRecordWithID[]
     await createItems(value)
-    location.reload()
   }
   catch (error) {
     // eslint-disable-next-line no-console
@@ -79,7 +78,6 @@ async function uploadAccountData() {
     await res.open()
     const value = JSON.parse(data.value as string) as UserRecordWithID
     await updateAccountData(value)
-    location.reload()
   }
   catch (error) {
     // eslint-disable-next-line no-console
@@ -109,7 +107,7 @@ async function uploadAccountData() {
       Download Account Data
     </BaseButton>
     <BaseButton v-if="isSupported" @click="uploadAccountData">
-      Upload Account Data
+      {{ isUploadingAccountData === true ? 'Uploading...' : 'Upload Account Data' }}
     </BaseButton>
     <BaseButton v-if="confirmDeletion" @click="deleteAllMarkers(items)">
       Delete All Markers (Confirm)
