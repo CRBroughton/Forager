@@ -80,7 +80,7 @@ export function mapBoxStore(vars?: Mapbox, user?: AuthModel) {
       container: vars!.container,
       style: 'mapbox://styles/mapbox/outdoors-v12',
       center: vars!.home,
-      zoom: 14,
+      zoom: user?.lat === 0 && user?.lng === 0 ? 2 : 14,
     })
 
     map.on('load', async () => {
@@ -107,9 +107,11 @@ export function mapBoxStore(vars?: Mapbox, user?: AuthModel) {
       if (user?.lat === 0 && user?.lng === 0) {
         const { setUserLocation } = usePocketBase()
         await setUserLocation(e.lngLat)
-        map?.flyTo({ center: e.lngLat })
+        map?.flyTo({ center: e.lngLat, zoom: 14 })
         lng.value = e.lngLat.lng
         lat.value = e.lngLat.lat
+        user.lat = e.lngLat.lat
+        user.lng = e.lngLat.lng
         return
       }
       markerUIHidden.value = false
