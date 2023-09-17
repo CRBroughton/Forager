@@ -1,4 +1,5 @@
 import PocketBase from 'pocketbase'
+import type { LngLat } from 'mapbox-gl'
 import type { ItemsRecord, ServicesRecord, UsersRecord } from './pocketbase-types'
 import type { ItemsRecordWithID, UserRecordWithID } from './types'
 
@@ -74,6 +75,19 @@ export function usePocketBase() {
         name: data.name,
         email: data.email,
 
+      })
+    }
+    catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
+  }
+
+  const setUserLocation = async (position: LngLat) => {
+    try {
+      await pb.collection('users').update(user.value?.id, {
+        lat: position.lat,
+        lng: position.lng,
       })
     }
     catch (error: unknown) {
@@ -268,6 +282,7 @@ export function usePocketBase() {
     deleteAllMarkers,
     createItems,
     updateAccountData,
+    setUserLocation,
   }
 }
 

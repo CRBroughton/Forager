@@ -8,7 +8,7 @@ const home: LngLatLike = [
   user.value?.lng ?? 0,
   user.value?.lat ?? 0,
 ]
-const { initMapbox, markerUIHidden } = provideMapboxStore({ home, container: 'map' })
+const { initMapbox, markerUIHidden } = provideMapboxStore({ home, container: 'map' }, user.value)
 
 const canCreateAccounts = ref<boolean | undefined>(false)
 onMounted(async () => {
@@ -43,6 +43,10 @@ async function agree() {
   location.reload()
   await initMapbox()
 }
+
+const homeNotSet = computed(() => {
+  return user.value?.lat === 0 && user.value?.lng === 0
+})
 </script>
 
 <template>
@@ -84,6 +88,9 @@ async function agree() {
     <div
       id="map"
     />
+    <div v-if="homeNotSet" class="absolute w-screen bottom-0 left-0 bg-red-500 z-50">
+      <p>Please select your home location</p>
+    </div>
     <Transition name="slide">
       <SettingsMenu v-if="settingsMenu" @close="closeSettingsMenu" />
     </Transition>
