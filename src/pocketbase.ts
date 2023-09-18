@@ -83,7 +83,11 @@ export function usePocketBase() {
     }
   }
 
-  const setUserLocation = async (position: LngLat) => {
+  interface Position {
+    lng: number
+    lat: number
+  }
+  const setUserLocation = async (position: Position) => {
     try {
       await pb.collection('users').update(user.value?.id, {
         lat: position.lat,
@@ -110,21 +114,6 @@ export function usePocketBase() {
   const refresh = async () => {
     try {
       await pb.collection('users').authRefresh()
-    }
-    catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
-    }
-  }
-
-  const setUserLngLat = async () => {
-    try {
-      if (user.value && user.value.lat && user.value.lng) {
-        await pb.collection('users').update<UsersRecord>(user.value!.id, {
-          lng: user.value.lng,
-          lat: user.value.lat,
-        })
-      }
     }
     catch (error: unknown) {
       // eslint-disable-next-line no-console
@@ -272,7 +261,6 @@ export function usePocketBase() {
     getHealth,
     getItems,
     createItem,
-    setUserLngLat,
     getSelectedItem,
     selectedItemPocketbase,
     deleteItem,

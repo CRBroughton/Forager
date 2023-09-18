@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { usePocketBase } from '@/pocketbase'
 import { provideSettingsStore } from '@/views/settings/settingsStore'
 
 interface Emits {
@@ -7,12 +6,7 @@ interface Emits {
 }
 defineEmits<Emits>()
 
-const { user, setUserLngLat } = usePocketBase()
 const { imagesOpen, toggleImageMenu, accountSettingsOpen, toggleAccountMenu } = provideSettingsStore()
-
-const lng = ref(user.value?.lng ?? 0)
-const lat = ref(user.value?.lat ?? 0)
-const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 0)
 </script>
 
 <template>
@@ -20,14 +14,6 @@ const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 
     <template #title>
       Settings
     </template>
-    <p class="w-full text-left">
-      Longitude
-    </p>
-    <input v-if="user" v-model="lng" placeholder="Longitude">
-    <p class="text-left w-full">
-      Latitude
-    </p>
-    <input v-if="user" v-model="lat" placeholder="Latitude">
     <BaseButton @click="toggleAccountMenu">
       Account
     </BaseButton>
@@ -40,9 +26,6 @@ const hasNoLngLat = computed(() => lng.value.length <= 0 || lat.value.length <= 
     <Transition name="slide">
       <ImageSettings v-if="imagesOpen" />
     </Transition>
-    <BaseButton :class="{ disabled: hasNoLngLat }" :disabled="hasNoLngLat" @click="setUserLngLat()">
-      Update Location
-    </BaseButton>
     <BaseButton @click="$emit('close')">
       Close
     </BaseButton>

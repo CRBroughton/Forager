@@ -6,7 +6,7 @@ import type { ItemsRecordWithID, UserRecordWithID } from '@/types'
 
 const { isSupported } = useFileSystemAccess()
 const { toggleAccountMenu } = injectSettingsStore()
-const { deleteAllMarkers, createItems, updateAccountData, user } = injectPocketBaseStore()
+const { deleteAllMarkers, createItems, updateAccountData, setUserLocation, user } = injectPocketBaseStore()
 const { items } = injectMapboxStore()
 
 const confirmDeletion = ref(false)
@@ -87,6 +87,20 @@ async function uploadAccountData() {
     isUploadingAccountData.value = false
   }
 }
+
+async function resetLocation() {
+  try {
+    await setUserLocation({
+      lng: 0,
+      lat: 0,
+    })
+    location.reload()
+  }
+  catch (error: unknown) {
+    // eslint-disable-next-line no-console
+    console.log(error)
+  }
+}
 </script>
 
 <template>
@@ -94,6 +108,9 @@ async function uploadAccountData() {
     <template #title>
       Account
     </template>
+    <BaseButton @click="resetLocation">
+      Reset Home Location
+    </BaseButton>
     <BaseButton v-if="isSupported" @click="downloadAccountData">
       Download Account Data
     </BaseButton>
