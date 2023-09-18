@@ -1,5 +1,4 @@
 import PocketBase from 'pocketbase'
-import type { LngLat } from 'mapbox-gl'
 import type { ItemsRecord, ServicesRecord, UsersRecord } from './pocketbase-types'
 import type { ItemsRecordWithID, UserRecordWithID } from './types'
 
