@@ -117,6 +117,28 @@ const sideMenuHidden = ref(true)
         </svg>
       </div>
     </Transition>
+    <Transition name="slide">
+      <div
+        v-if="!sideMenuHidden"
+
+        class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 cursor-pointer"
+      >
+        <svg
+          class="w-6 h-6 text-gray-500"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+          />
+        </svg>
+      </div>
+    </Transition>
     <!-- <div
       data-test="sidemenu-toggle-tooltips-off"
       class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full shadow-xl border-gray-200 border cursor-pointer"
