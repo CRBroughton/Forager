@@ -244,7 +244,29 @@ export function usePocketBase() {
     }
   }
 
+  const getRoutes = async () => {
+    try {
+      return await pb.collection('routes').getFullList()
+    }
+    catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
+  }
+
+  const getRoute = async (id: string) => {
+    try {
+      return await pb.collection('routes').getOne(id)
+    }
+    catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
+  }
+
   return {
+    getRoute,
+    getRoutes,
     pb,
     user,
     username,

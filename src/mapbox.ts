@@ -97,6 +97,10 @@ export function mapBoxStore(vars?: Mapbox, user?: AuthModel) {
         clusterRadius: 50,
       })
 
+
+      const { getRoute } = usePocketBase()
+      const lineCoords = await getRoute('4t2ttp1beq31p2r')
+
       map?.addSource('routes', {
         type: 'geojson',
         data: {
@@ -107,10 +111,7 @@ export function mapBoxStore(vars?: Mapbox, user?: AuthModel) {
               properties: {},
               geometry: {
                 type: 'LineString',
-                coordinates: [
-                  [-1.683644243431928, 53.80594058476723],
-                  [-1.6790308439269097, 53.802899379899316],
-                ],
+                coordinates: lineCoords?.points.coords,
               },
             },
           ],
