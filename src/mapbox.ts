@@ -97,6 +97,26 @@ export function mapBoxStore(vars?: Mapbox, user?: AuthModel) {
         clusterRadius: 50,
       })
 
+      map?.addSource('routes', {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [
+            {
+              type: 'Feature',
+              properties: {},
+              geometry: {
+                type: 'LineString',
+                coordinates: [
+                  [-1.683644243431928, 53.80594058476723],
+                  [-1.6790308439269097, 53.802899379899316],
+                ],
+              },
+            },
+          ],
+        },
+      })
+
       if (map) {
         createLayers(map)
         createGeolocator(map)

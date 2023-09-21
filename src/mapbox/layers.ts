@@ -88,4 +88,19 @@ export function createLayers(map: mapboxgl.Map) {
       'text-size': 12,
     },
   })
+
+  // Add line layer
+  map.addLayer({
+    id: 'routes',
+    type: 'line',
+    source: 'routes',
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round',
+    },
+    paint: {
+      'line-color': '#888',
+      'line-width': 4,
+    },
+  })
 }
