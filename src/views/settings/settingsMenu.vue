@@ -7,6 +7,14 @@ interface Emits {
 defineEmits<Emits>()
 
 const { imagesOpen, toggleImageMenu, accountSettingsOpen, toggleAccountMenu } = provideSettingsStore()
+
+const state = useStorage('forager-store', {
+  map3D: false,
+})
+
+function restartApplication() {
+  location.reload()
+}
 </script>
 
 <template>
@@ -14,6 +22,13 @@ const { imagesOpen, toggleImageMenu, accountSettingsOpen, toggleAccountMenu } = 
     <template #title>
       Settings
     </template>
+    <h2 class="text-md font-medium">
+      General
+    </h2>
+    <div class="flex w-full">
+      <label for="topology">Enable 3D Map</label>
+      <input id="topology" v-model="state.map3D" name="topology" type="checkbox" class="w-12 " @change="restartApplication()">
+    </div>
     <BaseButton @click="toggleAccountMenu">
       Account
     </BaseButton>
@@ -45,12 +60,6 @@ const { imagesOpen, toggleImageMenu, accountSettingsOpen, toggleAccountMenu } = 
     padding-inline: 1em;
 }
 
-input {
-    height: 50px;
-    padding: 1em;
-    border-radius: 10px;
-    width: 100%;
-}
 
 .disabled {
   background: red;

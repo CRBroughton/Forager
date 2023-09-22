@@ -124,6 +124,23 @@ export function mapBoxStore(vars?: Mapbox, user?: AuthModel) {
       }
     })
 
+    const state = useStorage('forager-store', {
+      map3D: false,
+    })
+
+    if (map && state.value.map3D) {
+      map.on('style.load', () => {
+        map?.addSource('mapbox-dem', {
+          type: 'raster-dem',
+          url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
+          tileSize: 512,
+          maxzoom: 14,
+        })
+        // add the DEM source as a terrain layer with exaggerated height
+        map?.setTerrain({ source: 'mapbox-dem', exaggeration: 1.5 })
+      })
+
+    }
     map.on('click', async (e: MapMouseEvent) => {
       if (user?.lat === 0 && user?.lng === 0) {
         const { setUserLocation } = usePocketBase()
