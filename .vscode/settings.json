@@ -17,6 +17,7 @@
     "css.lint.unknownAtRules": "ignore",
     "scss.lint.unknownAtRules": "ignore",
     "conventionalCommits.scopes": [
-        "routes"
+        "routes",
+        "delete-reference-images"
     ]
 }
