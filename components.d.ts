@@ -16,6 +16,7 @@ declare module 'vue' {
     InformationMark: typeof import('./src/components/InformationMark.vue')['default']
     ItemDetails: typeof import('./src/components/ItemDetails.vue')['default']
     LoginForm: typeof import('./src/components/LoginForm.vue')['default']
+    ReferenceImage: typeof import('./src/components/ReferenceImage.vue')['default']
     ReferenceImages: typeof import('./src/components/ReferenceImages.vue')['default']
     ServerHealth: typeof import('./src/components/ServerHealth.vue')['default']
     SettingsMenu: typeof import('./src/views/settings/settingsMenu.vue')['default']
