@@ -4,7 +4,7 @@ import { injectPocketBaseStore } from '@/pocketbase'
 import { createPopup } from '@/tippy'
 
 const { toggleImageMenu } = injectSettingsStore()
-const { user, createImage } = injectPocketBaseStore()
+const { user, createImage, deleteReferenceImage } = injectPocketBaseStore()
 
 const imageURL = ref('')
 const imageName = ref('')
@@ -40,7 +40,7 @@ watch(() => imageSettingsRef.value, () => {
     <div class="grid grid-cols-3 gap-4 max-w-sm justify-center">
       <div v-for="image in user?.images" :key="image" class="flex flex-col items-center justify-center gap-2">
         <div class="relative">
-          <div class="w-6 h-6 bg-red-500 absolute top-0 right-0 rounded-full flex justify-center items-center">
+          <div class="w-6 h-6 bg-red-500 absolute top-0 right-0 rounded-full flex justify-center items-center" @click="deleteReferenceImage(image)">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="white" d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" /></svg>
           </div>
           <img v-if="image" class="add-new-image object-cover" :src="image.url" :style="`outline: 3px solid ${image.colour}`">

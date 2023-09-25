@@ -264,7 +264,22 @@ export function usePocketBase() {
     }
   }
 
+  const deleteReferenceImage = async (removedImage: UserImage) => {
+    const filteredImages: UserImage[] = user.value?.images.filter((image: UserImage) => image !== removedImage)
+    try {
+      await pb.collection('users').update<UsersRecord<UserImage[]>>(user.value!.id, {
+        images: filteredImages,
+      })
+      user.value!.images = filteredImages
+    }
+    catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
+  }
+
   return {
+    deleteReferenceImage,
     getRoute,
     getRoutes,
     pb,
