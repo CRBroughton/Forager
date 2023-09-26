@@ -19,6 +19,7 @@
     "conventionalCommits.scopes": [
         "routes",
         "delete-reference-images",
-        "desktop-support"
+        "desktop-support",
+        "marker-details"
     ]
 }

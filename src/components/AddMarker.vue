@@ -38,7 +38,6 @@ function hide() {
   emits('hide')
 }
 
-const months = ['January', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 const imageURL = ref<string | undefined>('')
 const selectedColour = ref('red')
@@ -79,18 +78,11 @@ function setSelectedItem(event: UserImage) {
               placeholder="Please Enter Object Name"
               data-test="input-marker-title"
             >
-            <div class="month-selector">
-              <select v-model="selectedStartMonth" name="start">
-                <option v-for="month in months" :key="month" :value="month">
-                  {{ month }}
-                </option>
-              </select>
-              <select v-model="selectedEndMonth" name="end">
-                <option v-for="month in months" :key="month" :value="month">
-                  {{ month }}
-                </option>
-              </select>
-            </div>
+            <MonthSelector 
+              :selected-start-month="selectedStartMonth" :selected-end-month="selectedEndMonth" 
+              @update-start-month="selectedStartMonth = $event"
+              @update-end-month="selectedEndMonth = $event"
+            />
           </div>
         </Transition>
       </div>
@@ -115,19 +107,6 @@ h1 {
   font-size: 1.2em;
 }
 
-.month-selector {
-  text-align: center;
-  gap: 1em;
-  display: flex;
-  margin-bottom: 20px;
-
-  select {
-    width: 100%;
-    background: white;
-    padding: 1em 0.8em;
-    border-radius: 10px;
-  }
-}
 
 .slide-enter-active {
   transition: all 0.2s ease-out;
