@@ -40,7 +40,7 @@ const previewImg = computed(() => {
 </script>
 
 <template>
-  <div v-if="selectedItemPocketbase" class="absolute overflow-scroll m-auto bottom-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-lg w-[calc(100% - 1em)] mx-4 rounded-tr-xl rounded-tl-xl p-4 max-h-[45%] md:bottom-2 md:left-2 md:w-2/3 md:h-auto  md:rounded-br-xl md:rounded-bl-xl md:m-0 md:max-w-md md:max-h-[50%] md:overflow-scroll flex flex-col gap-2">
+  <div v-if="selectedItemPocketbase" class="absolute overflow-scroll m-auto flex flex-col gap-2 bottom-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-lg w-[calc(100% - 1em)] mx-4 rounded-tr-xl rounded-tl-xl p-4 max-h-[50%] md:bottom-2 md:left-2 md:w-2/3 md:h-auto md:rounded-br-xl md:rounded-bl-xl md:m-0 md:max-w-md md:overflow-scroll">
     <div class="name-and-img">
       <h1>{{ selectedItemPocketbase.name }}</h1>
       <Teleport v-if="selectedItemPocketbase.imageURL" to="body" :disabled="fullscreenImg === false">
