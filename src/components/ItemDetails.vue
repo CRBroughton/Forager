@@ -33,17 +33,17 @@ async function forageItem() {
 const fullscreenImg = ref(false)
 const previewImg = computed(() => {
   return {
-    'item-img': fullscreenImg.value === false,
-    'fullscreen-img': fullscreenImg.value === true,
+    'w-20 h-20 rounded-full ml-auto': fullscreenImg.value === false,
+    'w-full h-fit max-w-[1000px] object-contain self-center': fullscreenImg.value === true,
   }
 })
 </script>
 
 <template>
-  <div v-if="selectedItemPocketbase" class="item-details">
+  <div v-if="selectedItemPocketbase" class="absolute overflow-scroll m-auto bottom-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-lg w-[calc(100% - 1em)] mx-4 rounded-tr-xl rounded-tl-xl p-4 max-h-[45%] md:bottom-2 md:left-2 md:w-2/3 md:h-auto  md:rounded-br-xl md:rounded-bl-xl md:m-0 md:max-w-md md:max-h-[50%] md:overflow-scroll flex flex-col gap-2">
     <div class="name-and-img">
       <h1>{{ selectedItemPocketbase.name }}</h1>
-      <Teleport v-if="selectedItemPocketbase.imageURL" to="body" :disabled="previewImg['item-img']">
+      <Teleport v-if="selectedItemPocketbase.imageURL" to="body" :disabled="fullscreenImg === false">
         <div class="ml-auto" :class="{ 'blur-preview': fullscreenImg, 'preview-image-container ': fullscreenImg }" @click="fullscreenImg = !fullscreenImg">
           <img :src="selectedItemPocketbase.imageURL" class="object-cover" :class="previewImg">
         </div>
@@ -84,40 +84,13 @@ const previewImg = computed(() => {
   display: flex;
   justify-content: center;
 }
-.fullscreen-img {
-  width: 100%;
-  max-width: 1000px;
-  object-fit: contain;
-}
+
 .name-and-img {
   display: flex;
 }
-.item-img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin-left: auto;
-}
+
 h1 {
   font-size: 1.2em;
-}
-.item-details {
-    z-index: 10;
-    min-width: calc(100% - 1em);
-    height: auto;
-    background: rgba(255,255,255,0.3);
-    backdrop-filter: blur(20px);
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
-    padding: 1em;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    gap: 1em;
-    display: flex;
-    flex-direction: column;
 }
 
 .item-detail-buttons {

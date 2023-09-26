@@ -18,6 +18,7 @@
     "scss.lint.unknownAtRules": "ignore",
     "conventionalCommits.scopes": [
         "routes",
-        "delete-reference-images"
+        "delete-reference-images",
+        "desktop-support"
     ]
 }
