@@ -37,9 +37,9 @@ watch(() => imageSettingsRef.value, () => {
     <h2 class="text-md font-medium">
       Saved Images
     </h2>
-    <div class="grid grid-cols-3 gap-4 max-w-sm justify-center">
+    <div class="grid grid-cols-3 gap-4 justify-center">
       <div v-for="image in user?.images" :key="image" class="flex flex-col items-center justify-center gap-2">
-        <ReferenceImage :image="image" @delete="deleteReferenceImage(image)" />
+        <ReferenceImage :image="image" can-delete @delete="deleteReferenceImage(image)" />
       </div>
     </div>
     <hr class="h-[1px] min-h-[1px] w-full bg-gray-400 border-0">
