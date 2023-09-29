@@ -3,6 +3,7 @@ import { injectSettingsStore } from '@/views/settings/settingsStore'
 import { injectPocketBaseStore } from '@/pocketbase'
 import { injectMapboxStore } from '@/mapbox'
 import type { ItemsRecordWithID, UserRecordWithID } from '@/types'
+import { jsonDownloader } from '@/jsonDownloader'
 
 const { isSupported } = useFileSystemAccess()
 const { toggleAccountMenu } = injectSettingsStore()
@@ -12,11 +13,7 @@ const { items } = injectMapboxStore()
 const confirmDeletion = ref(false)
 
 function downloadMarkerData() {
-  const link = document.createElement('a') as HTMLAnchorElement
-  const file = new Blob([JSON.stringify(items.value)], { type: 'application/json' })
-
-  link.href = URL.createObjectURL(file)
-  link.download = `${new Date().toLocaleDateString()}_markers.json`
+  const { link } = jsonDownloader(items.value, '_markers.json')
   link.click()
 }
 
@@ -54,12 +51,11 @@ async function uploadMarkerdata() {
 const downloadingAccountData = ref(false)
 async function downloadAccountData() {
   try {
-    downloadingAccountData.value = true
-    const link = document.createElement('a') as HTMLAnchorElement
-    const file = new Blob([JSON.stringify(user.value)], { type: 'application/json' })
 
-    link.href = URL.createObjectURL(file)
-    link.download = `${new Date().toLocaleDateString()}_user_data.json`
+    downloadingAccountData.value = true
+    
+    const { link } = jsonDownloader(user.value, '_user_data.json')
+
     link.click()
   }
   catch (error: unknown) {
