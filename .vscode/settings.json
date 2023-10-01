@@ -20,6 +20,7 @@
         "routes",
         "delete-reference-images",
         "desktop-support",
-        "marker-details"
+        "marker-details",
+        "login-page"
     ]
 }
