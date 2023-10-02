@@ -5,7 +5,7 @@
 <template>
   <div class="login-inputs">
     <div class="flex justify-center items-center gap-2">
-      <img src="../../assets/logo.png" width="52" height="52">
+      <img src="../../public/assets/logo.png" width="52" height="52">
       <h1 class="title">
         Forager
       </h1>
