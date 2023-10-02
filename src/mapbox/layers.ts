@@ -7,7 +7,7 @@ export function createLayers(map: mapboxgl.Map) {
     source: 'items',
     filter: ['!', ['has', 'point_count']],
     paint: {
-      // Color circles by ethnicity, using a `match` expression.
+      // Color circles, using a `match` expression.
       'circle-color': [
         'match',
         ['get', 'colour'],
