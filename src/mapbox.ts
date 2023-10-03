@@ -179,7 +179,7 @@ export function mapBoxStore(vars?: Mapbox, user?: AuthModel) {
 
   const addMarker = async (lng: number, lat: number, name: string, colour: string, startMonth: string, endMonth: string, imageURL: string) => {
     // Create a new marker.
-    const { createItem, getItems, user } = usePocketBase()
+    const settingsStore = usePocketBase()
 
     const newItem = {
       date: new Date().toISOString(),
@@ -187,15 +187,15 @@ export function mapBoxStore(vars?: Mapbox, user?: AuthModel) {
       lng,
       lat,
       name,
-      owner: user.value!.id,
+      owner: settingsStore.user?.id,
       colour,
       startMonth,
       endMonth,
       imageURL,
     }
 
-    await createItem(newItem)
-    items.value = await getItems()
+    await settingsStore.createItem(newItem)
+    items.value = await settingsStore.getItems()
 
     // Get the GeoJSON source by ID
     const source = map?.getSource('items') as mapboxgl.GeoJSONSource
@@ -253,8 +253,8 @@ export function mapBoxStore(vars?: Mapbox, user?: AuthModel) {
   }
 
   const returnHome = () => {
-    const { user } = usePocketBase()
-    map?.flyTo({ center: [user.value?.lng, user.value?.lat], zoom: 14 })
+    const settingsStore = usePocketBase()
+    map?.flyTo({ center: [settingsStore.user?.lng, settingsStore.user?.lat], zoom: 14 })
   }
 
   return {

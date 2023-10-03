@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { LngLatLike } from 'mapbox-gl'
 import { provideMapboxStore } from './mapbox'
-import { providePocketBaseStore } from './pocketbase'
+import { usePocketBase } from './pocketbase'
 
-const { pb, refresh, user, username, password, passwordConfirm, isCreatingAccount, login, updateDisclaimerAgreement, createAccount, canCreateAccount } = providePocketBaseStore()
+const pocketbaseStore = usePocketBase()
+const { user, username, password, passwordConfirm, isCreatingAccount  } = storeToRefs(pocketbaseStore)
 const home: LngLatLike = [
   user.value?.lng ?? 0,
   user.value?.lat ?? 0,
@@ -12,10 +13,10 @@ const { initMapbox, markerUIHidden } = provideMapboxStore({ home, container: 'ma
 
 const canCreateAccounts = ref<boolean | undefined>(false)
 onMounted(async () => {
-  canCreateAccounts.value = await canCreateAccount()
-  if (pb.authStore.token && user.value && user.value.disclaimerAgreed) {
+  canCreateAccounts.value = await pocketbaseStore.canCreateAccount()
+  if (pocketbaseStore.pb.authStore.token && user.value && user.value.disclaimerAgreed) {
     await initMapbox()
-    await refresh()
+    await pocketbaseStore.refresh()
   }
 })
 
@@ -34,12 +35,12 @@ function openSettingsMenu() {
 }
 
 async function loginInUser() {
-  await login()
+  await pocketbaseStore.login()
   location.reload()
 }
 
 async function agree() {
-  await updateDisclaimerAgreement()
+  await pocketbaseStore.updateDisclaimerAgreement()
   location.reload()
   await initMapbox()
 }
@@ -64,7 +65,7 @@ const homeNotSet = computed(() => {
       <BaseButton v-if="!isCreatingAccount && canCreateAccounts" @click="isCreatingAccount = !isCreatingAccount">
         Create New Account
       </BaseButton>
-      <BaseButton v-if="isCreatingAccount" @click="createAccount()">
+      <BaseButton v-if="isCreatingAccount" @click="pocketbaseStore.createAccount()">
         Create Account
       </BaseButton>
       <BaseButton

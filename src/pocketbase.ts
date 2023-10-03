@@ -11,7 +11,7 @@ interface healthCheckResponse {
   message: string
 }
 
-export function usePocketBase() {
+export const usePocketBase = defineStore('pocketbse-store', () => {
   const user = ref(pb.authStore.model)
   const username = ref('')
   const password = ref('')
@@ -308,16 +308,4 @@ export function usePocketBase() {
     updateAccountData,
     setUserLocation,
   }
-}
-
-const storeKey: InjectionKey<ReturnType<typeof usePocketBase>> = Symbol('pocketbase-store')
-
-export function providePocketBaseStore() {
-  const store = usePocketBase()
-  provide(storeKey, store)
-  return store
-}
-
-export function injectPocketBaseStore() {
-  return inject(storeKey)!
-}
+})

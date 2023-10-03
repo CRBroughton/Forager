@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { injectMapboxStore } from '@/mapbox'
-import { injectPocketBaseStore } from '@/pocketbase'
+import { usePocketBase } from '@/pocketbase'
 
 const { selectedItem, deleteMarker, updateMarkerLayer } = injectMapboxStore()
 
-const { getSelectedItem, selectedItemPocketbase, updateForageDate } = injectPocketBaseStore()
+const pocketbaseStore = usePocketBase()
+const {  selectedItemPocketbase } = storeToRefs(pocketbaseStore)
 
 watch(() => selectedItem.value, () => {
   if (selectedItem.value !== undefined)
-    getSelectedItem(selectedItem.value)
+    pocketbaseStore.getSelectedItem(selectedItem.value)
 })
 
 function clearSelected() {
@@ -25,7 +26,7 @@ function deleteItem() {
 
 async function forageItem() {
   if (selectedItemPocketbase.value) {
-    await updateForageDate(selectedItemPocketbase.value.id)
+    await pocketbaseStore.updateForageDate(selectedItemPocketbase.value.id)
     await updateMarkerLayer()
   }
 }

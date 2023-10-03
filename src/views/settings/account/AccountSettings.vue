@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { useSettingsStore } from '@/views/settings/settingsStore'
-import { injectPocketBaseStore } from '@/pocketbase'
+import { usePocketBase } from '@/pocketbase'
 import { injectMapboxStore } from '@/mapbox'
 import type { ItemsRecordWithID, UserRecordWithID } from '@/types'
 import { jsonDownloader } from '@/jsonDownloader'
 
 const { isSupported } = useFileSystemAccess()
 const { toggleAccountMenu } = useSettingsStore()
-const { deleteAllMarkers, createItems, updateAccountData, setUserLocation, user } = injectPocketBaseStore()
+const pocketbaseStore = usePocketBase()
+const {  user } = storeToRefs(pocketbaseStore)
 const { items } = injectMapboxStore()
 
 const confirmDeletion = ref(false)
@@ -37,7 +38,7 @@ async function uploadMarkerdata() {
     isUploading.value = true
     await res.open()
     const value = JSON.parse(data.value as string) as ItemsRecordWithID[]
-    await createItems(value)
+    await pocketbaseStore.createItems(value)
   }
   catch (error) {
     // eslint-disable-next-line no-console
@@ -73,7 +74,7 @@ async function uploadAccountData() {
     isUploadingAccountData.value = true
     await res.open()
     const value = JSON.parse(data.value as string) as UserRecordWithID
-    await updateAccountData(value)
+    await pocketbaseStore.updateAccountData(value)
   }
   catch (error) {
     // eslint-disable-next-line no-console
@@ -86,7 +87,7 @@ async function uploadAccountData() {
 
 async function resetLocation() {
   try {
-    await setUserLocation({
+    await pocketbaseStore.setUserLocation({
       lng: 0,
       lat: 0,
     })
@@ -122,7 +123,7 @@ async function resetLocation() {
     <BaseButton v-if="!confirmDeletion" @click="confirmDeletion = !confirmDeletion">
       Delete All Markers
     </BaseButton>
-    <BaseButton v-if="confirmDeletion" @click="deleteAllMarkers(items)">
+    <BaseButton v-if="confirmDeletion" @click="pocketbaseStore.deleteAllMarkers(items)">
       Delete All Markers (Confirm)
     </BaseButton>
     <BaseButton v-if="confirmDeletion" @click="confirmDeletion = !confirmDeletion">

@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { usePocketBase } from '@/pocketbase'
 
-const { health, getHealth } = usePocketBase()
+const pocketbaseStore = usePocketBase()
 
 onMounted(() => {
-  getHealth()
+  pocketbaseStore.getHealth()
   setTimeout(toggleServerText, 5000)
 })
 
-setInterval(getHealth, 30000)
+setInterval(pocketbaseStore.getHealth, 30000)
 const serverStatus = computed(() => {
   return {
-    online: health.value?.code === 200,
-    offline: health.value?.code !== 200 || health.value === undefined,
+    online: pocketbaseStore.health?.code === 200,
+    offline: pocketbaseStore.health?.code !== 200 || pocketbaseStore.health === undefined,
   }
 })
 

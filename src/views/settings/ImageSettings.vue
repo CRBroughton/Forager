@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useSettingsStore } from '@/views/settings/settingsStore'
-import { injectPocketBaseStore } from '@/pocketbase'
+import { usePocketBase } from '@/pocketbase'
 import { createPopup } from '@/tippy'
 
 const { toggleImageMenu } = useSettingsStore()
-const { user, createImage, deleteReferenceImage } = injectPocketBaseStore()
+const pocketbaseStore = usePocketBase()
+const { user } = storeToRefs(pocketbaseStore)
 
 const imageURL = ref('')
 const imageName = ref('')
@@ -39,7 +40,7 @@ watch(() => imageSettingsRef.value, () => {
     </h2>
     <div class="grid grid-cols-3 gap-4 justify-center">
       <div v-for="image in user?.images" :key="image" class="flex flex-col items-center justify-center gap-2">
-        <ReferenceImage :image="image" can-delete @delete="deleteReferenceImage(image)" />
+        <ReferenceImage :image="image" can-delete @delete="pocketbaseStore.deleteReferenceImage(image)" />
       </div>
     </div>
     <hr class="h-[1px] min-h-[1px] w-full bg-gray-400 border-0">
@@ -52,7 +53,7 @@ watch(() => imageSettingsRef.value, () => {
       <input v-model="imageName" class="login-input" placeholder="Enter Image Name">
     </div>
     <div class="flex flex-col gap-4 w-full mt-auto">
-      <BaseButton :class="{ disabled: submitButtonDisabled }" :disabled="submitButtonDisabled" @click="createImage({ name: imageName, url: imageURL, colour: selectedColour })">
+      <BaseButton :class="{ disabled: submitButtonDisabled }" :disabled="submitButtonDisabled" @click="pocketbaseStore.createImage({ name: imageName, url: imageURL, colour: selectedColour })">
         Create New Image
       </BaseButton>
       <BaseButton @click="toggleImageMenu">

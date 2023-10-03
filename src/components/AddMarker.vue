@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { injectMapboxStore } from '@/mapbox'
-import { injectPocketBaseStore } from '@/pocketbase'
+import { usePocketBase } from '@/pocketbase'
 import type { UserImage } from '@/types'
 import { createPopup } from '@/tippy'
 
@@ -26,7 +26,8 @@ watch(() => createItemRef.value, () => {
 })
 
 const { lng, lat, addMarker } = injectMapboxStore()
-const { user } = injectPocketBaseStore()
+const pocketbaseStore = usePocketBase()
+const { user } = storeToRefs(pocketbaseStore)
 const selectedStartMonth = ref('January')
 const selectedEndMonth = ref('December')
 const creatingNewItem = ref(false)
