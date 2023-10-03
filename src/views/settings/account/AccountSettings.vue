@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { injectSettingsStore } from '@/views/settings/settingsStore'
+import { useSettingsStore } from '@/views/settings/settingsStore'
 import { injectPocketBaseStore } from '@/pocketbase'
 import { injectMapboxStore } from '@/mapbox'
 import type { ItemsRecordWithID, UserRecordWithID } from '@/types'
 import { jsonDownloader } from '@/jsonDownloader'
 
 const { isSupported } = useFileSystemAccess()
-const { toggleAccountMenu } = injectSettingsStore()
+const { toggleAccountMenu } = useSettingsStore()
 const { deleteAllMarkers, createItems, updateAccountData, setUserLocation, user } = injectPocketBaseStore()
 const { items } = injectMapboxStore()
 

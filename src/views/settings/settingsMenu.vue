@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { provideSettingsStore } from '@/views/settings/settingsStore'
+import { useSettingsStore } from '@/views/settings/settingsStore'
 
 interface Emits {
   (e: 'close'): void
 }
 defineEmits<Emits>()
 
-const { imagesOpen, toggleImageMenu, accountSettingsOpen, toggleAccountMenu } = provideSettingsStore()
+const settingsStore = useSettingsStore()
+const { imagesOpen, accountSettingsOpen } = storeToRefs(settingsStore)
 
 const state = useStorage('forager-store', {
   map3D: false,
@@ -29,13 +30,13 @@ function restartApplication() {
       <label for="topology">Enable 3D Map</label>
       <input id="topology" v-model="state.map3D" name="topology" type="checkbox" class="w-12 " @change="restartApplication()">
     </div>
-    <BaseButton @click="toggleAccountMenu">
+    <BaseButton @click="settingsStore.toggleAccountMenu">
       Account
     </BaseButton>
     <Transition name="slide">
       <AccountSettings v-if="accountSettingsOpen" />
     </Transition>
-    <BaseButton @click="toggleImageMenu">
+    <BaseButton @click="settingsStore.toggleImageMenu">
       Images
     </BaseButton>
     <Transition name="slide">

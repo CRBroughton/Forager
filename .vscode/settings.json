@@ -21,6 +21,7 @@
         "delete-reference-images",
         "desktop-support",
         "marker-details",
-        "login-page"
+        "login-page",
+        "stores"
     ]
 }

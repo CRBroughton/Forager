@@ -45,6 +45,7 @@ export default defineConfig({
       imports: [
         // presets
         'vue',
+        'pinia',
         '@vueuse/core',
       ],
     }),

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { injectSettingsStore } from '@/views/settings/settingsStore'
+import { useSettingsStore } from '@/views/settings/settingsStore'
 import { injectPocketBaseStore } from '@/pocketbase'
 import { createPopup } from '@/tippy'
 
-const { toggleImageMenu } = injectSettingsStore()
+const { toggleImageMenu } = useSettingsStore()
 const { user, createImage, deleteReferenceImage } = injectPocketBaseStore()
 
 const imageURL = ref('')

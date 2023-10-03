@@ -1,4 +1,4 @@
-export function useSettingsStore() {
+export const useSettingsStore = defineStore('settings-store', () => {
   const imagesOpen = ref(false)
   const accountSettingsOpen = ref(false)
 
@@ -16,16 +16,4 @@ export function useSettingsStore() {
     toggleImageMenu,
     toggleAccountMenu,
   }
-}
-
-const storeKey: InjectionKey<ReturnType<typeof useSettingsStore>> = Symbol('settings-store')
-
-export function provideSettingsStore() {
-  const store = useSettingsStore()
-  provide(storeKey, store)
-  return store
-}
-
-export function injectSettingsStore() {
-  return inject(storeKey)!
-}
+})
