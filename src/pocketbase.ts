@@ -22,14 +22,22 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
 
   pb.authStore.onChange(() => user.value = pb.authStore.model)
 
+  const errorMessage = ref<Error | undefined>(undefined)
+  const setErrorMessage = (message: Error) => {
+    errorMessage.value = message
+    setTimeout(() => {
+      errorMessage.value = undefined
+    }, 1000)
+  }
+
   const getHealth = async () => {
     try {
       const response = await pb.health.check()
       health.value = response
     }
     catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
       health.value = undefined
     }
   }
@@ -41,10 +49,11 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
   const login = async () => {
     try {
       await pb.collection('users').authWithPassword(username.value, password.value)
+      return 'success'
     }
     catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -60,8 +69,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       await login()
     }
     catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -77,8 +86,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       })
     }
     catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -94,8 +103,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       })
     }
     catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -105,8 +114,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       return services[0].canCreateAccounts
     }
     catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -115,8 +124,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       await pb.collection('users').authRefresh()
     }
     catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -126,8 +135,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       response = await pb.collection('items').getFullList<ItemsRecordWithID>()
     }
     catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
     return response
   }
@@ -138,8 +147,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       selectedItemPocketbase.value = await pb.collection('items').getOne(id)
     }
     catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -148,8 +157,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       await pb.collection('items').create(data)
     }
     catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -168,8 +177,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       Promise.all(promises)
     }
     catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -179,8 +188,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       await getItems()
     }
     catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -191,8 +200,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       })
     }
     catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -203,8 +212,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       })
     }
     catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -221,8 +230,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       })
     }
     catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -239,8 +248,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       Promise.all(promises)
     }
     catch (error: unknown) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -249,8 +258,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       return await pb.collection('routes').getFullList()
     }
     catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -259,8 +268,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       return await pb.collection('routes').getOne(id)
     }
     catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -273,8 +282,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
       user.value!.images = filteredImages
     }
     catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if (isError(error)) 
+        setErrorMessage(error)
     }
   }
 
@@ -307,5 +316,7 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
     createItems,
     updateAccountData,
     setUserLocation,
+    errorMessage,
+    setErrorMessage,
   }
 })

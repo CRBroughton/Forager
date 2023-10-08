@@ -4,7 +4,7 @@ import { provideMapboxStore } from './mapbox'
 import { usePocketBase } from './pocketbase'
 
 const pocketbaseStore = usePocketBase()
-const { user, username, password, passwordConfirm, isCreatingAccount  } = storeToRefs(pocketbaseStore)
+const { user, username, password, passwordConfirm, isCreatingAccount, errorMessage } = storeToRefs(pocketbaseStore)
 const home: LngLatLike = [
   user.value?.lng ?? 0,
   user.value?.lat ?? 0,
@@ -35,8 +35,10 @@ function openSettingsMenu() {
 }
 
 async function loginInUser() {
-  await pocketbaseStore.login()
-  location.reload()
+  const result = await pocketbaseStore.login()
+
+  if (result === 'success')
+    location.reload()
 }
 
 async function agree() {
@@ -52,6 +54,7 @@ const homeNotSet = computed(() => {
 
 <template>
   <div v-if="!user" class="login">
+    <ErrorMessage :error-message="errorMessage" />
     <LoginForm>
       <input v-model="username" class="login-input" placeholder="enter username">
       <input v-model="password" class="login-input" type="password" placeholder="enter password">
@@ -78,6 +81,7 @@ const homeNotSet = computed(() => {
     </LoginForm>
   </div>
   <div v-if="user && !user.disclaimerAgreed" class="login">
+    <ErrorMessage :error-message="errorMessage" />
     <LoginForm>
       <Disclaimer />
       <BaseButton @click="agree">
@@ -86,6 +90,7 @@ const homeNotSet = computed(() => {
     </LoginForm>
   </div>
   <div v-if="user && user.disclaimerAgreed">
+    <ErrorMessage :error-message="errorMessage" />
     <div
       id="map"
     />
