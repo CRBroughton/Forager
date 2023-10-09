@@ -98,25 +98,25 @@ export function mapBoxStore(vars?: Mapbox, user?: AuthModel) {
       })
 
 
-      const { getRoute } = usePocketBase()
-      const lineCoords = await getRoute('4t2ttp1beq31p2r')
+      // const { getRoute } = usePocketBase()
+      // const lineCoords = await getRoute('4t2ttp1beq31p2r')
 
-      map?.addSource('routes', {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [
-            {
-              type: 'Feature',
-              properties: {},
-              geometry: {
-                type: 'LineString',
-                coordinates: lineCoords?.points.coords,
-              },
-            },
-          ],
-        },
-      })
+      // map?.addSource('routes', {
+      //   type: 'geojson',
+      //   data: {
+      //     type: 'FeatureCollection',
+      //     features: [
+      //       {
+      //         type: 'Feature',
+      //         properties: {},
+      //         geometry: {
+      //           type: 'LineString',
+      //           coordinates: lineCoords?.points.coords,
+      //         },
+      //       },
+      //     ],
+      //   },
+      // })
 
       if (map) {
         createLayers(map)
