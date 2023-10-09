@@ -18,10 +18,10 @@ interface Mapbox {
 let map: mapboxgl.Map | undefined
 
 export function mapBoxStore(vars?: Mapbox, user?: AuthModel) {
-  const lng = ref()
-  const lat = ref()
+  const lng = ref(0)
+  const lat = ref(0)
   const markerUIHidden = ref(true)
-  const selectedItem = ref()
+  const selectedItem = ref<string | undefined>(undefined)
   const detailsHidden = ref(true)
   const items = ref<ItemsRecordWithID[]>([])
 
