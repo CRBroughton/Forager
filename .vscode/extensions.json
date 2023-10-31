@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "Vue.volar",
+    "bradlc.vscode-tailwindcss",
+    "dbaeumer.vscode-eslint",
+    "usernamehw.errorlens",
+    "mhutchie.git-graph",
+    "eamodio.gitlens",
+    "vscode-icons-team.vscode-icons",
+    "formulahendry.auto-rename-tag",
+    "vivaxy.vscode-conventional-commits",
+    "golang.go",
+    "afzalsayed96.icones",
+    "Vue.vscode-typescript-vue-plugin",
+  ]
+}

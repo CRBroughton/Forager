@@ -1,4 +1,20 @@
-/* ./src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* { 
+    -webkit-tap-highlight-color: transparent
+}
+
+body {
+    overflow: hidden;
+}
+
+* {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+*::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
