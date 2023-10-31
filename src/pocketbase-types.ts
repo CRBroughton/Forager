@@ -5,7 +5,6 @@
 export enum Collections {
 	Services = "Services",
 	Items = "items",
-	Routes = "routes",
 	Users = "users",
 }
 
@@ -51,12 +50,6 @@ export type ItemsRecord = {
 	startMonth?: string
 }
 
-export type RoutesRecord<Tpoints = unknown> = {
-	date: string
-	name: string
-	points: null | Tpoints
-}
-
 export type UsersRecord<Timages = unknown> = {
 	avatar?: string
 	disclaimerAgreed?: boolean
@@ -69,7 +62,6 @@ export type UsersRecord<Timages = unknown> = {
 // Response types include system fields and match responses from the PocketBase API
 export type ServicesResponse<Texpand = unknown> = Required<ServicesRecord> & BaseSystemFields<Texpand>
 export type ItemsResponse<Texpand = unknown> = Required<ItemsRecord> & BaseSystemFields<Texpand>
-export type RoutesResponse<Tpoints = unknown, Texpand = unknown> = Required<RoutesRecord<Tpoints>> & BaseSystemFields<Texpand>
 export type UsersResponse<Timages = unknown, Texpand = unknown> = Required<UsersRecord<Timages>> & AuthSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
@@ -77,13 +69,11 @@ export type UsersResponse<Timages = unknown, Texpand = unknown> = Required<Users
 export type CollectionRecords = {
 	Services: ServicesRecord
 	items: ItemsRecord
-	routes: RoutesRecord
 	users: UsersRecord
 }
 
 export type CollectionResponses = {
 	Services: ServicesResponse
 	items: ItemsResponse
-	routes: RoutesResponse
 	users: UsersResponse
 }
