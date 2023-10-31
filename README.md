@@ -113,9 +113,8 @@ Forager is a Progressive Web Application (PWA), and therefore can be installed v
 
 ### Do you provide an official Forager instance?
 
-The official instance of Forager is https://forager.crbroughton.me - This instance
-will regularly be reset, so only use this instance to see if you are interested in
-Forager as an application.
+I do not currently run an official instance of Forager. If there is a demand for this,
+it could happen though.
 
 ### Where is the old version of Forager?
 
