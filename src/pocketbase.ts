@@ -253,25 +253,25 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
     }
   }
 
-  const getRoutes = async () => {
-    try {
-      return await pb.collection('routes').getFullList()
-    }
-    catch (error) {
-      if (isError(error)) 
-        setErrorMessage(error)
-    }
-  }
+  // const getRoutes = async () => {
+  //   try {
+  //     return await pb.collection('routes').getFullList()
+  //   }
+  //   catch (error) {
+  //     if (isError(error)) 
+  //       setErrorMessage(error)
+  //   }
+  // }
 
-  const getRoute = async (id: string) => {
-    try {
-      return await pb.collection('routes').getOne(id)
-    }
-    catch (error) {
-      if (isError(error)) 
-        setErrorMessage(error)
-    }
-  }
+  // const getRoute = async (id: string) => {
+  //   try {
+  //     return await pb.collection('routes').getOne(id)
+  //   }
+  //   catch (error) {
+  //     if (isError(error)) 
+  //       setErrorMessage(error)
+  //   }
+  // }
 
   const deleteReferenceImage = async (removedImage: UserImage) => {
     const filteredImages: UserImage[] = user.value?.images.filter((image: UserImage) => image !== removedImage)
@@ -289,8 +289,8 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
 
   return {
     deleteReferenceImage,
-    getRoute,
-    getRoutes,
+    // getRoute,
+    // getRoutes,
     pb,
     user,
     username,
