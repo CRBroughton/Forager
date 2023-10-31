@@ -117,7 +117,7 @@ const sideMenuHidden = ref(true)
         </svg>
       </div>
     </Transition>
-    <Transition name="slide">
+    <!-- <Transition name="slide">
       <div
         v-if="!sideMenuHidden"
 
@@ -138,7 +138,7 @@ const sideMenuHidden = ref(true)
           />
         </svg>
       </div>
-    </Transition>
+    </Transition> -->
     <!-- <div
       v-else
       data-test="sidemenu-toggle-tooltips-on"

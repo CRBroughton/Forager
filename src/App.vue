@@ -95,7 +95,7 @@ const homeNotSet = computed(() => {
       id="map"
     />
     <div v-if="homeNotSet" class="absolute overflow-scroll m-auto bottom-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-lg w-full rounded-tr-xl rounded-tl-xl p-4 max-h-[45%] md:bottom-2 md:left-2 md:w-2/3 md:h-auto md:rounded-br-xl md:rounded-bl-xl md:m-0 md:max-w-md md:max-h-[50%] md:overflow-scroll">
-      <p class="font-semibold text-white">
+      <p class="font-semibold text-black">
         Please select your home location
       </p>
     </div>
