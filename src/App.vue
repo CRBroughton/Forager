@@ -91,6 +91,7 @@ const homeNotSet = computed(() => {
   </div>
   <div v-if="user && user.disclaimerAgreed">
     <ErrorMessage :error-message="errorMessage" />
+    <WeatherNotification :lat="user.lat" :lng="user.lng" />
     <div
       id="map"
     />

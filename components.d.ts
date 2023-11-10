@@ -24,5 +24,6 @@ declare module 'vue' {
     SettingsMenu: typeof import('./src/views/settings/settingsMenu.vue')['default']
     SettingsWrapper: typeof import('./src/views/settings/SettingsWrapper.vue')['default']
     SideMenu: typeof import('./src/components/SideMenu.vue')['default']
+    WeatherNotification: typeof import('./src/components/WeatherNotification.vue')['default']
   }
 }

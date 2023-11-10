@@ -3,8 +3,8 @@ import { httpClient } from './wrapper'
 
 interface Params {
   apikey?: string
-  lat: string
-  lon: string
+  lat: number
+  lng: number
   imperial?: boolean
 }
 
@@ -13,9 +13,12 @@ export class OpenWeatherAPIClient {
     if (!params.apikey)
       return
 
+
+    const lat = String(params.lat)
+    const lng = String(params.lng)
     return httpClient.get<OpenWeatherResponse>(
       {
-        url: `https://api.openweathermap.org/data/3.0/onecall?lat=${params.lat}&lon=${params.lon}&units=${params.imperial ? 'imperial' : 'metric'}&appid=${params.apikey}`,
+        url: `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lng}&units=${params.imperial ? 'imperial' : 'metric'}&appid=${params.apikey}`,
       },
     )
   }
