@@ -7,7 +7,6 @@
     "no-restricted-syntax": [
       "error",
       "TSEnumDeclaration",
-      "ClassDeclaration",
       "Decorator",
       "TSAnyKeyword"
     ]
