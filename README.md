@@ -63,7 +63,7 @@ Regardless of installation method, you will require the following to build Forag
 
 - npm
 - pnpm
-- go 1.20+ (this is version Forager is built against)
+- go 1.20+ (this is the version Forager is built against)
 
 Forager can then be installed via the following methods:
 
@@ -77,7 +77,7 @@ To install Forager using this method, perform the following actions:
 - Clone this repository
 - `cd` into the repository and run `pnpm i`
 - Provide your [Mapbox](https://www.mapbox.com/) key to the `.env` file
-- Run `pnpm run go:build` to produce a linux arm64 binary
+- Run `pnpm run go:build` to produce a executable binary
 
 There are other commands available in the `package.json` to produce various binaries.
 
@@ -97,13 +97,11 @@ You can utilise Pocketbase via a domain you own; Check [Pocketbases Going to Pro
 Development of Forager requires:
 
 - An active Mapbox account and API key
-- A Pocketbase server
 - All of the previously mentioned software requirements
 
-Dependant on your operating system's architecture, download the latest release of
-[Pocketbase](https://github.com/pocketbase/pocketbase) and extract the executable
-into the db folder. When running `pnpm run pocketbase:serve` for the first time,
-the database migrations will ensure the correct tables are created.
+ When running `pnpm run pocketbase:serve` for the first time,
+the database migrations will ensure the correct tables are created and will
+start up a development instance of [Pocketbase](https://github.com/pocketbase/pocketbase).
 
 ## Progressive Web Application (PWA)
 

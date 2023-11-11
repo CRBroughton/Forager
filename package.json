@@ -13,7 +13,9 @@
     "lint:check": "eslint \"src/*.{vue,ts,js}\"",
     "lint:fix": "eslint \"src/*.{vue,ts,js}\" --fix",
     "serve": "vite preview",
-    "pocketbase:serve": "./db/pocketbase serve",
+    "pocketbase:migrate": "cd db && go run main.go migrate",
+    "pocketbase:migrate:down": "cd db && go run main.go migrate down",
+    "pocketbase:serve": "cd db && go run main.go serve",
     "pocketbase:types": "npx pocketbase-typegen --db ./db/pb_data/data.db --out ./src/pocketbase-types.ts"
   },
   "dependencies": {
