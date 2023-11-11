@@ -16,6 +16,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
   const username = ref('')
   const password = ref('')
   const passwordConfirm = ref('')
+  const mapboxAPIKey = ref('')
   const isCreatingAccount = ref(false)
   const health = ref<healthCheckResponse>()
   const selectedItemPocketbase = ref<ItemsRecordWithID>()
@@ -57,12 +58,17 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     }
   }
 
+  const canSignUp = computed(() => {
+    return username.value && password.value && passwordConfirm.value && mapboxAPIKey.value
+  })
+
   const createAccount = async () => {
     try {
       await pb.collection('users').create({
         username: username.value,
         password: password.value,
         passwordConfirm: passwordConfirm.value,
+        mapboxAPIKey: mapboxAPIKey.value,
         images: [],
       })
 
@@ -296,12 +302,14 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     username,
     password,
     passwordConfirm,
+    mapboxAPIKey,
     isCreatingAccount,
     health,
     login,
     logout,
     refresh,
     createAccount,
+    canSignUp,
     canCreateAccount,
     getHealth,
     getItems,

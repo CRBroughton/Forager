@@ -4,7 +4,7 @@ import { useMapbox } from './mapbox'
 
 const pocketbaseStore = usePocketBase()
 const mapboxStore = useMapbox()
-const { user, username, password, passwordConfirm, isCreatingAccount, errorMessage } = storeToRefs(pocketbaseStore)
+const { user, username, password, passwordConfirm, mapboxAPIKey, isCreatingAccount, errorMessage, canSignUp } = storeToRefs(pocketbaseStore)
 const canCreateAccounts = ref<boolean | undefined>(false)
 
 onMounted(async () => {
@@ -51,11 +51,15 @@ const homeNotSet = computed(() => {
   <div v-if="!user" class="login">
     <ErrorMessage :error-message="errorMessage" />
     <LoginForm>
-      <input v-model="username" class="login-input" placeholder="enter username">
-      <input v-model="password" class="login-input" type="password" placeholder="enter password">
+      <input v-model="username" class="login-input" placeholder="enter username" required>
+      <input v-model="password" class="login-input" type="password" placeholder="enter password" required>
       <input
         v-if="isCreatingAccount"
-        v-model="passwordConfirm" class="login-input" placeholder="confirm password" type="password"
+        v-model="passwordConfirm" class="login-input" placeholder="confirm password" type="password" required
+      >
+      <input
+        v-if="isCreatingAccount"
+        v-model="mapboxAPIKey" class="login-input" placeholder="Mapbox API Key" type="password" required
       >
       <BaseButton v-if="!isCreatingAccount" @click="loginInUser()">
         Login
@@ -63,7 +67,7 @@ const homeNotSet = computed(() => {
       <BaseButton v-if="!isCreatingAccount && canCreateAccounts" @click="isCreatingAccount = !isCreatingAccount">
         Create New Account
       </BaseButton>
-      <BaseButton v-if="isCreatingAccount" @click="pocketbaseStore.createAccount()">
+      <BaseButton v-if="isCreatingAccount" :disabled="!canSignUp" @click="pocketbaseStore.createAccount()">
         Create Account
       </BaseButton>
       <BaseButton
