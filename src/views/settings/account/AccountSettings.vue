@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { useSettingsStore } from '@/views/settings/settingsStore'
 import { usePocketBase } from '@/pocketbase'
-import { injectMapboxStore } from '@/mapbox'
+import { useMapbox } from '@/mapbox'
 import type { ItemsRecordWithID, UserRecordWithID } from '@/types'
 import { jsonDownloader } from '@/jsonDownloader'
 
 const { isSupported } = useFileSystemAccess()
 const { toggleAccountMenu } = useSettingsStore()
 const pocketbaseStore = usePocketBase()
-const {  user } = storeToRefs(pocketbaseStore)
-const { items } = injectMapboxStore()
+const { user } = storeToRefs(pocketbaseStore)
+const mapboxStore = useMapbox()
+const { items } = storeToRefs(mapboxStore)
 
 const confirmDeletion = ref(false)
 

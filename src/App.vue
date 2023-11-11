@@ -1,27 +1,22 @@
 <script setup lang="ts">
-import type { LngLatLike } from 'mapbox-gl'
-import { provideMapboxStore } from './mapbox'
 import { usePocketBase } from './pocketbase'
+import { useMapbox } from './mapbox'
 
 const pocketbaseStore = usePocketBase()
+const mapboxStore = useMapbox()
 const { user, username, password, passwordConfirm, isCreatingAccount, errorMessage } = storeToRefs(pocketbaseStore)
-const home: LngLatLike = [
-  user.value?.lng ?? 0,
-  user.value?.lat ?? 0,
-]
-const { initMapbox, markerUIHidden } = provideMapboxStore({ home, container: 'map' }, user.value)
-
 const canCreateAccounts = ref<boolean | undefined>(false)
+
 onMounted(async () => {
   canCreateAccounts.value = await pocketbaseStore.canCreateAccount()
   if (pocketbaseStore.pb.authStore.token && user.value && user.value.disclaimerAgreed) {
-    await initMapbox()
+    await mapboxStore.initMapbox()
     await pocketbaseStore.refresh()
   }
 })
 
 function hideAddMarker() {
-  markerUIHidden.value = true
+  mapboxStore.markerUIHidden = true
 }
 
 const settingsMenu = ref(false)
@@ -44,7 +39,7 @@ async function loginInUser() {
 async function agree() {
   await pocketbaseStore.updateDisclaimerAgreement()
   location.reload()
-  await initMapbox()
+  await mapboxStore.initMapbox()
 }
 
 const homeNotSet = computed(() => {
@@ -107,7 +102,7 @@ const homeNotSet = computed(() => {
       :open-settings="openSettingsMenu"
     />
     <Transition name="slide">
-      <AddMarker :hidden="markerUIHidden" @hide="hideAddMarker" />
+      <AddMarker :hidden="mapboxStore.markerUIHidden" @hide="hideAddMarker" />
     </Transition>
     <Transition name="slide">
       <ItemDetails />

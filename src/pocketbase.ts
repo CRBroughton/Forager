@@ -11,7 +11,7 @@ interface healthCheckResponse {
   message: string
 }
 
-export const usePocketBase = defineStore('pocketbse-store', () => {
+export const usePocketBase = defineStore('pocketbase-store', () => {
   const user = ref(pb.authStore.model)
   const username = ref('')
   const password = ref('')
