@@ -6,12 +6,11 @@ import type { ItemsRecordWithID } from './types'
 import { createLayers } from './mapbox/layers'
 import { createGeolocator } from './mapbox/geoLocator'
 
-const accessToken = import.meta.env.VITE_MAPBOX_KEY
-mapboxgl.accessToken = accessToken
-
-let map: mapboxgl.Map | undefined
 
 export const useMapbox = defineStore('mapbox-store', () => {
+  const userStore = usePocketBase()
+  mapboxgl.accessToken = userStore.user?.mapboxAPIKey
+  let map: mapboxgl.Map | undefined
   const lng = ref(0)
   const lat = ref(0)
   const markerUIHidden = ref(true)
