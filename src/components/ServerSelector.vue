@@ -40,13 +40,13 @@ checkConnectivityDeBounce()
         <div class="flex items-center content-center">
           <div :class="serverClasses" />
           <p v-if="!serverIsAlive">
-            Could not find server
+            Could not find pocketbase server
           </p>
           <p v-if="serverIsAlive">
-            Found server!
+            Found pocketbase server!
           </p>
         </div>
-        <input v-model="state.server" class="login-input" type="text" name="server" placeholder="Server address" @keydown="checkConnectivityDeBounce">
+        <input v-model="state.server" class="login-input" type="text" name="server" placeholder="Pocketbase server address" @keydown="checkConnectivityDeBounce">
       </div>
      
       <BaseButton @click="emit('hide')">
