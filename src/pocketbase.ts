@@ -4,7 +4,10 @@ import type { ItemsRecordWithID, UserRecordWithID } from './types'
 
 export const isError = (err: unknown): err is Error => err instanceof Error
 
-const pb = new PocketBase(import.meta.env.VITE_POCKETBASE_URL)
+const state = useStorage('forager-store', {
+  server: 'http://localhost:8090',
+})
+const pb = new PocketBase(state.value.server)
 
 interface healthCheckResponse {
   code: number

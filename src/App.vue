@@ -45,12 +45,14 @@ async function agree() {
 const homeNotSet = computed(() => {
   return user.value?.lat === 0 && user.value?.lng === 0
 })
+
+const settingsMenuVisible = ref(false)
 </script>
 
 <template>
   <div v-if="!user" class="login">
     <ErrorMessage :error-message="errorMessage" />
-    <LoginForm>
+    <LoginForm @toggle-settings="settingsMenuVisible = !settingsMenuVisible">
       <input v-model="username" class="login-input" placeholder="enter username" required>
       <input v-model="password" class="login-input" type="password" placeholder="enter password" required>
       <input
@@ -77,6 +79,7 @@ const homeNotSet = computed(() => {
       >
         Back
       </BaseButton>
+      <ServerSelector v-if="settingsMenuVisible" @hide="settingsMenuVisible = !settingsMenuVisible" />
     </LoginForm>
   </div>
   <div v-if="user && !user.disclaimerAgreed" class="login">
