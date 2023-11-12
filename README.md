@@ -59,7 +59,17 @@ All pinned locations are stored via [Pocketbase](https://github.com/pocketbase/p
 
 ## Installation
 
-Regardless of installation method, you will require the following to build Forager:
+### Prebuilt Binary Installation
+
+You can install Forager with the provided binaries available on the [releases](https://github.com/CRBroughton/Forager/releases) page.
+
+This binary will provide both the back-end and front-end of the application.
+
+For deployment of the application, see [Pocketbases Going to Production documentation](https://pocketbase.io/docs/going-to-production/).
+
+## Manual Installation
+
+Regardless of manual installation method, you will require the following to build Forager:
 
 - npm
 - pnpm
@@ -76,8 +86,7 @@ To install Forager using this method, perform the following actions:
 
 - Clone this repository
 - `cd` into the repository and run `pnpm i`
-- Provide your [Mapbox](https://www.mapbox.com/) key to the `.env` file
-- Run `pnpm run go:build` to produce a linux arm64 binary
+- Run `pnpm run go:build` to produce a binary
 
 There are other commands available in the `package.json` to produce various binaries.
 
