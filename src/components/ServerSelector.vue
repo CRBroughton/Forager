@@ -5,7 +5,7 @@ interface Emits {
   (e: 'hide'): void
 }
 const state = useStorage('forager-store', {
-  server: 'http://localhost:8090',
+  server: import.meta.env.VITE_POCKETBASE_URL,
 },
 localStorage,
 { mergeDefaults: true })

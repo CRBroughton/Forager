@@ -5,7 +5,7 @@ import type { ItemsRecordWithID, UserRecordWithID } from './types'
 export const isError = (err: unknown): err is Error => err instanceof Error
 
 const state = useStorage('forager-store', {
-  server: 'http://localhost:8090',
+  server: import.meta.env.VITE_POCKETBASE_URL,
 })
 const pb = new PocketBase(state.value.server)
 
