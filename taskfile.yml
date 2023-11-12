@@ -1,0 +1,37 @@
+version: '3'
+
+tasks:
+  build: 
+    deps: [linux32, linux64, windows64, apple, applesilicon]
+
+  front:
+    cmds:
+      - npm run build
+      - rm -rf db/dist
+      - cp -R dist db/
+    run: once
+
+  linux32:
+    deps: [front]
+    cmds:
+      - cd db && GOOS=linux GOARCH=386 go build -o ../build/forager-2.0.1-linux32
+
+  linux64:
+    deps: [front]
+    cmds:
+      - cd db && GOOS=linux GOARCH=amd64 go build -o ../build/forager-2.0.1-linux
+
+  windows64:
+    deps: [front]
+    cmds:
+      - cd db && GOOS=windows GOARCH=amd64 go build -o ../build/forager-2.0.1.exe
+  
+  apple:
+    deps: [front]
+    cmds:
+      - cd db && GOOS=darwin GOARCH=amd64 go build -o ../build/forager-2.0.1-apple.app
+
+  applesilicon:
+    deps: [front]
+    cmds:
+      - cd db && GOOS=darwin GOARCH=arm64 go build -o ../build/forager-2.0.1-appliesilicon.app

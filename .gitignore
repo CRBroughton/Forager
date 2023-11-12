@@ -14,3 +14,4 @@ db/pb_data
 **/*.exe
 **/*.zip
 db/forager
+build
