@@ -1,27 +1,22 @@
 <script setup lang="ts">
-import type { LngLatLike } from 'mapbox-gl'
-import { provideMapboxStore } from './mapbox'
 import { usePocketBase } from './pocketbase'
+import { useMapbox } from './mapbox'
 
 const pocketbaseStore = usePocketBase()
-const { user, username, password, passwordConfirm, isCreatingAccount, errorMessage } = storeToRefs(pocketbaseStore)
-const home: LngLatLike = [
-  user.value?.lng ?? 0,
-  user.value?.lat ?? 0,
-]
-const { initMapbox, markerUIHidden } = provideMapboxStore({ home, container: 'map' }, user.value)
-
+const mapboxStore = useMapbox()
+const { user, username, password, passwordConfirm, mapboxAPIKey, isCreatingAccount, errorMessage, canSignUp } = storeToRefs(pocketbaseStore)
 const canCreateAccounts = ref<boolean | undefined>(false)
+
 onMounted(async () => {
   canCreateAccounts.value = await pocketbaseStore.canCreateAccount()
   if (pocketbaseStore.pb.authStore.token && user.value && user.value.disclaimerAgreed) {
-    await initMapbox()
+    await mapboxStore.initMapbox()
     await pocketbaseStore.refresh()
   }
 })
 
 function hideAddMarker() {
-  markerUIHidden.value = true
+  mapboxStore.markerUIHidden = true
 }
 
 const settingsMenu = ref(false)
@@ -44,23 +39,29 @@ async function loginInUser() {
 async function agree() {
   await pocketbaseStore.updateDisclaimerAgreement()
   location.reload()
-  await initMapbox()
+  await mapboxStore.initMapbox()
 }
 
 const homeNotSet = computed(() => {
   return user.value?.lat === 0 && user.value?.lng === 0
 })
+
+const settingsMenuVisible = ref(false)
 </script>
 
 <template>
   <div v-if="!user" class="login">
     <ErrorMessage :error-message="errorMessage" />
-    <LoginForm>
-      <input v-model="username" class="login-input" placeholder="enter username">
-      <input v-model="password" class="login-input" type="password" placeholder="enter password">
+    <LoginForm @toggle-settings="settingsMenuVisible = !settingsMenuVisible">
+      <input v-model="username" class="login-input" placeholder="enter username" required>
+      <input v-model="password" class="login-input" type="password" placeholder="enter password" required>
       <input
         v-if="isCreatingAccount"
-        v-model="passwordConfirm" class="login-input" placeholder="confirm password" type="password"
+        v-model="passwordConfirm" class="login-input" placeholder="confirm password" type="password" required
+      >
+      <input
+        v-if="isCreatingAccount"
+        v-model="mapboxAPIKey" class="login-input" placeholder="Mapbox API Key" type="password" required
       >
       <BaseButton v-if="!isCreatingAccount" @click="loginInUser()">
         Login
@@ -68,7 +69,7 @@ const homeNotSet = computed(() => {
       <BaseButton v-if="!isCreatingAccount && canCreateAccounts" @click="isCreatingAccount = !isCreatingAccount">
         Create New Account
       </BaseButton>
-      <BaseButton v-if="isCreatingAccount" @click="pocketbaseStore.createAccount()">
+      <BaseButton v-if="isCreatingAccount" :disabled="!canSignUp" @click="pocketbaseStore.createAccount()">
         Create Account
       </BaseButton>
       <BaseButton
@@ -78,6 +79,7 @@ const homeNotSet = computed(() => {
       >
         Back
       </BaseButton>
+      <ServerSelector v-if="settingsMenuVisible" @hide="settingsMenuVisible = !settingsMenuVisible" />
     </LoginForm>
   </div>
   <div v-if="user && !user.disclaimerAgreed" class="login">
@@ -107,7 +109,7 @@ const homeNotSet = computed(() => {
       :open-settings="openSettingsMenu"
     />
     <Transition name="slide">
-      <AddMarker :hidden="markerUIHidden" @hide="hideAddMarker" />
+      <AddMarker :hidden="mapboxStore.markerUIHidden" @hide="hideAddMarker" />
     </Transition>
     <Transition name="slide">
       <ItemDetails />

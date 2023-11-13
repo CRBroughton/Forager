@@ -1,6 +1,6 @@
 <script  setup lang="ts">
 import { ref } from 'vue'
-import { mapBoxStore } from '@/mapbox'
+import { useMapbox } from '@/mapbox'
 import { usePocketBase } from '@/pocketbase'
 
 // For default values for your props, use :
@@ -9,7 +9,7 @@ interface Props {
   openSettings: () => void
 }
 const props = defineProps<Props>()
-const { returnHome } = mapBoxStore()
+const mapboxStore = useMapbox()
 const { logout } = usePocketBase()
 
 const sideMenuHidden = ref(true)
@@ -99,7 +99,7 @@ const sideMenuHidden = ref(true)
         v-if="!sideMenuHidden"
         data-test="sidemenu-return-home"
         class="h-14 w-14 mb-1 bg-white active:bg-gray-100 flex justify-center items-center rounded-full  border-gray-200 border cursor-pointer"
-        @click="returnHome()"
+        @click="mapboxStore.returnHome()"
       >
         <svg
           class="w-6 h-6 text-gray-500"

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { injectMapboxStore } from '@/mapbox'
 import { usePocketBase } from '@/pocketbase'
+import { useMapbox } from '@/mapbox'
 import type { UserImage } from '@/types'
 import { createPopup } from '@/tippy'
 
@@ -25,7 +25,8 @@ watch(() => createItemRef.value, () => {
   createItemPopup('#newItem', 'Creates a new item, either from your images, or an arbitrary item')
 })
 
-const { lng, lat, addMarker } = injectMapboxStore()
+const mapboxStore = useMapbox()
+const { lng, lat } = storeToRefs(mapboxStore)
 const pocketbaseStore = usePocketBase()
 const { user } = storeToRefs(pocketbaseStore)
 const selectedStartMonth = ref('January')
@@ -88,7 +89,7 @@ function setSelectedItem(event: UserImage) {
         </Transition>
       </div>
       <div class="flex gap-4 m-auto w-full justify-center">
-        <BaseButton @click="addMarker(lng, lat, input, selectedColour, selectedStartMonth, selectedEndMonth, imageURL!)">
+        <BaseButton @click="mapboxStore.addMarker(lng, lat, input, selectedColour, selectedStartMonth, selectedEndMonth, imageURL!)">
           Create
         </BaseButton>
         <BaseButton @click="hide">
