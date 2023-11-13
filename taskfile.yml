@@ -1,5 +1,8 @@
 version: '3'
 
+vars:
+  version: 1.2.0
+
 tasks:
   build: 
     deps: [linux32, linux64, windows64, apple, applesilicon]
@@ -14,24 +17,24 @@ tasks:
   linux32:
     deps: [front]
     cmds:
-      - cd db && GOOS=linux GOARCH=386 go build -o ../build/forager-2.0.1-linux32
+      - cd db && GOOS=linux GOARCH=386 go build -o ../build/forager-"{{.version}}"-linux32
 
   linux64:
     deps: [front]
     cmds:
-      - cd db && GOOS=linux GOARCH=amd64 go build -o ../build/forager-2.0.1-linux
+      - cd db && GOOS=linux GOARCH=amd64 go build -o ../build/forager-"{{.version}}"-linux
 
   windows64:
     deps: [front]
     cmds:
-      - cd db && GOOS=windows GOARCH=amd64 go build -o ../build/forager-2.0.1.exe
+      - cd db && GOOS=windows GOARCH=amd64 go build -o ../build/forager-"{{.version}}".exe
   
   apple:
     deps: [front]
     cmds:
-      - cd db && GOOS=darwin GOARCH=amd64 go build -o ../build/forager-2.0.1-apple.app
+      - cd db && GOOS=darwin GOARCH=amd64 go build -o ../build/forager-"{{.version}}"-apple.app
 
   applesilicon:
     deps: [front]
     cmds:
-      - cd db && GOOS=darwin GOARCH=arm64 go build -o ../build/forager-2.0.1-appliesilicon.app
+      - cd db && GOOS=darwin GOARCH=arm64 go build -o ../build/forager-"{{.version}}"-appliesilicon.app
