@@ -74,6 +74,7 @@ Regardless of manual installation method, you will require the following to buil
 - npm
 - pnpm
 - go 1.20+ (this is version Forager is built against)
+- [taskfile](https://taskfile.dev/) - Automates the build process
 
 Forager can then be installed via the following methods:
 
@@ -86,10 +87,9 @@ To install Forager using this method, perform the following actions:
 
 - Clone this repository
 - `cd` into the repository and run `pnpm i`
-- Run `pnpm run go:build` to produce a binary
-
-There are other commands available in the `package.json` to produce various binaries.
-
+- Run `task linux64` to build the linux64 binary; Check out the
+taskfile.yml file for various architectures, or to create all, simply
+run `task build`.
 
 ### Separated installation
 
