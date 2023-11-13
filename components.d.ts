@@ -21,6 +21,7 @@ declare module 'vue' {
     ReferenceImage: typeof import('./src/components/ReferenceImage.vue')['default']
     ReferenceImages: typeof import('./src/components/ReferenceImages.vue')['default']
     ServerHealth: typeof import('./src/components/ServerHealth.vue')['default']
+    ServerSelector: typeof import('./src/components/ServerSelector.vue')['default']
     SettingsMenu: typeof import('./src/views/settings/settingsMenu.vue')['default']
     SettingsWrapper: typeof import('./src/views/settings/SettingsWrapper.vue')['default']
     SideMenu: typeof import('./src/components/SideMenu.vue')['default']

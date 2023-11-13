@@ -1,23 +1,16 @@
-import type { LngLatLike, MapMouseEvent } from 'mapbox-gl'
+import type { MapMouseEvent } from 'mapbox-gl'
 import type { Feature } from 'geojson'
 import mapboxgl from 'mapbox-gl'
-import type { AuthModel } from 'pocketbase'
 import { usePocketBase } from './pocketbase'
 import type { ItemsRecordWithID } from './types'
 import { createLayers } from './mapbox/layers'
 import { createGeolocator } from './mapbox/geoLocator'
 
-const accessToken = import.meta.env.VITE_MAPBOX_KEY
-mapboxgl.accessToken = accessToken
 
-interface Mapbox {
-  home?: LngLatLike
-  container: string
-}
-
-let map: mapboxgl.Map | undefined
-
-export function mapBoxStore(vars?: Mapbox, user?: AuthModel) {
+export const useMapbox = defineStore('mapbox-store', () => {
+  const userStore = usePocketBase()
+  mapboxgl.accessToken = userStore.user?.mapboxAPIKey
+  let map: mapboxgl.Map | undefined
   const lng = ref(0)
   const lat = ref(0)
   const markerUIHidden = ref(true)
@@ -76,11 +69,13 @@ export function mapBoxStore(vars?: Mapbox, user?: AuthModel) {
   }
 
   const initMapbox = async () => {
+    const pocketbaseStore = usePocketBase()
+    const { user } = storeToRefs(pocketbaseStore)
     map = new mapboxgl.Map({
-      container: vars!.container,
+      container: 'map',
       style: 'mapbox://styles/mapbox/outdoors-v12',
-      center: vars!.home,
-      zoom: user?.lat === 0 && user?.lng === 0 ? 2 : 14,
+      center: [user?.value?.lng, user?.value?.lat] ?? [0, 0],
+      zoom: user?.value?.lat === 0 && user?.value?.lng === 0 ? 2 : 14,
     })
 
     map.on('load', async () => {
@@ -142,14 +137,14 @@ export function mapBoxStore(vars?: Mapbox, user?: AuthModel) {
 
     }
     map.on('click', async (e: MapMouseEvent) => {
-      if (user?.lat === 0 && user?.lng === 0) {
+      if (user.value?.lat === 0 && user.value.lng === 0) {
         const { setUserLocation } = usePocketBase()
         await setUserLocation(e.lngLat)
         map?.flyTo({ center: e.lngLat, zoom: 14 })
         lng.value = e.lngLat.lng
         lat.value = e.lngLat.lat
-        user.lat = e.lngLat.lat
-        user.lng = e.lngLat.lng
+        user.value!.lat = e.lngLat.lat
+        user.value!.lng = e.lngLat.lng
         return
       }
       markerUIHidden.value = false
@@ -271,16 +266,4 @@ export function mapBoxStore(vars?: Mapbox, user?: AuthModel) {
     items,
     updateMarkerLayer,
   }
-}
-
-const storeKey: InjectionKey<ReturnType<typeof mapBoxStore>> = Symbol('mapbox-store')
-
-export function provideMapboxStore(vars?: Mapbox, user?: AuthModel) {
-  const store = mapBoxStore(vars, user)
-  provide(storeKey, store)
-  return store
-}
-
-export function injectMapboxStore() {
-  return inject(storeKey)!
-}
+})

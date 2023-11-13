@@ -4,18 +4,22 @@ import type { ItemsRecordWithID, UserRecordWithID } from './types'
 
 export const isError = (err: unknown): err is Error => err instanceof Error
 
-const pb = new PocketBase(import.meta.env.VITE_POCKETBASE_URL)
+const state = useStorage('forager-store', {
+  server: import.meta.env.VITE_POCKETBASE_URL,
+})
+const pb = new PocketBase(state.value.server)
 
 interface healthCheckResponse {
   code: number
   message: string
 }
 
-export const usePocketBase = defineStore('pocketbse-store', () => {
+export const usePocketBase = defineStore('pocketbase-store', () => {
   const user = ref(pb.authStore.model)
   const username = ref('')
   const password = ref('')
   const passwordConfirm = ref('')
+  const mapboxAPIKey = ref('')
   const isCreatingAccount = ref(false)
   const health = ref<healthCheckResponse>()
   const selectedItemPocketbase = ref<ItemsRecordWithID>()
@@ -57,12 +61,17 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
     }
   }
 
+  const canSignUp = computed(() => {
+    return username.value && password.value && passwordConfirm.value && mapboxAPIKey.value
+  })
+
   const createAccount = async () => {
     try {
       await pb.collection('users').create({
         username: username.value,
         password: password.value,
         passwordConfirm: passwordConfirm.value,
+        mapboxAPIKey: mapboxAPIKey.value,
         images: [],
       })
 
@@ -296,12 +305,14 @@ export const usePocketBase = defineStore('pocketbse-store', () => {
     username,
     password,
     passwordConfirm,
+    mapboxAPIKey,
     isCreatingAccount,
     health,
     login,
     logout,
     refresh,
     createAccount,
+    canSignUp,
     canCreateAccount,
     getHealth,
     getItems,
