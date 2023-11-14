@@ -114,6 +114,10 @@ Dependant on your operating system's architecture, download the latest release o
 into the db folder. When running `pnpm run pocketbase:serve` for the first time,
 the database migrations will ensure the correct tables are created.
 
+If you wish to seed the database with a test user, one is provided
+if you run `pnpm run pocketbase:seed` - You will need to update this
+users password and Mapbox API key.
+
 ## Progressive Web Application (PWA)
 
 Forager is a Progressive Web Application (PWA), and therefore can be installed via any browser, however requires an active connection to your [Pocketbase](https://github.com/pocketbase/pocketbase) instance.
