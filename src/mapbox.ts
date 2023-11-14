@@ -16,7 +16,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
   const markerUIHidden = ref(true)
   const selectedItem = ref<string | undefined>(undefined)
   const detailsHidden = ref(true)
-  const items = ref<ItemsRecordWithID[]>([])
+  const items = ref<ItemsRecordWithID[] | null>(null)
 
   const translateItemToLayerItem = (items: ItemsRecordWithID[]) => {
     const records = ref<Feature[]>([])

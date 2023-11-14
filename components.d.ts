@@ -16,6 +16,7 @@ declare module 'vue' {
     ImageSettings: typeof import('./src/views/settings/ImageSettings.vue')['default']
     InformationMark: typeof import('./src/components/InformationMark.vue')['default']
     ItemDetails: typeof import('./src/components/ItemDetails.vue')['default']
+    LoadingScreen: typeof import('./src/components/LoadingScreen.vue')['default']
     LoginForm: typeof import('./src/components/LoginForm.vue')['default']
     MonthSelector: typeof import('./src/components/MonthSelector.vue')['default']
     ReferenceImage: typeof import('./src/components/ReferenceImage.vue')['default']
