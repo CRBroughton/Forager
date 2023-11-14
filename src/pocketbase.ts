@@ -244,7 +244,9 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     }
   }
 
-  const deleteAllMarkers = async (items: ItemsRecordWithID[]) => {
+  const deleteAllMarkers = async (items: ItemsRecordWithID[] | null) => {
+    if (items === null) 
+      return
     const promises: Promise<boolean>[] = []
     try {
       // eslint-disable-next-line no-console
