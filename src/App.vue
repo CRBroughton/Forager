@@ -93,6 +93,7 @@ const settingsMenuVisible = ref(false)
   </div>
   <div v-if="user && user.disclaimerAgreed">
     <ErrorMessage :error-message="errorMessage" />
+    <LoadingScreen />
     <div
       id="map"
     />
