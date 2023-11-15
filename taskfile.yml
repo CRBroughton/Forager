@@ -23,13 +23,13 @@ tasks:
   linux32:
     deps: [front]
     cmds:
-      - cd db && GOOS=linux GOARCH=386 go build -o ../build/forager-"{{.version}}"-linux32
+      - cd db && CGO_ENABLED=0 GOOS=linux GOARCH=386 go build -o ../build/forager-"{{.version}}"-linux32
       - cd build && zip forager-"{{.version}}"-linux32.zip forager-"{{.version}}"-linux32
 
   linux64:
     deps: [front]
     cmds:
-      - cd db && GOOS=linux GOARCH=amd64 go build -o ../build/forager-"{{.version}}"-linux
+      - cd db && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ../build/forager-"{{.version}}"-linux
       - cd build && zip forager-"{{.version}}"-linux.zip forager-"{{.version}}"-linux
 
 
@@ -52,7 +52,7 @@ tasks:
       - cd build && zip forager-"{{.version}}"-appliesilicon.zip forager-"{{.version}}"-appliesilicon.app
 
   cleanoutput:
-    deps: [apple, applesilicon]
+    deps: [linux32, linux64, windows64, apple, applesilicon]
     cmds:
       - cd build && rm -rf forager-"{{.version}}"-linux32
       - cd build && rm -rf forager-"{{.version}}"-linux
