@@ -67,6 +67,12 @@ This binary will provide both the back-end and front-end of the application.
 
 For deployment of the application, see [Pocketbases Going to Production documentation](https://pocketbase.io/docs/going-to-production/).
 
+### Docker
+
+The Forager repository includes a `docker-compose.yml` file, enabling
+quick deployment of Forager. Simply install Docker, clone the repository
+and then run `docker compose up -d`.
+
 ## Manual Installation
 
 Regardless of manual installation method, you will require the following to build Forager:
