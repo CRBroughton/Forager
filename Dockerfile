@@ -1,19 +1,19 @@
-FROM node:18.12.1
+FROM alpine:latest
 
-LABEL author="Craig Broughton"
-LABEL author.email="CRBroughton@posteo.uk"
+ARG FORAGER_VERSION=2.0.0
 
-WORKDIR /app
+RUN apk add --no-cache \
+    unzip \
+    ca-certificates
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# download and unzip Forager
+ADD https://github.com/CRBroughton/forager/releases/download/${FORAGER_VERSION}/forager-${FORAGER_VERSION}-linux.zip /tmp/forager.zip
 
-ADD . .
+RUN unzip /tmp/forager.zip -d forager
+RUN cd forager && mv forager-${FORAGER_VERSION}-linux forager
+RUN rm -rf /tmp/forager/zip
 
-RUN npm i -g pnpm && pnpm i
+EXPOSE 8080
 
-ENTRYPOINT ["/entrypoint.sh"]
-
-EXPOSE 4000
-
-CMD ["npm", "run", "dev"]
+# start Forager
+CMD ["forager/forager", "serve", "--http=0.0.0.0:8090"]
