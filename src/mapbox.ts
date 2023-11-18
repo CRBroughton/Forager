@@ -5,6 +5,7 @@ import { usePocketBase } from './pocketbase'
 import type { ItemsRecordWithID, UserImage } from './types'
 import { createLayers } from './mapbox/layers'
 import { createGeolocator } from './mapbox/geoLocator'
+import type { LandmarksRecord } from './pocketbase-types'
 
 
 export const useMapbox = defineStore('mapbox-store', () => {
@@ -17,6 +18,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
   const selectedItem = ref<string | undefined>(undefined)
   const detailsHidden = ref(true)
   const items = ref<ItemsRecordWithID[] | null>(null)
+  const landmarks = ref<LandmarksRecord[] | null>(null)
 
   const translateItemToLayerItem = (items: ItemsRecordWithID[]) => {
     const records = ref<Feature[]>([])
@@ -82,6 +84,18 @@ export const useMapbox = defineStore('mapbox-store', () => {
       const markers = await addinitMarkers()
 
       map?.addSource('items', {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: markers,
+        },
+        cluster: true,
+        clusterMaxZoom: 12,
+        clusterRadius: 50,
+      })
+
+
+      map?.addSource('landmarks', {
         type: 'geojson',
         data: {
           type: 'FeatureCollection',
@@ -170,6 +184,28 @@ export const useMapbox = defineStore('mapbox-store', () => {
       if (map)
         map.getCanvas().style.cursor = ''
     })
+  }
+
+  const addLandmark = async (landmark: LandmarksRecord) =>{
+    const settingsStore = usePocketBase()
+
+    await settingsStore.createLandmark(landmark)
+
+    landmarks.value = await settingsStore.getLandmarks()
+
+    const source = map?.getSource('landmarks') as mapboxgl.GeoJSONSource
+
+
+    const itemLayer = ref<Feature[]>([])
+
+    if (items.value)
+      itemLayer.value = translateItemToLayerItem(items.value)
+
+    source.setData({
+      type: 'FeatureCollection',
+      features: itemLayer.value,
+    })
+
   }
 
   const addMarker = async (lng: number, lat: number, selectedImage: UserImage) => {

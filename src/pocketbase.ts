@@ -1,5 +1,5 @@
 import PocketBase from 'pocketbase'
-import type { ItemsRecord, ServicesRecord, UsersRecord } from './pocketbase-types'
+import type { ItemsRecord, LandmarksRecord, ServicesRecord, UsersRecord } from './pocketbase-types'
 import type { ItemsRecordWithID, UserRecordWithID } from './types'
 
 export const isError = (err: unknown): err is Error => err instanceof Error
@@ -142,6 +142,18 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     let response: ItemsRecordWithID[] = []
     try {
       response = await pb.collection('items').getFullList<ItemsRecordWithID>()
+    }
+    catch (error: unknown) {
+      if (isError(error)) 
+        setErrorMessage(error)
+    }
+    return response
+  }
+
+  const getLandmarks = async () => {
+    let response: LandmarksRecord[] = []
+    try {
+      response = await pb.collection('landmarks').getFullList<LandmarksRecord>()
     }
     catch (error: unknown) {
       if (isError(error)) 
@@ -300,6 +312,16 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     }
   }
 
+  const createLandmark = async (data: LandmarksRecord) => {
+    try {
+      await pb.collection('landmarks').create(data)
+    }
+    catch (error: unknown) {
+      if (isError(error)) 
+        setErrorMessage(error)
+    }
+  }
+
   return {
     deleteReferenceImage,
     // getRoute,
@@ -333,5 +355,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     setUserLocation,
     errorMessage,
     setErrorMessage,
+    createLandmark,
+    getLandmarks,
   }
 })

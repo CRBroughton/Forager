@@ -29,7 +29,7 @@ const isSliced = ref(true)
         <div class="grid gap-4 grid-cols-3 my-4">
           <div class="flex flex-col justify-center items-center">
             <slot />
-            <p>Create</p>
+            <p>Landmark</p>
           </div>
           <div v-for="image in props.images" :key="image.url" class="flex flex-col justify-center items-center">
             <ReferenceImage :image="image" :class="{ selected: selectedImage?.url === image.url }" @click="selectImage(image)" />
@@ -40,7 +40,7 @@ const isSliced = ref(true)
         <div class="grid gap-4 grid-cols-3 my-4">
           <div class="flex flex-col justify-center items-center gap-2">
             <slot />
-            <p>Create</p>
+            <p>Landmark</p>
           </div>
           <div v-for="image in props.images.slice(0, 5)" :key="image.url" class="flex flex-col justify-center items-center">
             <ReferenceImage :image="image" :outline="`${selectedImage?.url === image.url ? 'blue' : image.colour}`" @click="selectImage(image)" />
