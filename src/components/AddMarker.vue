@@ -57,8 +57,11 @@ function setSelectedItem(event: UserImage) {
       <div class="flex gap-2 items-center">
         <h1>Create new item</h1>
         <InformationMark id="newItem" ref="createItemRef" />
-        <div v-if="creatingNewItem" class="ml-auto w-6 h-6 bg-white rounded-full" @click="creatingNewItem = !creatingNewItem">
+        <div v-if="creatingNewItem" class="ml-auto h-6 bg-white rounded-full flex items-center w-16 cursor-pointer" @click="creatingNewItem = !creatingNewItem">
           <svg class="text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6l6 6l1.41-1.42Z" /></svg>
+          <p class="text-gray-500">
+            back
+          </p>
         </div>
       </div>
       <div class="m-auto items-center w-full overflow-hidden">
