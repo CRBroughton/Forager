@@ -29,10 +29,16 @@ const mapboxStore = useMapbox()
 const { lng, lat } = storeToRefs(mapboxStore)
 const pocketbaseStore = usePocketBase()
 const { user } = storeToRefs(pocketbaseStore)
-const selectedStartMonth = ref('January')
-const selectedEndMonth = ref('December')
+
 const creatingNewItem = ref(false)
 
+const selectedItem = reactive<UserImage>({
+  name: '',
+  colour: '',
+  startMonth: '',
+  endMonth: '',
+  url: '',
+})
 const input = ref('')
 function hide() {
   input.value = ''
@@ -41,13 +47,8 @@ function hide() {
 }
 
 
-const imageURL = ref<string | undefined>('')
-const selectedColour = ref('red')
-
 function setSelectedItem(event: UserImage) {
-  imageURL.value = event.url
-  input.value = event.name
-  selectedColour.value = event.colour
+  Object.assign(selectedItem, event) 
 }
 </script>
 
@@ -75,7 +76,7 @@ function setSelectedItem(event: UserImage) {
           </div>
 
           <div v-else-if="creatingNewItem">
-            <ColourSelector :selected-colour="selectedColour" @change="selectedColour = $event" />
+            <ColourSelector :selected-colour="selectedItem.colour" @change="selectedItem.colour = $event" />
             <input
               v-model="input"
               type="text"
@@ -83,16 +84,11 @@ function setSelectedItem(event: UserImage) {
               placeholder="Please Enter Object Name"
               data-test="input-marker-title"
             >
-            <MonthSelector 
-              :selected-start-month="selectedStartMonth" :selected-end-month="selectedEndMonth" 
-              @update-start-month="selectedStartMonth = $event"
-              @update-end-month="selectedEndMonth = $event"
-            />
           </div>
         </Transition>
       </div>
       <div class="flex gap-4 m-auto w-full justify-center">
-        <BaseButton @click="mapboxStore.addMarker(lng, lat, input, selectedColour, selectedStartMonth, selectedEndMonth, imageURL!)">
+        <BaseButton @click="mapboxStore.addMarker(lng, lat, selectedItem)">
           Create
         </BaseButton>
         <BaseButton @click="hide">

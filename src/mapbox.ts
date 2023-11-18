@@ -2,7 +2,7 @@ import type { MapMouseEvent } from 'mapbox-gl'
 import type { Feature } from 'geojson'
 import mapboxgl from 'mapbox-gl'
 import { usePocketBase } from './pocketbase'
-import type { ItemsRecordWithID } from './types'
+import type { ItemsRecordWithID, UserImage } from './types'
 import { createLayers } from './mapbox/layers'
 import { createGeolocator } from './mapbox/geoLocator'
 
@@ -172,7 +172,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
     })
   }
 
-  const addMarker = async (lng: number, lat: number, name: string, colour: string, startMonth: string, endMonth: string, imageURL: string) => {
+  const addMarker = async (lng: number, lat: number, selectedImage: UserImage) => {
     // Create a new marker.
     const settingsStore = usePocketBase()
 
@@ -181,12 +181,12 @@ export const useMapbox = defineStore('mapbox-store', () => {
       lastForaged: undefined,
       lng,
       lat,
-      name,
+      name: selectedImage.name,
       owner: settingsStore.user?.id,
-      colour,
-      startMonth,
-      endMonth,
-      imageURL,
+      colour: selectedImage.colour,
+      startMonth: selectedImage.startMonth,
+      endMonth: selectedImage.endMonth,
+      imageURL: selectedImage.url,
     }
 
     await settingsStore.createItem(newItem)

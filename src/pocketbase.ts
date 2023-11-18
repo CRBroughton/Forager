@@ -230,6 +230,8 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     name: string
     url: string
     colour: string
+    startMonth: string
+    endMonth: string
   }
   const createImage = async (img: UserImage) => {
     const images = user.value?.images ? [...user.value?.images, img] : [img]

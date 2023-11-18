@@ -52,7 +52,7 @@ func seedTestUsersMarkers(app *pocketbase.PocketBase) {
 			Lng:        "-0.13107839490911033",
 			Lat:        "50.8315128991386",
 			Colour:     "purple",
-			StartMonth: "January",
+			StartMonth: "August",
 			EndMonth:   "September",
 			ImageURL:   "https://upload.wikimedia.org/wikipedia/commons/7/78/Ripe%2C_ripening%2C_and_green_blackberries.jpg",
 		},
@@ -132,30 +132,40 @@ func seedTestUser(app *pocketbase.PocketBase) {
 	record := models.NewRecord(collection)
 
 	type image struct {
-		Colour string `json:"colour"`
-		Name   string `json:"name"`
-		Url    string `json:"url"`
+		Colour     string `json:"colour"`
+		Name       string `json:"name"`
+		Url        string `json:"url"`
+		StartMonth string `json:"startMonth"`
+		EndMonth   string `json:"endMonth"`
 	}
 
 	images := []image{
 		{
-			Colour: "purple",
-			Name:   "Blackberries",
-			Url:    "https://upload.wikimedia.org/wikipedia/commons/7/78/Ripe%2C_ripening%2C_and_green_blackberries.jpg",
+			Colour:     "purple",
+			Name:       "Blackberries",
+			Url:        "https://upload.wikimedia.org/wikipedia/commons/7/78/Ripe%2C_ripening%2C_and_green_blackberries.jpg",
+			StartMonth: "August",
+			EndMonth:   "September",
 		},
 		{
-			Colour: "deeppink",
-			Name:   "Hawthorn",
-			Url:    "https://images.immediate.co.uk/production/volatile/sites/23/2019/09/GettyImages-513147101-hawthorn-Neil-Holmes-dba76ab.jpg",
+			Colour:     "deeppink",
+			Name:       "Hawthorn",
+			Url:        "https://images.immediate.co.uk/production/volatile/sites/23/2019/09/GettyImages-513147101-hawthorn-Neil-Holmes-dba76ab.jpg",
+			StartMonth: "January",
+			EndMonth:   "December",
 		},
 		{
-			Name: "Rhubarb",
-			Url:  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Rheum_rhabarbarum.2006-04-27.uellue.jpg/1280px-Rheum_rhabarbarum.2006-04-27.uellue.jpg",
+			Name:       "Rhubarb",
+			Url:        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Rheum_rhabarbarum.2006-04-27.uellue.jpg/1280px-Rheum_rhabarbarum.2006-04-27.uellue.jpg",
+			StartMonth: "January",
+			EndMonth:   "December",
 		},
 		{
-			Colour: "cadetblue",
-			Name:   "Elderberries",
-			Url:    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Sambucus-berries.jpg/1280px-Sambucus-berries.jpg",
+			Colour:     "cadetblue",
+			Name:       "Elderberries",
+			Url:        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Sambucus-berries.jpg/1280px-Sambucus-berries.jpg",
+			StartMonth: "January",
+			EndMonth:   "December",
 		},
 	}
 

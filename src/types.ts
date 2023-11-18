@@ -13,4 +13,6 @@ export interface UserImage {
   name: string
   url: string
   colour: string
+  startMonth: string
+  endMonth: string
 }
