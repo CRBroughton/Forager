@@ -13,6 +13,7 @@ import (
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
 
 	_ "github.com/crbroughton/forager/migrations"
+	"github.com/crbroughton/forager/seeder"
 )
 
 //go:embed all:dist
@@ -20,6 +21,8 @@ var distDir embed.FS
 
 func main() {
 	app := pocketbase.New()
+
+	seeder.AddSeederCommand(app)
 
 	// loosely check if it was executed using "go run"
 	isGoRun := strings.HasPrefix(os.Args[0], os.TempDir())

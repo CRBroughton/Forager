@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase'
-import type { ItemsRecord, ServicesRecord, UsersRecord } from './pocketbase-types'
-import type { ItemsRecordWithID, UserRecordWithID } from './types'
+import type { ItemsRecord, LandmarksRecord, ServicesRecord, UsersRecord } from './pocketbase-types'
+import type { ItemsRecordWithID, LandmarksRecordWithID, UserRecordWithID } from './types'
 
 export const isError = (err: unknown): err is Error => err instanceof Error
 
@@ -150,10 +150,22 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     return response
   }
 
-  const getSelectedItem = async (id: string) => {
+  const getLandmarks = async () => {
+    let response: LandmarksRecordWithID[] = []
+    try {
+      response = await pb.collection('landmarks').getFullList<LandmarksRecordWithID>()
+    }
+    catch (error: unknown) {
+      if (isError(error)) 
+        setErrorMessage(error)
+    }
+    return response
+  }
+
+  const getSelectedItem = async (id: string, collection: string) => {
     try {
       // or fetch only the first record that matches the specified filter
-      selectedItemPocketbase.value = await pb.collection('items').getOne(id)
+      selectedItemPocketbase.value = await pb.collection(collection).getOne(id)
     }
     catch (error: unknown) {
       if (isError(error)) 
@@ -191,9 +203,9 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     }
   }
 
-  const deleteItem = async (id: string) => {
+  const deleteItem = async (id: string, collection: string) => {
     try {
-      await pb.collection('items').delete(id)
+      await pb.collection(collection).delete(id)
       await getItems()
     }
     catch (error: unknown) {
@@ -230,6 +242,8 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     name: string
     url: string
     colour: string
+    startMonth: string
+    endMonth: string
   }
   const createImage = async (img: UserImage) => {
     const images = user.value?.images ? [...user.value?.images, img] : [img]
@@ -244,7 +258,9 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     }
   }
 
-  const deleteAllMarkers = async (items: ItemsRecordWithID[]) => {
+  const deleteAllMarkers = async (items: ItemsRecordWithID[] | null) => {
+    if (items === null) 
+      return
     const promises: Promise<boolean>[] = []
     try {
       // eslint-disable-next-line no-console
@@ -296,6 +312,16 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     }
   }
 
+  const createLandmark = async (data: LandmarksRecord) => {
+    try {
+      await pb.collection('landmarks').create(data)
+    }
+    catch (error: unknown) {
+      if (isError(error)) 
+        setErrorMessage(error)
+    }
+  }
+
   return {
     deleteReferenceImage,
     // getRoute,
@@ -329,5 +355,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     setUserLocation,
     errorMessage,
     setErrorMessage,
+    createLandmark,
+    getLandmarks,
   }
 })

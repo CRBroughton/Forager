@@ -67,6 +67,12 @@ This binary will provide both the back-end and front-end of the application.
 
 For deployment of the application, see [Pocketbases Going to Production documentation](https://pocketbase.io/docs/going-to-production/).
 
+### Docker
+
+The Forager repository includes a `docker-compose.yml` file, enabling
+quick deployment of Forager. Simply install Docker, clone the repository
+and then run `docker compose up -d`.
+
 ## Manual Installation
 
 Regardless of manual installation method, you will require the following to build Forager:
@@ -113,6 +119,10 @@ Dependant on your operating system's architecture, download the latest release o
 [Pocketbase](https://github.com/pocketbase/pocketbase) and extract the executable
 into the db folder. When running `pnpm run pocketbase:serve` for the first time,
 the database migrations will ensure the correct tables are created.
+
+If you wish to seed the database with a test user, one is provided
+if you run `pnpm run pocketbase:seed` - You will need to update this
+users password and Mapbox API key.
 
 ## Progressive Web Application (PWA)
 

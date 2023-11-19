@@ -31,6 +31,7 @@ export function createLayers(map: mapboxgl.Map) {
     },
   })
 
+
   // Add label layer
   map.addLayer({
     id: 'marker-labels',
@@ -45,6 +46,7 @@ export function createLayers(map: mapboxgl.Map) {
       'icon-image': ['get', 'icon'],
     },
   })
+
 
   // Add clustering layer
   map.addLayer({
@@ -103,4 +105,24 @@ export function createLayers(map: mapboxgl.Map) {
   //     'line-width': 4,
   //   },
   // })
+}
+
+export function createLandmarks(map: mapboxgl.Map) {
+  map.addLayer({
+    id: 'landmark',
+    type: 'symbol',
+    source: 'landmarks',
+    minzoom: 14,
+    layout: {
+      'icon-image': 'custom-marker',
+      'text-field': ['get', 'description'],
+      'text-font': [
+        'Open Sans Semibold',
+        'Arial Unicode MS Bold',
+      ],
+      'icon-size': 0.6,
+      'text-offset': [0, 0.8],
+      'text-anchor': 'top',
+    },
+  })
 }

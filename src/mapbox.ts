@@ -2,9 +2,10 @@ import type { MapMouseEvent } from 'mapbox-gl'
 import type { Feature } from 'geojson'
 import mapboxgl from 'mapbox-gl'
 import { usePocketBase } from './pocketbase'
-import type { ItemsRecordWithID } from './types'
-import { createLayers } from './mapbox/layers'
+import type { ItemsRecordWithID, LandmarksRecordWithID, UserImage } from './types'
+import { createLandmarks, createLayers } from './mapbox/layers'
 import { createGeolocator } from './mapbox/geoLocator'
+import type { LandmarksRecord } from './pocketbase-types'
 
 
 export const useMapbox = defineStore('mapbox-store', () => {
@@ -15,13 +16,15 @@ export const useMapbox = defineStore('mapbox-store', () => {
   const lat = ref(0)
   const markerUIHidden = ref(true)
   const selectedItem = ref<string | undefined>(undefined)
+  const selectedCollection = ref('')
   const detailsHidden = ref(true)
-  const items = ref<ItemsRecordWithID[]>([])
+  const items = ref<ItemsRecordWithID[] | null>(null)
+  const landmarks = ref<LandmarksRecordWithID[]>([])
 
-  const translateItemToLayerItem = (items: ItemsRecordWithID[]) => {
+  const translateItemToLayerItem = (items: ItemsRecordWithID[] | LandmarksRecordWithID[]) => {
     const records = ref<Feature[]>([])
 
-    const setItemForageColour = (item: ItemsRecordWithID) => {
+    const setItemForageColour = (item: ItemsRecordWithID & LandmarksRecordWithID) => {
       const today = new Date().toLocaleDateString()
       const foragedDate = new Date(item.lastForaged!).toLocaleDateString()
 
@@ -36,14 +39,21 @@ export const useMapbox = defineStore('mapbox-store', () => {
       return 'gray'
     }
 
+    const checkIfItemOrLandmark = (item: ItemsRecordWithID | LandmarksRecordWithID) => {
+      if ('lastForaged' in item)
+        return setItemForageColour(item)
+      return ''
+    }
+
     items?.forEach((item) => {
       if (item.lng && item.lat && item.name) {
         records.value.push({
           type: 'Feature',
+
           properties: {
             id: item.id,
             description: item.name,
-            colour: setItemForageColour(item),
+            colour: checkIfItemOrLandmark(item),
           },
           geometry: {
             type: 'Point',
@@ -68,6 +78,20 @@ export const useMapbox = defineStore('mapbox-store', () => {
     return itemLayer.value
   }
 
+  const addinitLandmark = async () => {
+    const { getLandmarks } = usePocketBase()
+
+    landmarks.value = await getLandmarks()
+
+    const itemLayer = ref<Feature[]>([])
+
+    if (landmarks.value)
+      itemLayer.value = translateItemToLayerItem(landmarks.value)
+
+    return itemLayer.value
+  }
+
+
   const initMapbox = async () => {
     const pocketbaseStore = usePocketBase()
     const { user } = storeToRefs(pocketbaseStore)
@@ -80,6 +104,26 @@ export const useMapbox = defineStore('mapbox-store', () => {
 
     map.on('load', async () => {
       const markers = await addinitMarkers()
+      const landmarks = await addinitLandmark()
+
+      map?.loadImage(
+        'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
+        (error, image) => {
+          if (error)
+            throw error
+          map?.addImage('custom-marker', image as HTMLImageElement)
+
+          map?.addSource('landmarks', {
+            type: 'geojson',
+            data: {
+              type: 'FeatureCollection',
+              features: landmarks,
+            },
+          })
+
+          if (map) 
+            createLandmarks(map)
+        })
 
       map?.addSource('items', {
         type: 'geojson',
@@ -91,6 +135,9 @@ export const useMapbox = defineStore('mapbox-store', () => {
         clusterMaxZoom: 12,
         clusterRadius: 50,
       })
+
+
+
 
 
       // const { getRoute } = usePocketBase()
@@ -157,6 +204,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
       markerUIHidden.value = true
       detailsHidden.value = false
       selectedItem.value = e.features![0].properties!.id
+      selectedCollection.value = 'items'
     })
 
     // Change the cursor to a pointer when the mouse is over the places layer.
@@ -170,9 +218,51 @@ export const useMapbox = defineStore('mapbox-store', () => {
       if (map)
         map.getCanvas().style.cursor = ''
     })
+
+    map.on('click', 'landmark', async (e) => {
+      markerUIHidden.value = true
+      detailsHidden.value = false
+      selectedItem.value = e.features![0].properties!.id
+      selectedCollection.value = 'landmarks'
+    })
+    map.on('mouseenter', 'landmark', () => {
+      if (map) 
+        map.getCanvas().style.cursor = 'pointer'
+    })
+
+    map.on('mouseleave', 'landmark', () => {
+      if (map) 
+        map.getCanvas().style.cursor = ''
+    })
   }
 
-  const addMarker = async (lng: number, lat: number, name: string, colour: string, startMonth: string, endMonth: string, imageURL: string) => {
+  const addLandmark = async (landmark: Omit<LandmarksRecord, 'owner'>) => {
+    const settingsStore = usePocketBase()
+
+    const newLandmark = {
+      ...landmark,
+      owner: settingsStore.user?.id,
+    }
+
+    await settingsStore.createLandmark(newLandmark)
+
+    landmarks.value = await settingsStore.getLandmarks()
+
+    const source = map?.getSource('landmarks') as mapboxgl.GeoJSONSource
+
+    const itemLayer = ref<Feature[]>([])
+
+    if (landmarks.value)
+      itemLayer.value = translateItemToLayerItem(landmarks.value)
+
+    source.setData({
+      type: 'FeatureCollection',
+      features: itemLayer.value,
+    })
+
+  }
+
+  const addMarker = async (lng: number, lat: number, selectedImage: UserImage) => {
     // Create a new marker.
     const settingsStore = usePocketBase()
 
@@ -181,12 +271,12 @@ export const useMapbox = defineStore('mapbox-store', () => {
       lastForaged: undefined,
       lng,
       lat,
-      name,
+      name: selectedImage.name,
       owner: settingsStore.user?.id,
-      colour,
-      startMonth,
-      endMonth,
-      imageURL,
+      colour: selectedImage.colour,
+      startMonth: selectedImage.startMonth,
+      endMonth: selectedImage.endMonth,
+      imageURL: selectedImage.url,
     }
 
     await settingsStore.createItem(newItem)
@@ -209,24 +299,43 @@ export const useMapbox = defineStore('mapbox-store', () => {
   }
 
   const deleteMarker = async (id: string) => {
-    const { getItems, deleteItem } = usePocketBase()
+    const { getItems, getLandmarks, deleteItem } = usePocketBase()
 
-    await deleteItem(id)
+    await deleteItem(id, selectedCollection.value)
 
-    items.value = await getItems()
+    if (selectedCollection.value === 'items') {
 
-    const itemLayer = ref<Feature[]>([])
+      items.value = await getItems()
 
-    // Get the GeoJSON source by ID
-    const source = map?.getSource('items') as mapboxgl.GeoJSONSource
+      const itemLayer = ref<Feature[]>([])
 
-    if (items.value)
-      itemLayer.value = translateItemToLayerItem(items.value)
+      // Get the GeoJSON source by ID
+      const source = map?.getSource(selectedCollection.value) as mapboxgl.GeoJSONSource
 
-    source.setData({
-      type: 'FeatureCollection',
-      features: itemLayer.value,
-    })
+      if (items.value)
+        itemLayer.value = translateItemToLayerItem(items.value)
+
+      source.setData({
+        type: 'FeatureCollection',
+        features: itemLayer.value,
+      })
+    }
+    if (selectedCollection.value === 'landmarks') {
+      landmarks.value = await getLandmarks()
+
+      const itemLayer = ref<Feature[]>([])
+
+      // Get the GeoJSON source by ID
+      const source = map?.getSource(selectedCollection.value) as mapboxgl.GeoJSONSource
+
+      if (landmarks.value)
+        itemLayer.value = translateItemToLayerItem(landmarks.value)
+
+      source.setData({
+        type: 'FeatureCollection',
+        features: itemLayer.value,
+      })
+    }
   }
 
   const updateMarkerLayer = async () => {
@@ -265,5 +374,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
     deleteMarker,
     items,
     updateMarkerLayer,
+    addLandmark,
+    selectedCollection,
   }
 })

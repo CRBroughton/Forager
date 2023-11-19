@@ -3,14 +3,14 @@ import { usePocketBase } from '@/pocketbase'
 import { useMapbox } from '@/mapbox'
 
 const mapboxStore = useMapbox()
-const { selectedItem } = storeToRefs(mapboxStore)
+const { selectedItem, selectedCollection } = storeToRefs(mapboxStore)
 
 const pocketbaseStore = usePocketBase()
 const {  selectedItemPocketbase } = storeToRefs(pocketbaseStore)
 
 watch(() => selectedItem.value, () => {
   if (selectedItem.value !== undefined)
-    pocketbaseStore.getSelectedItem(selectedItem.value)
+    pocketbaseStore.getSelectedItem(selectedItem.value, selectedCollection.value)
 })
 
 function clearSelected() {
@@ -51,7 +51,7 @@ const previewImg = computed(() => {
         </div>
       </Teleport>
     </div>
-    <div class="item-forage-details">
+    <div v-if="selectedCollection === 'items'" class="item-forage-details">
       <p>Last Foraged: {{ selectedItemPocketbase.lastForaged ? new Date(selectedItemPocketbase.lastForaged!).toDateString() : 'Never' }}</p>
       <p> Start Month: {{ selectedItemPocketbase.startMonth || 'Not Set' }}</p>
       <p>End Month: {{ selectedItemPocketbase.endMonth || 'Not Set' }}</p>
@@ -60,7 +60,7 @@ const previewImg = computed(() => {
       <BaseButton @click="deleteItem">
         Delete
       </BaseButton>
-      <BaseButton @click="forageItem">
+      <BaseButton v-if="selectedCollection === 'items'" @click="forageItem">
         Forage Now
       </BaseButton>
       <BaseButton @click="clearSelected">

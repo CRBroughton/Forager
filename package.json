@@ -1,6 +1,6 @@
 {
   "name": "forager",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
@@ -10,8 +10,12 @@
     "lint:check": "eslint \"src/*.{vue,ts,js}\"",
     "lint:fix": "eslint \"src/*.{vue,ts,js}\" --fix",
     "serve": "vite preview",
-    "pocketbase:serve": "./db/pocketbase serve",
+    "pocketbase:serve": "cd db && go run main.go serve",
+    "pocketbase:seed": "cd db && go run main.go seed",
     "pocketbase:types": "npx pocketbase-typegen --db ./db/pb_data/data.db --out ./src/pocketbase-types.ts",
+    "pocketbase:migrate": "cd db && go run main.go migrate",
+    "pocketbase:migrate:down": "cd db && go run main.go migrate down",
+    "pocketbase:migrate:create": "cd db && go run main.go migrate create",
     "changeset": "npx changeset",
     "changeset:status": "npx changeset status --verbose",
     "changeset:version": "npx changeset version"

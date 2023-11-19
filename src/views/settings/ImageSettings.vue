@@ -25,6 +25,9 @@ watch(() => imageSettingsRef.value, () => {
 
   createItemPopup('#imageSettings', 'Add your images here, then start creating items on the map!')
 })
+
+const selectedStartMonth = ref('January')
+const selectedEndMonth = ref('December')
 </script>
 
 <template>
@@ -52,8 +55,13 @@ watch(() => imageSettingsRef.value, () => {
       <input v-model="imageURL" class="login-input" placeholder="Enter Image URL">
       <input v-model="imageName" class="login-input" placeholder="Enter Image Name">
     </div>
+    <MonthSelector 
+      :selected-start-month="selectedStartMonth" :selected-end-month="selectedEndMonth" 
+      @update-start-month="selectedStartMonth = $event"
+      @update-end-month="selectedEndMonth = $event"
+    />
     <div class="flex flex-col gap-4 w-full mt-auto">
-      <BaseButton :class="{ disabled: submitButtonDisabled }" :disabled="submitButtonDisabled" @click="pocketbaseStore.createImage({ name: imageName, url: imageURL, colour: selectedColour })">
+      <BaseButton :class="{ disabled: submitButtonDisabled }" :disabled="submitButtonDisabled" @click="pocketbaseStore.createImage({ name: imageName, url: imageURL, colour: selectedColour, startMonth: selectedStartMonth, endMonth: selectedEndMonth })">
         Create New Image
       </BaseButton>
       <BaseButton @click="toggleImageMenu">
