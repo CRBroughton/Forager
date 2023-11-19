@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase'
 import type { ItemsRecord, LandmarksRecord, ServicesRecord, UsersRecord } from './pocketbase-types'
-import type { ItemsRecordWithID, UserRecordWithID } from './types'
+import type { ItemsRecordWithID, LandmarksRecordWithID, UserRecordWithID } from './types'
 
 export const isError = (err: unknown): err is Error => err instanceof Error
 
@@ -151,9 +151,9 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
   }
 
   const getLandmarks = async () => {
-    let response: LandmarksRecord[] = []
+    let response: LandmarksRecordWithID[] = []
     try {
-      response = await pb.collection('landmarks').getFullList<LandmarksRecord>()
+      response = await pb.collection('landmarks').getFullList<LandmarksRecordWithID>()
     }
     catch (error: unknown) {
       if (isError(error)) 

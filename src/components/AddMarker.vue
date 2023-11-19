@@ -22,7 +22,7 @@ watch(() => createItemRef.value, () => {
   if (createItemRef.value === null)
     return
 
-  createItemPopup('#newItem', 'Creates a new item, either from your images, or an arbitrary item')
+  createItemPopup('#newItem', 'Create a new item, or a new landmark')
 })
 
 const mapboxStore = useMapbox()
@@ -52,8 +52,16 @@ function setSelectedItem(event: UserImage) {
 }
 
 function create() {
-  if (!createLandmark.value) 
+  if (!createLandmark.value) {
     mapboxStore.addMarker(lng.value, lat.value, selectedItem)
+    return
+  }
+
+  mapboxStore.addLandmark({
+    name: input.value,
+    lng: lng.value,
+    lat: lat.value,
+  })
   
 }
 </script>

@@ -31,11 +31,38 @@ export function createLayers(map: mapboxgl.Map) {
     },
   })
 
+  map.addLayer({
+    id: 'unclustered-landmark',
+    type: 'circle',
+    source: 'landmarks',
+    filter: ['!', ['has', 'point_count']],
+    paint: {
+      'circle-radius': 8,
+      'circle-stroke-width': 2,
+      'circle-stroke-color': '#fff',
+    },
+  })
+
   // Add label layer
   map.addLayer({
     id: 'marker-labels',
     type: 'symbol',
     source: 'items',
+    layout: {
+      'text-field': ['get', 'description'],
+      'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+      'text-variable-anchor': ['top'],
+      'text-radial-offset': 0.5,
+      'text-justify': 'auto',
+      'icon-image': ['get', 'icon'],
+    },
+  })
+
+  // Add landmarks layer
+  map.addLayer({
+    id: 'landmark-labels',
+    type: 'symbol',
+    source: 'landmarks',
     layout: {
       'text-field': ['get', 'description'],
       'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
