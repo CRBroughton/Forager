@@ -112,6 +112,7 @@ export function createLandmarks(map: mapboxgl.Map) {
     id: 'unclustered-landmark',
     type: 'symbol',
     source: 'landmarks',
+    minzoom: 14,
     layout: {
       'icon-image': 'custom-marker',
       'text-field': ['get', 'description'],
@@ -124,5 +125,4 @@ export function createLandmarks(map: mapboxgl.Map) {
       'text-anchor': 'top',
     },
   })
-
 }

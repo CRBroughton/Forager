@@ -118,9 +118,6 @@ export const useMapbox = defineStore('mapbox-store', () => {
               type: 'FeatureCollection',
               features: landmarks,
             },
-            cluster: true,
-            clusterMaxZoom: 12,
-            clusterRadius: 50,
           })
 
           if (map) 
