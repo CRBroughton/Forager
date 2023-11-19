@@ -109,7 +109,7 @@ export function createLayers(map: mapboxgl.Map) {
 
 export function createLandmarks(map: mapboxgl.Map) {
   map.addLayer({
-    id: 'unclustered-landmark',
+    id: 'landmark',
     type: 'symbol',
     source: 'landmarks',
     minzoom: 14,

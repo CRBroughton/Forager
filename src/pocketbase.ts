@@ -162,10 +162,10 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     return response
   }
 
-  const getSelectedItem = async (id: string) => {
+  const getSelectedItem = async (id: string, collection: string) => {
     try {
       // or fetch only the first record that matches the specified filter
-      selectedItemPocketbase.value = await pb.collection('items').getOne(id)
+      selectedItemPocketbase.value = await pb.collection(collection).getOne(id)
     }
     catch (error: unknown) {
       if (isError(error)) 
@@ -203,9 +203,9 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     }
   }
 
-  const deleteItem = async (id: string) => {
+  const deleteItem = async (id: string, collection: string) => {
     try {
-      await pb.collection('items').delete(id)
+      await pb.collection(collection).delete(id)
       await getItems()
     }
     catch (error: unknown) {

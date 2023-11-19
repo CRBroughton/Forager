@@ -16,6 +16,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
   const lat = ref(0)
   const markerUIHidden = ref(true)
   const selectedItem = ref<string | undefined>(undefined)
+  const selectedCollection = ref('')
   const detailsHidden = ref(true)
   const items = ref<ItemsRecordWithID[] | null>(null)
   const landmarks = ref<LandmarksRecordWithID[]>([])
@@ -203,6 +204,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
       markerUIHidden.value = true
       detailsHidden.value = false
       selectedItem.value = e.features![0].properties!.id
+      selectedCollection.value = 'items'
     })
 
     // Change the cursor to a pointer when the mouse is over the places layer.
@@ -214,6 +216,22 @@ export const useMapbox = defineStore('mapbox-store', () => {
     // Change it back to a pointer when it leaves.
     map.on('mouseleave', 'unclustered-point', () => {
       if (map)
+        map.getCanvas().style.cursor = ''
+    })
+
+    map.on('click', 'landmark', async (e) => {
+      markerUIHidden.value = true
+      detailsHidden.value = false
+      selectedItem.value = e.features![0].properties!.id
+      selectedCollection.value = 'landmarks'
+    })
+    map.on('mouseenter', 'landmark', () => {
+      if (map) 
+        map.getCanvas().style.cursor = 'pointer'
+    })
+
+    map.on('mouseleave', 'landmark', () => {
+      if (map) 
         map.getCanvas().style.cursor = ''
     })
   }
@@ -281,24 +299,43 @@ export const useMapbox = defineStore('mapbox-store', () => {
   }
 
   const deleteMarker = async (id: string) => {
-    const { getItems, deleteItem } = usePocketBase()
+    const { getItems, getLandmarks, deleteItem } = usePocketBase()
 
-    await deleteItem(id)
+    await deleteItem(id, selectedCollection.value)
 
-    items.value = await getItems()
+    if (selectedCollection.value === 'items') {
 
-    const itemLayer = ref<Feature[]>([])
+      items.value = await getItems()
 
-    // Get the GeoJSON source by ID
-    const source = map?.getSource('items') as mapboxgl.GeoJSONSource
+      const itemLayer = ref<Feature[]>([])
 
-    if (items.value)
-      itemLayer.value = translateItemToLayerItem(items.value)
+      // Get the GeoJSON source by ID
+      const source = map?.getSource(selectedCollection.value) as mapboxgl.GeoJSONSource
 
-    source.setData({
-      type: 'FeatureCollection',
-      features: itemLayer.value,
-    })
+      if (items.value)
+        itemLayer.value = translateItemToLayerItem(items.value)
+
+      source.setData({
+        type: 'FeatureCollection',
+        features: itemLayer.value,
+      })
+    }
+    if (selectedCollection.value === 'landmarks') {
+      landmarks.value = await getLandmarks()
+
+      const itemLayer = ref<Feature[]>([])
+
+      // Get the GeoJSON source by ID
+      const source = map?.getSource(selectedCollection.value) as mapboxgl.GeoJSONSource
+
+      if (landmarks.value)
+        itemLayer.value = translateItemToLayerItem(landmarks.value)
+
+      source.setData({
+        type: 'FeatureCollection',
+        features: itemLayer.value,
+      })
+    }
   }
 
   const updateMarkerLayer = async () => {
@@ -338,5 +375,6 @@ export const useMapbox = defineStore('mapbox-store', () => {
     items,
     updateMarkerLayer,
     addLandmark,
+    selectedCollection,
   }
 })
