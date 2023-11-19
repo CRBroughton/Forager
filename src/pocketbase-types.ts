@@ -52,7 +52,6 @@ export type ItemsRecord = {
 }
 
 export type LandmarksRecord = {
-	colour?: string
 	lat: number
 	lng: number
 	name: string

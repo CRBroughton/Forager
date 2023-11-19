@@ -59,11 +59,6 @@ func init() {
 					Required: true,
 					System:   false,
 				},
-				&schema.SchemaField{
-					Name:   "colour",
-					Type:   schema.FieldTypeText,
-					System: false,
-				},
 			),
 		}
 

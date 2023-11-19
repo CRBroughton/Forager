@@ -13,12 +13,60 @@ import (
 func AddSeederCommand(app *pocketbase.PocketBase) {
 	app.RootCmd.AddCommand(&cobra.Command{
 		Use:   "seed",
-		Short: "Seeds the database with a default admin user and item markers",
+		Short: "Seeds the database with a default admin user, item markers and landmarks",
 		Run: func(cmd *cobra.Command, args []string) {
 			seedTestUser(app)
 			seedTestUsersMarkers(app)
+			seedTestUsersLandmarks(app)
 		},
 	})
+}
+
+func seedTestUsersLandmarks(app *pocketbase.PocketBase) {
+	db := app.Dao()
+
+	collection, err := db.FindCollectionByNameOrId("landmarks")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	type item struct {
+		Id    int    `json:"id"`
+		Name  string `json:"name"`
+		Owner int    `json:"owner"`
+		Lng   string `json:"lng"`
+		Lat   string `json:"lat"`
+	}
+
+	items := []item{
+		{
+			Id:    1,
+			Name:  "The Level",
+			Owner: 1,
+			Lng:   "-0.13308322562591002",
+			Lat:   "50.83105275081468",
+		},
+	}
+
+	app.Dao().RunInTransaction(func(txDao *daos.Dao) error {
+		for _, item := range items {
+			record := models.NewRecord(collection)
+
+			record.Set("id", item.Id)
+			record.Set("name", item.Name)
+			record.Set("owner", item.Owner)
+			record.Set("lng", item.Lng)
+			record.Set("lat", item.Lat)
+
+			err = txDao.Save(record)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+		}
+		return nil
+	})
+
 }
 
 func seedTestUsersMarkers(app *pocketbase.PocketBase) {
