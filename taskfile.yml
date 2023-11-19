@@ -5,13 +5,14 @@ vars:
 
 tasks:
   build: 
-    deps: [clean, linux32, linux64, windows64, apple, applesilicon, cleanoutput]
+    deps: [clean, linux32, linux64, windows64, apple, applesilicon]
 
   clean:
     cmds:
       - rm -rf build
       - rm -rf dist
       - rm -rf db/dist
+    run: once
 
   front:
     deps: [clean]
@@ -20,43 +21,57 @@ tasks:
       - cp -R dist db/
     run: once
 
-  linux32:
+  buildlinux32:
     deps: [front]
     cmds:
       - cd db && CGO_ENABLED=0 GOOS=linux GOARCH=386 go build -o ../build/forager-"{{.version}}"-linux32
       - cd build && zip forager-"{{.version}}"-linux32.zip forager-"{{.version}}"-linux32
 
-  linux64:
+  buildlinux64:
     deps: [front]
     cmds:
       - cd db && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ../build/forager-"{{.version}}"-linux
       - cd build && zip forager-"{{.version}}"-linux.zip forager-"{{.version}}"-linux
 
-
-  windows64:
+  buildwindows64:
     deps: [front]
     cmds:
       - cd db && GOOS=windows GOARCH=amd64 go build -o ../build/forager-"{{.version}}".exe
       - cd build && zip forager-"{{.version}}"-windows.zip forager-"{{.version}}".exe
 
-  apple:
+  buildapple:
     deps: [front]
     cmds:
       - cd db && GOOS=darwin GOARCH=amd64 go build -o ../build/forager-"{{.version}}"-apple.app
       - cd build && zip forager-"{{.version}}"-apple.zip forager-"{{.version}}"-apple.app
 
-  applesilicon:
+  buildapplesilicon:
     deps: [front]
     cmds:
       - cd db && GOOS=darwin GOARCH=arm64 go build -o ../build/forager-"{{.version}}"-appliesilicon.app
       - cd build && zip forager-"{{.version}}"-appliesilicon.zip forager-"{{.version}}"-appliesilicon.app
 
-  cleanoutput:
-    deps: [linux32, linux64, windows64, apple, applesilicon]
+  linux32:
+    deps: [buildlinux32]
     cmds:
       - cd build && rm -rf forager-"{{.version}}"-linux32
+
+  linux64:
+    deps: [buildlinux64]
+    cmds:
       - cd build && rm -rf forager-"{{.version}}"-linux
+      
+  windows64:
+    deps: [buildwindows64]
+    cmds:
       - cd build && rm -rf forager-"{{.version}}".exe
-      - cd build && rm -rf forager-"{{.version}}"-appliesilicon.app
+
+  apple:
+    deps: [buildapple]
+    cmds:
       - cd build && rm -rf forager-"{{.version}}"-apple.app
       
+  applesilicon:
+    deps: [buildapplesilicon]
+    cmds:
+      - cd build && rm -rf forager-"{{.version}}"-appliesilicon.app
