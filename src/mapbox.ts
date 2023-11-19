@@ -3,7 +3,7 @@ import type { Feature } from 'geojson'
 import mapboxgl from 'mapbox-gl'
 import { usePocketBase } from './pocketbase'
 import type { ItemsRecordWithID, LandmarksRecordWithID, UserImage } from './types'
-import { createLayers } from './mapbox/layers'
+import { createLandmarks, createLayers } from './mapbox/layers'
 import { createGeolocator } from './mapbox/geoLocator'
 import type { LandmarksRecord } from './pocketbase-types'
 
@@ -39,7 +39,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
     }
 
     const checkIfItemOrLandmark = (item: ItemsRecordWithID | LandmarksRecordWithID) => {
-      if ('lastForaged' in item) 
+      if ('lastForaged' in item)
         return setItemForageColour(item)
       return ''
     }
@@ -48,7 +48,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
       if (item.lng && item.lat && item.name) {
         records.value.push({
           type: 'Feature',
-          
+
           properties: {
             id: item.id,
             description: item.name,
@@ -105,6 +105,28 @@ export const useMapbox = defineStore('mapbox-store', () => {
       const markers = await addinitMarkers()
       const landmarks = await addinitLandmark()
 
+      map?.loadImage(
+        'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
+        (error, image) => {
+          if (error)
+            throw error
+          map?.addImage('custom-marker', image as HTMLImageElement)
+
+          map?.addSource('landmarks', {
+            type: 'geojson',
+            data: {
+              type: 'FeatureCollection',
+              features: landmarks,
+            },
+            cluster: true,
+            clusterMaxZoom: 12,
+            clusterRadius: 50,
+          })
+
+          if (map) 
+            createLandmarks(map)
+        })
+
       map?.addSource('items', {
         type: 'geojson',
         data: {
@@ -117,16 +139,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
       })
 
 
-      map?.addSource('landmarks', {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: landmarks,
-        },
-        cluster: true,
-        clusterMaxZoom: 12,
-        clusterRadius: 50,
-      })
+
 
 
       // const { getRoute } = usePocketBase()
@@ -208,7 +221,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
     })
   }
 
-  const addLandmark = async (landmark: Omit<LandmarksRecord, 'owner'>) =>{
+  const addLandmark = async (landmark: Omit<LandmarksRecord, 'owner'>) => {
     const settingsStore = usePocketBase()
 
     const newLandmark = {

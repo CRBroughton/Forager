@@ -90,7 +90,7 @@ function create() {
           </div>
 
           <div v-else-if="createLandmark">
-            <ColourSelector :selected-colour="selectedItem.colour" @change="selectedItem.colour = $event" />
+            <ColourSelector v-if="!createLandmark" :selected-colour="selectedItem.colour" @change="selectedItem.colour = $event" />
             <input
               v-model="input"
               type="text"
