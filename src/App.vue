@@ -107,6 +107,7 @@ const settingsMenuVisible = ref(false)
     </Transition>
     <ServerHealth />
     <SideMenu
+      v-if="!homeNotSet"
       :open-settings="openSettingsMenu"
     />
     <Transition name="slide">

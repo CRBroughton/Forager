@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-ARG FORAGER_VERSION=2.1.0
+ARG FORAGER_VERSION=2.1.1
 
 RUN apk add --no-cache \
     unzip \
