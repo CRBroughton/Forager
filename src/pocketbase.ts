@@ -4,6 +4,23 @@ import type { ItemsRecordWithID, LandmarksRecordWithID, UserRecordWithID } from 
 
 export const isError = (err: unknown): err is Error => err instanceof Error
 
+
+interface AuthError {
+  code: number
+  message: string
+  data: AuthErrorData
+}
+
+interface AuthErrorData {
+  code: number
+  message: string
+  data: Record<string, string>
+}
+
+function isAuthError(err: unknown): err is AuthError {
+  return (err as AuthError).data.message === 'The request requires valid record authorization token to be set.' && (err as AuthError).data.code === 401
+}
+
 const state = useStorage('forager-store', {
   server: import.meta.env.VITE_POCKETBASE_URL,
 })
@@ -40,6 +57,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       health.value = response
     }
     catch (error: unknown) {
+
       if (isError(error)) 
         setErrorMessage(error)
       health.value = undefined
@@ -56,6 +74,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       return 'success'
     }
     catch (error: unknown) {
+
       if (isError(error)) 
         setErrorMessage(error)
     }
@@ -132,8 +151,12 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     try {
       await pb.collection('users').authRefresh()
     }
+
     catch (error: unknown) {
-      if (isError(error)) 
+      if (isError(error) && isAuthError(error)) 
+        pb.authStore.clear()
+      
+      if (isError(error))
         setErrorMessage(error)
     }
   }
