@@ -1,18 +1,27 @@
 # Forager
 
+## 2.1.1
+
+### Patch Changes
+
+- f03137f: Hide menu if users home location is not set.
+- f03137f: Fix docker volume binding.
+- 0c0e4e9: Failed authenticated refreshes will now log the user out.
+- a305ee1b: Add GPLV2 license.
+
 ## 2.1.0
 
 ### Minor Changes
 
 - 2f5dabb: Users can now create landmarks - Users are now able to create landmarks. This feature
-  re-purposes the arbitrary item menu to allow users to 
+  re-purposes the arbitrary item menu to allow users to
   add landmarks to the map. Landmarks, like items, can also be deleted.
 - a021252: move calendar month component to images menu - Previously, all added items of interest could not have
   their calendar months customised. You can now customise
   items 'startMonth' and 'endMonth' months, the months
   you can expect to find this item in the wild. Any existing
   items you have will need to be manually edited.
- 
+
 ### Patch Changes
 
 - 68ed2d7: Include Docker deployment options - Forager can now be deployed with a Docker image
