@@ -1,17 +1,30 @@
 <script setup lang="ts">
 import { usePocketBase } from './pocketbase'
 import { useMapbox } from './mapbox'
+import { notifications } from './notifications'
 
 const pocketbaseStore = usePocketBase()
 const mapboxStore = useMapbox()
 const { user, username, password, passwordConfirm, mapboxAPIKey, isCreatingAccount, errorMessage, canSignUp } = storeToRefs(pocketbaseStore)
 const canCreateAccounts = ref<boolean | undefined>(false)
+const notificationsStore = notifications()
 
 onMounted(async () => {
   canCreateAccounts.value = await pocketbaseStore.canCreateAccount()
   if (pocketbaseStore.pb.authStore.token && user.value && user.value.disclaimerAgreed) {
     await mapboxStore.initMapbox()
     await pocketbaseStore.refresh()
+  }
+})
+
+watch(() => user.value?.images, () => {
+  if (
+    user.value?.images !== undefined && 
+    user.value?.images !== null
+  ) {
+    useTimeoutFn(() => {
+      notificationsStore.triggerForagableNotification(user.value?.images)
+    }, 3000)
   }
 })
 

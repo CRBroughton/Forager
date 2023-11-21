@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { notifications } from '@/notifications'
 import { useSettingsStore } from '@/views/settings/settingsStore'
 
 interface Emits {
@@ -16,6 +17,8 @@ const state = useStorage('forager-store', {
 function restartApplication() {
   location.reload()
 }
+
+const notificationsStore = notifications()
 </script>
 
 <template>
@@ -30,6 +33,9 @@ function restartApplication() {
       <label for="topology">Enable 3D Map</label>
       <input id="topology" v-model="state.map3D" name="topology" type="checkbox" class="w-12 " @change="restartApplication()">
     </div>
+    <BaseButton v-if="notificationsStore.notificationStatus !== 'granted'" @click="notificationsStore.enableNotifications()">
+      Enable notifications
+    </BaseButton>
     <BaseButton @click="settingsStore.toggleAccountMenu">
       Account
     </BaseButton>

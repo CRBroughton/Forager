@@ -23,6 +23,7 @@
         "marker-details",
         "login-page",
         "stores",
-        "error-handling"
+        "error-handling",
+        "notifications"
     ]
 }
