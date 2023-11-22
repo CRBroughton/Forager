@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useSettingsStore } from '@/views/settings/settingsStore'
-import { usePocketBase } from '@/pocketbase'
-import { createPopup } from '@/tippy'
+import { usePocketBase } from '@/stores'
+import { createPopup } from '@/utils/tippy'
 
 const { toggleImageMenu } = useSettingsStore()
 const pocketbaseStore = usePocketBase()

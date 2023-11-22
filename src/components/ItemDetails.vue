@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { usePocketBase } from '@/pocketbase'
-import { useMapbox } from '@/mapbox'
+import { useMapbox, usePocketBase } from '@/stores'
 
 const mapboxStore = useMapbox()
 const { selectedItem, selectedCollection } = storeToRefs(mapboxStore)

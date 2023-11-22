@@ -1,12 +1,12 @@
 import type { MapMouseEvent } from 'mapbox-gl'
 import type { Feature } from 'geojson'
 import mapboxgl from 'mapbox-gl'
-import { usePocketBase } from './pocketbase'
-import type { ItemsRecordWithID, LandmarksRecordWithID, UserImage } from './types'
-import { createLandmarks, createLayers } from './mapbox/layers'
-import { createGeolocator } from './mapbox/geoLocator'
-import type { LandmarksRecord } from './pocketbase-types'
-import { user } from '@/stores/pocketbase'
+import type { ItemsRecordWithID, LandmarksRecordWithID, UserImage } from '../types'
+import { createLandmarks, createLayers } from '../mapbox/layers'
+import { createGeolocator } from '../mapbox/geoLocator'
+import type { LandmarksRecord } from '../pocketbase-types'
+import { usePocketBase } from '@/stores'
+import { user } from '@/utils/pocketbase'
 
 
 export const useMapbox = defineStore('mapbox-store', () => {

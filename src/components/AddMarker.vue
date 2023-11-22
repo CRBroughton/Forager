@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { usePocketBase } from '@/pocketbase'
-import { useMapbox } from '@/mapbox'
+import { useMapbox, usePocketBase } from '@/stores'
 import type { UserImage } from '@/types'
-import { createPopup } from '@/tippy'
+import { createPopup } from '@/utils/tippy'
 
 interface Props {
   hidden: boolean

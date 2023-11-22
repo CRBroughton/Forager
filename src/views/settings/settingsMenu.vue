@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { notifications } from '@/stores/notifications'
+import { notifications } from '@/stores'
 import { useSettingsStore } from '@/views/settings/settingsStore'
 
 interface Emits {

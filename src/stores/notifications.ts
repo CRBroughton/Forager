@@ -1,5 +1,5 @@
 import type { ItemsRecordWithID } from '../types'
-import { pb, setErrorMessage } from './pocketbase'
+import { pb, setErrorMessage } from '../utils/pocketbase'
 import { isError } from '@/utils/isError'
 import type { NotificationsRecord } from '@/pocketbase-types'
 

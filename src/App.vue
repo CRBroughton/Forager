@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { usePocketBase } from './pocketbase'
-import { useMapbox } from './mapbox'
-import { notifications } from '@/stores/notifications'
-import { errorMessage, user } from '@/stores/pocketbase'
+import { notifications, useMapbox, usePocketBase } from '@/stores'
+import { errorMessage, user } from '@/utils/pocketbase'
 
 const pocketbaseStore = usePocketBase()
 const mapboxStore = useMapbox()
@@ -178,3 +176,5 @@ const settingsMenuVisible = ref(false)
 }
 </style>
 ./stores/notifications
+./stores/pocketbase
+./stores/mapbox
