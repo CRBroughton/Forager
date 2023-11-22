@@ -1,5 +1,5 @@
 import type { ItemsRecordWithID } from '../types'
-import { pb, setErrorMessage } from '../utils/pocketbase'
+import { pb, setErrorMessage, user } from '../utils/pocketbase'
 import { isError } from '@/utils/isError'
 import type { NotificationsRecord } from '@/pocketbase-types'
 
@@ -63,6 +63,16 @@ export const notifications = defineStore('notifications-store', () => {
     }
   }
 
+  const setMonthlyForagableNotification = async (notification: NotificationsRecord) => {
+    try {
+      await pb.collection('notifications').create<NotificationsRecord>(notification)
+    }
+    catch (error) {
+      if (isError(error)) 
+        setErrorMessage(error)
+    }
+  }
+
   const filterMonthlyForagables = (items: ItemsRecordWithID[]) => {
     return items.filter(item => item.startMonth === currentMonth)
   }
@@ -83,11 +93,20 @@ export const notifications = defineStore('notifications-store', () => {
     filterMonthlyForagables(items).forEach((item) => {
       customItems = [...customItems, ` ${item.name}`]
     })
-    createNotification({
-      title: 'Monthly foragables!',
+
+    const newMonthlyNotification = {
+      title:'Monthly foragables!',
       content: {
-        body: `You can find${ customItems } this month`,
+        body:`You can find${ customItems } this month`,
       },
+    }
+    createNotification(newMonthlyNotification)
+
+    await setMonthlyForagableNotification({
+      type: 'monthly-update',
+      owner: user.value!.id,
+      title: newMonthlyNotification.title,
+      body: newMonthlyNotification.content.body,
     })
    
   }
