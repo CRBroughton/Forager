@@ -6,6 +6,7 @@ import type { ItemsRecordWithID, LandmarksRecordWithID, UserImage } from './type
 import { createLandmarks, createLayers } from './mapbox/layers'
 import { createGeolocator } from './mapbox/geoLocator'
 import type { LandmarksRecord } from './pocketbase-types'
+import { user } from '@/stores/pocketbase'
 
 
 export const useMapbox = defineStore('mapbox-store', () => {
@@ -93,8 +94,6 @@ export const useMapbox = defineStore('mapbox-store', () => {
 
 
   const initMapbox = async () => {
-    const pocketbaseStore = usePocketBase()
-    const { user } = storeToRefs(pocketbaseStore)
     map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/outdoors-v12',

@@ -1,8 +1,7 @@
-import PocketBase from 'pocketbase'
 import type { ItemsRecord, LandmarksRecord, ServicesRecord, UsersRecord } from './pocketbase-types'
 import type { ItemsRecordWithID, LandmarksRecordWithID, UserRecordWithID } from './types'
-
-export const isError = (err: unknown): err is Error => err instanceof Error
+import { pb, setErrorMessage, user } from '@/stores/pocketbase'
+import { isError } from '@/utils/isError'
 
 
 interface AuthError {
@@ -21,18 +20,12 @@ function isAuthError(err: unknown): err is AuthError {
   return (err as AuthError).data.message === 'The request requires valid record authorization token to be set.' && (err as AuthError).data.code === 401
 }
 
-const state = useStorage('forager-store', {
-  server: import.meta.env.VITE_POCKETBASE_URL,
-})
-const pb = new PocketBase(state.value.server)
-
 interface healthCheckResponse {
   code: number
   message: string
 }
 
 export const usePocketBase = defineStore('pocketbase-store', () => {
-  const user = ref(pb.authStore.model)
   const username = ref('')
   const password = ref('')
   const passwordConfirm = ref('')
@@ -43,13 +36,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
 
   pb.authStore.onChange(() => user.value = pb.authStore.model)
 
-  const errorMessage = ref<Error | undefined>(undefined)
-  const setErrorMessage = (message: Error) => {
-    errorMessage.value = message
-    setTimeout(() => {
-      errorMessage.value = undefined
-    }, 1000)
-  }
+
 
   const getHealth = async () => {
     try {
@@ -376,7 +363,6 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     createItems,
     updateAccountData,
     setUserLocation,
-    errorMessage,
     setErrorMessage,
     createLandmark,
     getLandmarks,

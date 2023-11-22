@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { usePocketBase } from './pocketbase'
 import { useMapbox } from './mapbox'
-import { notifications } from './notifications'
+import { notifications } from '@/stores/notifications'
+import { errorMessage, user } from '@/stores/pocketbase'
 
 const pocketbaseStore = usePocketBase()
 const mapboxStore = useMapbox()
-const { user, username, password, passwordConfirm, mapboxAPIKey, isCreatingAccount, errorMessage, canSignUp } = storeToRefs(pocketbaseStore)
+const { username, password, passwordConfirm, mapboxAPIKey, isCreatingAccount, canSignUp } = storeToRefs(pocketbaseStore)
 const canCreateAccounts = ref<boolean | undefined>(false)
 const notificationsStore = notifications()
 
@@ -176,3 +177,4 @@ const settingsMenuVisible = ref(false)
   transform: translateY(100%);
 }
 </style>
+./stores/notifications
