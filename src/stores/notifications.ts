@@ -1,4 +1,7 @@
-import type { ItemsRecordWithID } from './types'
+import type { ItemsRecordWithID } from '../types'
+import { pb, setErrorMessage } from './pocketbase'
+import { isError } from '@/utils/isError'
+import type { NotificationsRecord } from '@/pocketbase-types'
 
 export const notifications = defineStore('notifications-store', () => {
   const enableNotifications = () => {
@@ -40,19 +43,44 @@ export const notifications = defineStore('notifications-store', () => {
   const d = new Date()
   const currentMonth = months[d.getMonth()]
 
-  const getMonthlyForagables = (items: ItemsRecordWithID[]) => {
+  const getStoredNotifications = async (type: 'monthly-update' | 'weather-update') => {
+    try {
+      const response = await pb.collection('notifications').getFullList<NotificationsRecord>()
+
+      let hasNotification = false
+      response.forEach((notification) => {
+        if (notification.type === type) {
+          hasNotification = true
+          return hasNotification
+        }
+      })
+      return hasNotification
+    }
+    catch (error: unknown) {
+      if (isError(error))
+        setErrorMessage(error)
+      return false
+    }
+  }
+
+  const filterMonthlyForagables = (items: ItemsRecordWithID[]) => {
     return items.filter(item => item.startMonth === currentMonth)
   }
 
-  const triggerForagableNotification = (items: ItemsRecordWithID[]) => {
+  const triggerForagableNotification = async (items: ItemsRecordWithID[]) => {
     let customItems: string[] = []
     if (items === undefined) 
       return
 
-    if (getMonthlyForagables(items).length === 0) 
+    if (filterMonthlyForagables(items).length === 0) 
       return
+  
+    const hasStoredMonthlyUpdate = await getStoredNotifications('monthly-update')
+    if (hasStoredMonthlyUpdate === true) 
+      return
+    
 
-    getMonthlyForagables(items).forEach((item) => {
+    filterMonthlyForagables(items).forEach((item) => {
       customItems = [...customItems, ` ${item.name}`]
     })
     createNotification({

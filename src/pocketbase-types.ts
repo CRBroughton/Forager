@@ -6,6 +6,7 @@ export enum Collections {
 	Services = "Services",
 	Items = "items",
 	Landmarks = "landmarks",
+	Notifications = "notifications",
 	Users = "users",
 }
 
@@ -58,6 +59,13 @@ export type LandmarksRecord = {
 	owner: RecordIdString
 }
 
+export type NotificationsRecord = {
+	body: string
+	owner: RecordIdString
+	title: string
+	type: string
+}
+
 export type UsersRecord<Timages = unknown> = {
 	avatar?: string
 	disclaimerAgreed?: boolean
@@ -72,6 +80,7 @@ export type UsersRecord<Timages = unknown> = {
 export type ServicesResponse<Texpand = unknown> = Required<ServicesRecord> & BaseSystemFields<Texpand>
 export type ItemsResponse<Texpand = unknown> = Required<ItemsRecord> & BaseSystemFields<Texpand>
 export type LandmarksResponse<Texpand = unknown> = Required<LandmarksRecord> & BaseSystemFields<Texpand>
+export type NotificationsResponse<Texpand = unknown> = Required<NotificationsRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Timages = unknown, Texpand = unknown> = Required<UsersRecord<Timages>> & AuthSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
@@ -80,6 +89,7 @@ export type CollectionRecords = {
 	Services: ServicesRecord
 	items: ItemsRecord
 	landmarks: LandmarksRecord
+	notifications: NotificationsRecord
 	users: UsersRecord
 }
 
@@ -87,5 +97,6 @@ export type CollectionResponses = {
 	Services: ServicesResponse
 	items: ItemsResponse
 	landmarks: LandmarksResponse
+	notifications: NotificationsResponse
 	users: UsersResponse
 }
