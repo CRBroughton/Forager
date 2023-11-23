@@ -33,7 +33,7 @@ const notificationsStore = notifications()
       <label for="topology">Enable 3D Map</label>
       <input id="topology" v-model="state.map3D" name="topology" type="checkbox" class="w-12 " @change="restartApplication()">
     </div>
-    <BaseButton v-if="notificationsStore.notificationStatus !== 'granted'" @click="notificationsStore.enableNotifications()">
+    <BaseButton v-if="notificationsStore.notificationStatus !== 'granted' && notificationsStore.supportsNotificationsAPI" @click="notificationsStore.enableNotifications()">
       Enable notifications
     </BaseButton>
     <BaseButton @click="settingsStore.toggleAccountMenu">

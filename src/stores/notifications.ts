@@ -12,6 +12,10 @@ export const notifications = defineStore('notifications-store', () => {
     return Notification.permission
   })
 
+  const supportsNotificationsAPI = computed(() => {
+    return ('Notification' in window)
+  })
+
   interface Notification {
     title: string
     content?: {
@@ -114,6 +118,7 @@ export const notifications = defineStore('notifications-store', () => {
   return {
     enableNotifications,
     notificationStatus,
+    supportsNotificationsAPI,
     createNotification,
     triggerForagableNotification,
   }

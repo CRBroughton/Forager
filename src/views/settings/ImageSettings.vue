@@ -23,7 +23,7 @@ watch(() => imageSettingsRef.value, () => {
   if (imageSettingsRef.value === null)
     return
 
-  createItemPopup('#imageSettings', 'Add your images here, then start creating items on the map!')
+  createItemPopup('#imageSettings', 'Add your foragables here, then start creating them on the map.')
 })
 
 const selectedStartMonth = ref('January')
