@@ -66,7 +66,7 @@ function create() {
 </script>
 
 <template>
-  <div v-if="!hidden" class="absolute overflow-scroll m-auto bottom-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-lg w-[calc(100% - 1em)] mx-4 rounded-tr-xl rounded-tl-xl p-4 md:bottom-2 md:left-2 md:w-2/3 md:h-auto md:rounded-br-xl md:rounded-bl-xl md:px-0 md:m-0 md:max-w-md md:max-h-[50%] md:overflow-scroll">
+  <div v-if="!hidden" class="absolute overflow-scroll m-auto bottom-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-lg w-[calc(100% - 1em)] mx-4 rounded-tr-xl rounded-tl-xl p-4 md:bottom-2 md:left-2 md:w-2/3 md:h-auto md:rounded-br-xl md:rounded-bl-xl md:px-0 md:m-0 md:max-w-md md:overflow-scroll">
     <div class="max-w-sm flex flex-col m-auto rounded-xl md:max-w-none md:mx-4">
       <div class="flex gap-2 items-center">
         <h1>{{ !createLandmark ? 'Create new item' : 'Create landmark' }}</h1>
