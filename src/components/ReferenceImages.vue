@@ -23,7 +23,7 @@ const isSliced = ref(true)
 </script>
 
 <template>
-  <div class="overflow-hidden">
+  <div class="overflow-scroll max-h-72">
     <Transition name="slide" mode="out-in">
       <div v-if="!isSliced">
         <div class="grid gap-4 grid-cols-3 my-4">

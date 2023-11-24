@@ -1,5 +1,0 @@
-dist
-public
-coverage
-node_modules
-src/pocketbase-types.ts

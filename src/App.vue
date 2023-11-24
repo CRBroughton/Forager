@@ -1,17 +1,29 @@
 <script setup lang="ts">
-import { usePocketBase } from './pocketbase'
-import { useMapbox } from './mapbox'
+import { notifications, useMapbox, usePocketBase } from '@/stores'
+import { errorMessage, user } from '@/utils/pocketbase'
 
 const pocketbaseStore = usePocketBase()
 const mapboxStore = useMapbox()
-const { user, username, password, passwordConfirm, mapboxAPIKey, isCreatingAccount, errorMessage, canSignUp } = storeToRefs(pocketbaseStore)
+const { username, password, passwordConfirm, mapboxAPIKey, isCreatingAccount, canSignUp } = storeToRefs(pocketbaseStore)
 const canCreateAccounts = ref<boolean | undefined>(false)
+const notificationsStore = notifications()
 
 onMounted(async () => {
   canCreateAccounts.value = await pocketbaseStore.canCreateAccount()
   if (pocketbaseStore.pb.authStore.token && user.value && user.value.disclaimerAgreed) {
     await mapboxStore.initMapbox()
     await pocketbaseStore.refresh()
+  }
+})
+
+watch(() => user.value?.images, () => {
+  if (
+    user.value?.images !== undefined
+    && user.value?.images !== null
+  ) {
+    useTimeoutFn(() => {
+      notificationsStore.triggerForagableNotification(user.value?.images)
+    }, 3000)
   }
 })
 
@@ -163,3 +175,6 @@ const settingsMenuVisible = ref(false)
   transform: translateY(100%);
 }
 </style>
+./stores/notifications
+./stores/pocketbase
+./stores/mapbox

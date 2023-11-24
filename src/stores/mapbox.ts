@@ -1,12 +1,12 @@
 import type { MapMouseEvent } from 'mapbox-gl'
 import type { Feature } from 'geojson'
 import mapboxgl from 'mapbox-gl'
-import { usePocketBase } from './pocketbase'
-import type { ItemsRecordWithID, LandmarksRecordWithID, UserImage } from './types'
-import { createLandmarks, createLayers } from './mapbox/layers'
-import { createGeolocator } from './mapbox/geoLocator'
-import type { LandmarksRecord } from './pocketbase-types'
-
+import type { ItemsRecordWithID, LandmarksRecordWithID, UserImage } from '../types'
+import { createLandmarks, createLayers } from '../mapbox/layers'
+import { createGeolocator } from '../mapbox/geoLocator'
+import type { LandmarksRecord } from '../pocketbase-types'
+import { usePocketBase } from '@/stores'
+import { user } from '@/utils/pocketbase'
 
 export const useMapbox = defineStore('mapbox-store', () => {
   const userStore = usePocketBase()
@@ -91,10 +91,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
     return itemLayer.value
   }
 
-
   const initMapbox = async () => {
-    const pocketbaseStore = usePocketBase()
-    const { user } = storeToRefs(pocketbaseStore)
     map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/outdoors-v12',
@@ -121,9 +118,10 @@ export const useMapbox = defineStore('mapbox-store', () => {
             },
           })
 
-          if (map) 
+          if (map)
             createLandmarks(map)
-        })
+        },
+      )
 
       map?.addSource('items', {
         type: 'geojson',
@@ -135,10 +133,6 @@ export const useMapbox = defineStore('mapbox-store', () => {
         clusterMaxZoom: 12,
         clusterRadius: 50,
       })
-
-
-
-
 
       // const { getRoute } = usePocketBase()
       // const lineCoords = await getRoute('4t2ttp1beq31p2r')
@@ -181,7 +175,6 @@ export const useMapbox = defineStore('mapbox-store', () => {
         // add the DEM source as a terrain layer with exaggerated height
         map?.setTerrain({ source: 'mapbox-dem', exaggeration: 1.5 })
       })
-
     }
     map.on('click', async (e: MapMouseEvent) => {
       if (user.value?.lat === 0 && user.value.lng === 0) {
@@ -226,12 +219,12 @@ export const useMapbox = defineStore('mapbox-store', () => {
       selectedCollection.value = 'landmarks'
     })
     map.on('mouseenter', 'landmark', () => {
-      if (map) 
+      if (map)
         map.getCanvas().style.cursor = 'pointer'
     })
 
     map.on('mouseleave', 'landmark', () => {
-      if (map) 
+      if (map)
         map.getCanvas().style.cursor = ''
     })
   }
@@ -259,7 +252,6 @@ export const useMapbox = defineStore('mapbox-store', () => {
       type: 'FeatureCollection',
       features: itemLayer.value,
     })
-
   }
 
   const addMarker = async (lng: number, lat: number, selectedImage: UserImage) => {
@@ -304,7 +296,6 @@ export const useMapbox = defineStore('mapbox-store', () => {
     await deleteItem(id, selectedCollection.value)
 
     if (selectedCollection.value === 'items') {
-
       items.value = await getItems()
 
       const itemLayer = ref<Feature[]>([])

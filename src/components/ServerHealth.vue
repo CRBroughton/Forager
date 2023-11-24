@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { usePocketBase } from '@/pocketbase'
+import { usePocketBase } from '@/stores'
 
 const pocketbaseStore = usePocketBase()
 

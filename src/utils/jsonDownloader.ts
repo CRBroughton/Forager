@@ -1,5 +1,5 @@
 import type { AuthModel } from 'pocketbase'
-import type { ItemsRecordWithID } from './types'
+import type { ItemsRecordWithID } from '../types'
 
 export function jsonDownloader(items: ItemsRecordWithID[] | AuthModel, fileNameExtension: string) {
   const link = document.createElement('a') as HTMLAnchorElement

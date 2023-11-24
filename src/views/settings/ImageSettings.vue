@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useSettingsStore } from '@/views/settings/settingsStore'
-import { usePocketBase } from '@/pocketbase'
-import { createPopup } from '@/tippy'
+import { usePocketBase } from '@/stores'
+import { createPopup } from '@/utils/tippy'
 
 const { toggleImageMenu } = useSettingsStore()
 const pocketbaseStore = usePocketBase()
@@ -13,8 +13,8 @@ const selectedColour = ref('red')
 
 const submitButtonDisabled = computed(() => {
   return imageURL.value.length === 0
-  || imageName.value.length === 0
-  || selectedColour.value.length === 0
+    || imageName.value.length === 0
+    || selectedColour.value.length === 0
 })
 
 const [createItemPopup, imageSettingsRef] = createPopup()
@@ -23,7 +23,7 @@ watch(() => imageSettingsRef.value, () => {
   if (imageSettingsRef.value === null)
     return
 
-  createItemPopup('#imageSettings', 'Add your images here, then start creating items on the map!')
+  createItemPopup('#imageSettings', 'Add your foragables here, then start creating them on the map.')
 })
 
 const selectedStartMonth = ref('January')
@@ -55,8 +55,8 @@ const selectedEndMonth = ref('December')
       <input v-model="imageURL" class="login-input" placeholder="Enter Image URL">
       <input v-model="imageName" class="login-input" placeholder="Enter Image Name">
     </div>
-    <MonthSelector 
-      :selected-start-month="selectedStartMonth" :selected-end-month="selectedEndMonth" 
+    <MonthSelector
+      :selected-start-month="selectedStartMonth" :selected-end-month="selectedEndMonth"
       @update-start-month="selectedStartMonth = $event"
       @update-end-month="selectedEndMonth = $event"
     />
