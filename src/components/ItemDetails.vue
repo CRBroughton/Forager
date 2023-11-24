@@ -5,7 +5,7 @@ const mapboxStore = useMapbox()
 const { selectedItem, selectedCollection } = storeToRefs(mapboxStore)
 
 const pocketbaseStore = usePocketBase()
-const {  selectedItemPocketbase } = storeToRefs(pocketbaseStore)
+const { selectedItemPocketbase } = storeToRefs(pocketbaseStore)
 
 watch(() => selectedItem.value, () => {
   if (selectedItem.value !== undefined)

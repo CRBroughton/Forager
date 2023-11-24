@@ -18,8 +18,8 @@ onMounted(async () => {
 
 watch(() => user.value?.images, () => {
   if (
-    user.value?.images !== undefined && 
-    user.value?.images !== null
+    user.value?.images !== undefined
+    && user.value?.images !== null
   ) {
     useTimeoutFn(() => {
       notificationsStore.triggerForagableNotification(user.value?.images)

@@ -45,9 +45,8 @@ function hide() {
   emits('hide')
 }
 
-
 function setSelectedItem(event: UserImage) {
-  Object.assign(selectedItem, event) 
+  Object.assign(selectedItem, event)
 }
 
 function create() {
@@ -61,7 +60,6 @@ function create() {
     lng: lng.value,
     lat: lat.value,
   })
-  
 }
 </script>
 
@@ -120,7 +118,6 @@ function create() {
 h1 {
   font-size: 1.2em;
 }
-
 
 .slide-enter-active {
   transition: all 0.2s ease-out;

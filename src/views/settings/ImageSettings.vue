@@ -13,8 +13,8 @@ const selectedColour = ref('red')
 
 const submitButtonDisabled = computed(() => {
   return imageURL.value.length === 0
-  || imageName.value.length === 0
-  || selectedColour.value.length === 0
+    || imageName.value.length === 0
+    || selectedColour.value.length === 0
 })
 
 const [createItemPopup, imageSettingsRef] = createPopup()
@@ -55,8 +55,8 @@ const selectedEndMonth = ref('December')
       <input v-model="imageURL" class="login-input" placeholder="Enter Image URL">
       <input v-model="imageName" class="login-input" placeholder="Enter Image Name">
     </div>
-    <MonthSelector 
-      :selected-start-month="selectedStartMonth" :selected-end-month="selectedEndMonth" 
+    <MonthSelector
+      :selected-start-month="selectedStartMonth" :selected-end-month="selectedEndMonth"
       @update-start-month="selectedStartMonth = $event"
       @update-end-month="selectedEndMonth = $event"
     />

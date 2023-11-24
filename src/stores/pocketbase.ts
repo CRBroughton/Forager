@@ -3,7 +3,6 @@ import type { ItemsRecordWithID, LandmarksRecordWithID, UserRecordWithID } from 
 import { pb, setErrorMessage, user } from '@/utils/pocketbase'
 import { isError } from '@/utils/isError'
 
-
 interface AuthError {
   code: number
   message: string
@@ -36,16 +35,13 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
 
   pb.authStore.onChange(() => user.value = pb.authStore.model)
 
-
-
   const getHealth = async () => {
     try {
       const response = await pb.health.check()
       health.value = response
     }
     catch (error: unknown) {
-
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
       health.value = undefined
     }
@@ -61,8 +57,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       return 'success'
     }
     catch (error: unknown) {
-
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
   }
@@ -84,7 +79,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       await login()
     }
     catch (error: unknown) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
   }
@@ -101,7 +96,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       })
     }
     catch (error: unknown) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
   }
@@ -118,7 +113,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       })
     }
     catch (error: unknown) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
   }
@@ -129,7 +124,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       return services[0].canCreateAccounts
     }
     catch (error: unknown) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
   }
@@ -140,9 +135,9 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     }
 
     catch (error: unknown) {
-      if (isError(error) && isAuthError(error)) 
+      if (isError(error) && isAuthError(error))
         pb.authStore.clear()
-      
+
       if (isError(error))
         setErrorMessage(error)
     }
@@ -154,7 +149,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       response = await pb.collection('items').getFullList<ItemsRecordWithID>()
     }
     catch (error: unknown) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
     return response
@@ -166,7 +161,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       response = await pb.collection('landmarks').getFullList<LandmarksRecordWithID>()
     }
     catch (error: unknown) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
     return response
@@ -178,7 +173,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       selectedItemPocketbase.value = await pb.collection(collection).getOne(id)
     }
     catch (error: unknown) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
   }
@@ -188,7 +183,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       await pb.collection('items').create(data)
     }
     catch (error: unknown) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
   }
@@ -208,7 +203,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       Promise.all(promises)
     }
     catch (error: unknown) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
   }
@@ -219,7 +214,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       await getItems()
     }
     catch (error: unknown) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
   }
@@ -231,7 +226,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       })
     }
     catch (error: unknown) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
   }
@@ -243,7 +238,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       })
     }
     catch (error: unknown) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
   }
@@ -263,13 +258,13 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       })
     }
     catch (error: unknown) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
   }
 
   const deleteAllMarkers = async (items: ItemsRecordWithID[] | null) => {
-    if (items === null) 
+    if (items === null)
       return
     const promises: Promise<boolean>[] = []
     try {
@@ -283,7 +278,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       Promise.all(promises)
     }
     catch (error: unknown) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
   }
@@ -293,7 +288,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
   //     return await pb.collection('routes').getFullList()
   //   }
   //   catch (error) {
-  //     if (isError(error)) 
+  //     if (isError(error))
   //       setErrorMessage(error)
   //   }
   // }
@@ -303,7 +298,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
   //     return await pb.collection('routes').getOne(id)
   //   }
   //   catch (error) {
-  //     if (isError(error)) 
+  //     if (isError(error))
   //       setErrorMessage(error)
   //   }
   // }
@@ -317,7 +312,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       user.value!.images = filteredImages
     }
     catch (error) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
   }
@@ -327,7 +322,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
       await pb.collection('landmarks').create(data)
     }
     catch (error: unknown) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
   }

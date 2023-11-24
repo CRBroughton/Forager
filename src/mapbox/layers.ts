@@ -31,7 +31,6 @@ export function createLayers(map: mapboxgl.Map) {
     },
   })
 
-
   // Add label layer
   map.addLayer({
     id: 'marker-labels',
@@ -46,7 +45,6 @@ export function createLayers(map: mapboxgl.Map) {
       'icon-image': ['get', 'icon'],
     },
   })
-
 
   // Add clustering layer
   map.addLayer({

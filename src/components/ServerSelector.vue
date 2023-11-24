@@ -6,10 +6,7 @@ interface Emits {
 }
 const state = useStorage('forager-store', {
   server: import.meta.env.VITE_POCKETBASE_URL,
-},
-localStorage,
-{ mergeDefaults: true })
-
+}, localStorage, { mergeDefaults: true })
 
 const serverIsAlive = ref(false)
 const serverClasses = computed(() => {
@@ -21,9 +18,9 @@ const serverClasses = computed(() => {
 const debouncedFunction = useDebounceFn(async () => {
   const { response } = await useFetch(`${state.value.server}/api/health`)
 
-  if (response.value?.status === 200) 
+  if (response.value?.status === 200)
     serverIsAlive.value = true
-  else 
+  else
     serverIsAlive.value = false
 }, 1000)
 
@@ -48,7 +45,6 @@ checkConnectivityDeBounce()
         </div>
         <input v-model="state.server" class="login-input" type="text" name="server" placeholder="Pocketbase server address" @keydown="checkConnectivityDeBounce">
       </div>
-     
       <BaseButton @click="emit('hide')">
         Submit
       </BaseButton>

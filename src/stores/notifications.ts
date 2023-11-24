@@ -24,22 +24,20 @@ export const notifications = defineStore('notifications-store', () => {
     }
   }
   const createNotification = (notification: Notification) => {
-    return new Notification(notification.title,
-      { body: notification.content?.body },
-    )
+    return new Notification(notification.title, { body: notification.content?.body })
   }
 
   const months = [
     'January',
     'February',
     'March',
-    'April', 
-    'May', 
+    'April',
+    'May',
     'June',
-    'July', 
+    'July',
     'August',
     'September',
-    'October', 
+    'October',
     'November',
     'December',
   ]
@@ -72,7 +70,7 @@ export const notifications = defineStore('notifications-store', () => {
       await pb.collection('notifications').create<NotificationsRecord>(notification)
     }
     catch (error) {
-      if (isError(error)) 
+      if (isError(error))
         setErrorMessage(error)
     }
   }
@@ -83,25 +81,24 @@ export const notifications = defineStore('notifications-store', () => {
 
   const triggerForagableNotification = async (items: ItemsRecordWithID[]) => {
     let customItems: string[] = []
-    if (items === undefined) 
+    if (items === undefined)
       return
 
-    if (filterMonthlyForagables(items).length === 0) 
+    if (filterMonthlyForagables(items).length === 0)
       return
-  
+
     const hasStoredMonthlyUpdate = await getStoredNotifications('monthly-update')
-    if (hasStoredMonthlyUpdate === true) 
+    if (hasStoredMonthlyUpdate === true)
       return
-    
 
     filterMonthlyForagables(items).forEach((item) => {
       customItems = [...customItems, ` ${item.name}`]
     })
 
     const newMonthlyNotification = {
-      title:'Monthly foragables!',
+      title: 'Monthly foragables!',
       content: {
-        body:`You can find${ customItems } this month`,
+        body: `You can find${customItems} this month`,
       },
     }
     createNotification(newMonthlyNotification)
@@ -112,7 +109,6 @@ export const notifications = defineStore('notifications-store', () => {
       title: newMonthlyNotification.title,
       body: newMonthlyNotification.content.body,
     })
-   
   }
 
   return {

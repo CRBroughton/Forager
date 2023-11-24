@@ -67,7 +67,6 @@ const notificationsStore = notifications()
     padding-inline: 1em;
 }
 
-
 .disabled {
   background: red;
 }
