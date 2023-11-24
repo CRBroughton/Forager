@@ -6,11 +6,11 @@ import { createLandmarks, createLayers } from '../mapbox/layers'
 import { createGeolocator } from '../mapbox/geoLocator'
 import type { LandmarksRecord } from '../pocketbase-types'
 import { usePocketBase } from '@/stores'
-import { user } from '@/utils/pocketbase'
+import { user, usersSavedColours } from '@/utils/pocketbase'
 
 export const useMapbox = defineStore('mapbox-store', () => {
   const userStore = usePocketBase()
-  mapboxgl.accessToken = userStore.user?.mapboxAPIKey
+  mapboxgl.accessToken = userStore.user.mapboxAPIKey!
   let map: mapboxgl.Map | undefined
   const lng = ref(0)
   const lat = ref(0)
@@ -95,7 +95,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
     map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/outdoors-v12',
-      center: [user?.value?.lng, user?.value?.lat] ?? [0, 0],
+      center: [user.value.lng!, user.value.lat!] ?? [0, 0],
       zoom: user?.value?.lat === 0 && user?.value?.lng === 0 ? 2 : 14,
     })
 
@@ -155,7 +155,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
       // })
 
       if (map) {
-        createLayers(map)
+        createLayers(map, usersSavedColours.value)
         createGeolocator(map)
       }
     })
@@ -349,7 +349,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
 
   const returnHome = () => {
     const settingsStore = usePocketBase()
-    map?.flyTo({ center: [settingsStore.user?.lng, settingsStore.user?.lat], zoom: 14 })
+    map?.flyTo({ center: [settingsStore.user.lng!, settingsStore.user.lat!], zoom: 14 })
   }
 
   return {

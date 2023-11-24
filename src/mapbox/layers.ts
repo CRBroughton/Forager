@@ -1,6 +1,6 @@
 import type mapboxgl from 'mapbox-gl'
 
-export function createLayers(map: mapboxgl.Map) {
+export function createLayers(map: mapboxgl.Map, usersSavedColours: string[]) {
   map.addLayer({
     id: 'unclustered-point',
     type: 'circle',
@@ -11,18 +11,7 @@ export function createLayers(map: mapboxgl.Map) {
       'circle-color': [
         'match',
         ['get', 'colour'],
-        'blue',
-        'blue',
-        'red',
-        'red',
-        'purple',
-        'purple',
-        'orange',
-        'orange',
-        'deeppink',
-        'deeppink',
-        'cadetblue',
-        'cadetblue',
+        ...usersSavedColours,
         /* other */ '#ccc',
       ],
       'circle-radius': 8,

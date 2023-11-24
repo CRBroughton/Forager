@@ -9,7 +9,7 @@ const { user } = storeToRefs(pocketbaseStore)
 
 const imageURL = ref('')
 const imageName = ref('')
-const selectedColour = ref('red')
+const selectedColour = ref('')
 
 const submitButtonDisabled = computed(() => {
   return imageURL.value.length === 0
@@ -42,7 +42,7 @@ const selectedEndMonth = ref('December')
       Saved Images
     </h2>
     <div class="grid grid-cols-3 gap-4 justify-center">
-      <div v-for="image in user?.images" :key="image" class="flex flex-col items-center justify-center gap-2">
+      <div v-for="(image, index) in user?.images" :key="index" class="flex flex-col items-center justify-center gap-2">
         <ReferenceImage :image="image" can-delete @delete="pocketbaseStore.deleteReferenceImage(image)" />
       </div>
     </div>
@@ -50,6 +50,7 @@ const selectedEndMonth = ref('December')
     <h2 class="text-md font-medium">
       Create New Image
     </h2>
+    {{ selectedColour }}
     <ColourSelector :selected-colour="selectedColour" @change="selectedColour = $event" />
     <div class="flex flex-col gap-4">
       <input v-model="imageURL" class="login-input" placeholder="Enter Image URL">

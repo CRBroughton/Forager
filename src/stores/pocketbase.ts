@@ -33,7 +33,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
   const health = ref<healthCheckResponse>()
   const selectedItemPocketbase = ref<ItemsRecordWithID>()
 
-  pb.authStore.onChange(() => user.value = pb.authStore.model)
+  pb.authStore.onChange(() => user.value = pb.authStore.model as UserRecordWithID)
 
   const getHealth = async () => {
     try {
