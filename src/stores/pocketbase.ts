@@ -86,7 +86,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
 
   const updateAccountData = async (data: UserRecordWithID) => {
     try {
-      selectedItemPocketbase.value = await pb.collection('users').update<ItemsRecordWithID>(user.value?.id, {
+      selectedItemPocketbase.value = await pb.collection('users').update<ItemsRecordWithID>(user.value!.id, {
         images: data.images,
         lat: data.lat,
         lng: data.lng,
@@ -107,7 +107,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
   }
   const setUserLocation = async (position: Position) => {
     try {
-      await pb.collection('users').update(user.value?.id, {
+      await pb.collection('users').update(user.value!.id, {
         lat: position.lat,
         lng: position.lng,
       })
@@ -304,7 +304,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
   // }
 
   const deleteReferenceImage = async (removedImage: UserImage) => {
-    const filteredImages: UserImage[] = user.value?.images.filter((image: UserImage) => image !== removedImage)
+    const filteredImages: UserImage[] = user.value!.images.filter((image: UserImage) => image !== removedImage)
     try {
       await pb.collection('users').update<UsersRecord<UserImage[]>>(user.value!.id, {
         images: filteredImages,

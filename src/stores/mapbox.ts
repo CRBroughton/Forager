@@ -10,7 +10,7 @@ import { user, usersSavedColours } from '@/utils/pocketbase'
 
 export const useMapbox = defineStore('mapbox-store', () => {
   const userStore = usePocketBase()
-  mapboxgl.accessToken = userStore.user.mapboxAPIKey!
+  mapboxgl.accessToken = userStore.user?.mapboxAPIKey ?? ''
   let map: mapboxgl.Map | undefined
   const lng = ref(0)
   const lat = ref(0)
@@ -95,7 +95,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
     map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/outdoors-v12',
-      center: [user.value.lng!, user.value.lat!] ?? [0, 0],
+      center: [user.value?.lng ?? 0, user.value?.lat ?? 0],
       zoom: user?.value?.lat === 0 && user?.value?.lng === 0 ? 2 : 14,
     })
 
@@ -234,7 +234,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
 
     const newLandmark = {
       ...landmark,
-      owner: settingsStore.user?.id,
+      owner: settingsStore.user!.id,
     }
 
     await settingsStore.createLandmark(newLandmark)
@@ -264,7 +264,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
       lng,
       lat,
       name: selectedImage.name,
-      owner: settingsStore.user?.id,
+      owner: settingsStore.user!.id,
       colour: selectedImage.colour,
       startMonth: selectedImage.startMonth,
       endMonth: selectedImage.endMonth,
@@ -349,7 +349,7 @@ export const useMapbox = defineStore('mapbox-store', () => {
 
   const returnHome = () => {
     const settingsStore = usePocketBase()
-    map?.flyTo({ center: [settingsStore.user.lng!, settingsStore.user.lat!], zoom: 14 })
+    map?.flyTo({ center: [settingsStore.user?.lng ?? 0, settingsStore.user?.lat ?? 0], zoom: 14 })
   }
 
   return {

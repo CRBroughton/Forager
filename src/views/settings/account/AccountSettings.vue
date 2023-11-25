@@ -54,7 +54,7 @@ async function downloadAccountData() {
   try {
     downloadingAccountData.value = true
 
-    const { link } = jsonDownloader(user.value, '_user_data.json')
+    const { link } = jsonDownloader(user.value!, '_user_data.json')
 
     link.click()
   }

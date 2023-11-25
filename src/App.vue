@@ -22,7 +22,7 @@ watch(() => user.value?.images, () => {
     && user.value?.images !== null
   ) {
     useTimeoutFn(() => {
-      notificationsStore.triggerForagableNotification(user.value?.images)
+      notificationsStore.triggerForagableNotification(user.value!.images)
     }, 3000)
   }
 })

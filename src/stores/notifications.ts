@@ -1,4 +1,4 @@
-import type { ItemsRecordWithID } from '../types'
+import type { UserImage } from '../types'
 import { pb, setErrorMessage, user } from '../utils/pocketbase'
 import { isError } from '@/utils/isError'
 import type { NotificationsRecord } from '@/pocketbase-types'
@@ -75,11 +75,11 @@ export const notifications = defineStore('notifications-store', () => {
     }
   }
 
-  const filterMonthlyForagables = (items: ItemsRecordWithID[]) => {
+  const filterMonthlyForagables = (items: UserImage[]) => {
     return items.filter(item => item.startMonth === currentMonth)
   }
 
-  const triggerForagableNotification = async (items: ItemsRecordWithID[]) => {
+  const triggerForagableNotification = async (items: UserImage[]) => {
     let customItems: string[] = []
     if (items === undefined)
       return

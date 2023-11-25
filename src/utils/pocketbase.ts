@@ -6,12 +6,12 @@ const state = useStorage('forager-store', {
 })
 
 export const pb = new PocketBase(state.value.server)
-export const user = ref(pb.authStore.model) as Ref<UserRecordWithID>
+export const user = ref(pb.authStore.model) as Ref<UserRecordWithID | undefined>
 
 export const usersSavedColours = computed(() => {
   const colours: string[] = []
 
-  user.value.images.forEach((image) => {
+  user.value?.images.forEach((image) => {
     if (colours.includes(image.colour))
       return
     if (image.colour === '')

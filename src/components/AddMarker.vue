@@ -79,7 +79,7 @@ function create() {
       <div class="m-auto items-center w-full overflow-hidden">
         <Transition name="slide" mode="out-in">
           <div v-if="!createLandmark">
-            <ReferenceImages :new="createLandmark" :images="user?.images" @change="setSelectedItem">
+            <ReferenceImages :new="createLandmark" :images="user?.images!" @change="setSelectedItem">
               <div class="h-16 w-16 min-w-[4rem] min-h-[4rem] bg-white active:bg-gray-100 flex justify-center items-center rounded-full border-gray-200 border cursor-pointer text-gray-500" @click="createLandmark = !createLandmark">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2Z" /></svg>
               </div>
