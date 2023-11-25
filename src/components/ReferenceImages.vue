@@ -32,7 +32,11 @@ const isSliced = ref(true)
             <p>Landmark</p>
           </div>
           <div v-for="image in props.images" :key="image.url" class="flex flex-col justify-center items-center">
-            <ReferenceImage :image="image" :class="{ selected: selectedImage?.url === image.url }" @click="selectImage(image)" />
+            <ReferenceImage
+              :image="image"
+              :outline="`${selectedImage?.url === image.url ? 'blue' : image.colour}`"
+              @click="selectImage (image)"
+            />
           </div>
         </div>
       </div>
