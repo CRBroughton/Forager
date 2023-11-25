@@ -33,13 +33,13 @@ const selectedEndMonth = ref('December')
 <template>
   <SettingsWrapper style="background: #d3fcd9;">
     <template #title>
-      Images
+      Foragables
     </template>
     <template #info>
       <InformationMark id="imageSettings" ref="imageSettingsRef" class="ml-auto" />
     </template>
     <h2 class="text-md font-medium">
-      Saved Images
+      Saved Foragables
     </h2>
     <div class="grid grid-cols-3 gap-4 justify-center">
       <div v-for="(image, index) in user?.images" :key="index" class="flex flex-col items-center justify-center gap-2">
@@ -48,9 +48,8 @@ const selectedEndMonth = ref('December')
     </div>
     <hr class="h-[1px] min-h-[1px] w-full bg-gray-400 border-0">
     <h2 class="text-md font-medium">
-      Create New Image
+      Create New Foragable
     </h2>
-    {{ selectedColour }}
     <ColourSelector :selected-colour="selectedColour" @change="selectedColour = $event" />
     <div class="flex flex-col gap-4">
       <input v-model="imageURL" class="login-input" placeholder="Enter Image URL">
@@ -63,7 +62,7 @@ const selectedEndMonth = ref('December')
     />
     <div class="flex flex-col gap-4 w-full mt-auto">
       <BaseButton :class="{ disabled: submitButtonDisabled }" :disabled="submitButtonDisabled" @click="pocketbaseStore.createImage({ name: imageName, url: imageURL, colour: selectedColour, startMonth: selectedStartMonth, endMonth: selectedEndMonth })">
-        Create New Image
+        Create New Foragable
       </BaseButton>
       <BaseButton @click="toggleImageMenu">
         Return to main menu

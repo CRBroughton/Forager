@@ -8,7 +8,7 @@ const selectedColour = ref('#ffffff')
 
 <template>
   <div class="flex flex-col gap-2">
-    <p>Colour</p>
+    <p>Foragable Marker Colour</p>
     <input v-model="selectedColour" class="w-full" type="color" @change="emit('change', selectedColour)">
   </div>
 </template>

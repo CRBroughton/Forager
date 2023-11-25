@@ -43,7 +43,7 @@ const notificationsStore = notifications()
       <AccountSettings v-if="accountSettingsOpen" />
     </Transition>
     <BaseButton @click="settingsStore.toggleImageMenu">
-      Images
+      Foragables
     </BaseButton>
     <Transition name="slide">
       <ImageSettings v-if="imagesOpen" />
