@@ -62,6 +62,17 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     }
   }
 
+  const loginWithDiscord = async () => {
+    try {
+      await pb.collection('users').authWithOAuth2({ provider: 'discord' })
+      return 'success'
+    }
+    catch (error: unknown) {
+      if (isError(error))
+        setErrorMessage(error)
+    }
+  }
+
   const canSignUp = computed(() => {
     return username.value && password.value && passwordConfirm.value && mapboxAPIKey.value
   })
@@ -361,5 +372,6 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     setErrorMessage,
     createLandmark,
     getLandmarks,
+    loginWithDiscord,
   }
 })

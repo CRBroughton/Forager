@@ -48,6 +48,13 @@ async function loginInUser() {
     location.reload()
 }
 
+async function loginUserWithDiscord() {
+  const result = await pocketbaseStore.loginWithDiscord()
+
+  if (result === 'success')
+    location.reload()
+}
+
 async function agree() {
   await pocketbaseStore.updateDisclaimerAgreement()
   location.reload()
@@ -77,6 +84,9 @@ const settingsMenuVisible = ref(false)
       >
       <BaseButton v-if="!isCreatingAccount" @click="loginInUser()">
         Login
+      </BaseButton>
+      <BaseButton v-if="!isCreatingAccount && canCreateAccounts" @click="loginUserWithDiscord()">
+        Login With Discord
       </BaseButton>
       <BaseButton v-if="!isCreatingAccount && canCreateAccounts" @click="isCreatingAccount = !isCreatingAccount">
         Create New Account

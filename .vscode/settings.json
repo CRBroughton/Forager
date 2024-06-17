@@ -19,14 +19,15 @@
     "css.lint.unknownAtRules": "ignore",
     "scss.lint.unknownAtRules": "ignore",
     "conventionalCommits.scopes": [
-        "routes",
-        "delete-reference-images",
-        "desktop-support",
-        "marker-details",
-        "login-page",
-        "stores",
-        "error-handling",
-        "notifications"
+      "routes",
+      "delete-reference-images",
+      "desktop-support",
+      "marker-details",
+      "login-page",
+      "stores",
+      "error-handling",
+      "notifications",
+      "0auth2"
     ],
 
 
