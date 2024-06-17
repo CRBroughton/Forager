@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { useSettingsStore } from '@/views/settings/settingsStore'
-import { usePocketBase } from '@/pocketbase'
-import { useMapbox } from '@/mapbox'
+import { useMapbox, usePocketBase } from '@/stores'
 import type { ItemsRecordWithID, UserRecordWithID } from '@/types'
-import { jsonDownloader } from '@/jsonDownloader'
+import { jsonDownloader } from '@/utils/jsonDownloader'
 
 const { isSupported } = useFileSystemAccess()
 const { toggleAccountMenu } = useSettingsStore()
@@ -53,10 +52,9 @@ async function uploadMarkerdata() {
 const downloadingAccountData = ref(false)
 async function downloadAccountData() {
   try {
-
     downloadingAccountData.value = true
-    
-    const { link } = jsonDownloader(user.value, '_user_data.json')
+
+    const { link } = jsonDownloader(user.value!, '_user_data.json')
 
     link.click()
   }

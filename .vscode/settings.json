@@ -1,4 +1,6 @@
 {
+     // Enable the ESlint flat config support
+    "eslint.experimental.useFlatConfig": true,
     "eslint.workingDirectories": [{ "mode": "auto" }],
     "eslint.validate": [
         "javascript",
@@ -6,7 +8,7 @@
         "vue"
   ],
   "editor.codeActionsOnSave": {
-      "source.fixAll": true,
+      "source.fixAll.eslint": true,
       "eslint.format.enable": true,
       "editor.formatOnSave": true,
     },
@@ -17,12 +19,28 @@
     "css.lint.unknownAtRules": "ignore",
     "scss.lint.unknownAtRules": "ignore",
     "conventionalCommits.scopes": [
-        "routes",
-        "delete-reference-images",
-        "desktop-support",
-        "marker-details",
-        "login-page",
-        "stores",
-        "error-handling"
-    ]
+      "routes",
+      "delete-reference-images",
+      "desktop-support",
+      "marker-details",
+      "login-page",
+      "stores",
+      "error-handling",
+      "notifications",
+      "0auth2"
+    ],
+
+
+  // Silent the stylistic rules in you IDE, but still auto fix them
+//   "eslint.rules.customizations": [
+//     { "rule": "style/*", "severity": "off" },
+//     { "rule": "*-indent", "severity": "off" },
+//     { "rule": "*-spacing", "severity": "off" },
+//     { "rule": "*-spaces", "severity": "off" },
+//     { "rule": "*-order", "severity": "off" },
+//     { "rule": "*-dangle", "severity": "off" },
+//     { "rule": "*-newline", "severity": "off" },
+//     { "rule": "*quotes", "severity": "off" },
+//     { "rule": "*semi", "severity": "off" }
+//   ],
 }

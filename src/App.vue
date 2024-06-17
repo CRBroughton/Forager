@@ -1,17 +1,29 @@
 <script setup lang="ts">
-import { usePocketBase } from './pocketbase'
-import { useMapbox } from './mapbox'
+import { notifications, useMapbox, usePocketBase } from '@/stores'
+import { errorMessage, user } from '@/utils/pocketbase'
 
 const pocketbaseStore = usePocketBase()
 const mapboxStore = useMapbox()
-const { user, username, password, passwordConfirm, mapboxAPIKey, isCreatingAccount, errorMessage, canSignUp } = storeToRefs(pocketbaseStore)
+const { username, password, passwordConfirm, mapboxAPIKey, isCreatingAccount, isCreatingDiscountAccount, canSignUp } = storeToRefs(pocketbaseStore)
 const canCreateAccounts = ref<boolean | undefined>(false)
+const notificationsStore = notifications()
 
 onMounted(async () => {
   canCreateAccounts.value = await pocketbaseStore.canCreateAccount()
-  if (pocketbaseStore.pb.authStore.token && user.value && user.value.disclaimerAgreed) {
+  if (pocketbaseStore.pb.authStore.token && user.value && user.value.disclaimerAgreed && user.value.mapboxAPIKey) {
     await mapboxStore.initMapbox()
     await pocketbaseStore.refresh()
+  }
+})
+
+watch(() => user.value?.images, () => {
+  if (
+    user.value?.images !== undefined
+    && user.value?.images !== null
+  ) {
+    useTimeoutFn(() => {
+      notificationsStore.triggerForagableNotification(user.value!.images)
+    }, 3000)
   }
 })
 
@@ -36,6 +48,13 @@ async function loginInUser() {
     location.reload()
 }
 
+async function loginUserWithDiscord(firstLogin: boolean) {
+  const result = await pocketbaseStore.loginWithDiscord(firstLogin)
+
+  if (result === 'success')
+    location.reload()
+}
+
 async function agree() {
   await pocketbaseStore.updateDisclaimerAgreement()
   location.reload()
@@ -53,20 +72,26 @@ const settingsMenuVisible = ref(false)
   <div v-if="!user" class="login">
     <ErrorMessage :error-message="errorMessage" />
     <LoginForm @toggle-settings="settingsMenuVisible = !settingsMenuVisible">
-      <input v-model="username" class="login-input" placeholder="enter username" required>
-      <input v-model="password" class="login-input" type="password" placeholder="enter password" required>
+      <input v-if="!isCreatingDiscountAccount" v-model="username" class="login-input" placeholder="enter username" required>
+      <input v-if="!isCreatingDiscountAccount" v-model="password" class="login-input" type="password" placeholder="enter password" required>
       <input
-        v-if="isCreatingAccount"
+        v-if="isCreatingAccount && !isCreatingDiscountAccount"
         v-model="passwordConfirm" class="login-input" placeholder="confirm password" type="password" required
       >
       <input
-        v-if="isCreatingAccount"
+        v-if="isCreatingAccount || isCreatingDiscountAccount"
         v-model="mapboxAPIKey" class="login-input" placeholder="Mapbox API Key" type="password" required
       >
-      <BaseButton v-if="!isCreatingAccount" @click="loginInUser()">
+      <BaseButton v-if="!isCreatingAccount && !isCreatingDiscountAccount" @click="loginInUser()">
         Login
       </BaseButton>
-      <BaseButton v-if="!isCreatingAccount && canCreateAccounts" @click="isCreatingAccount = !isCreatingAccount">
+      <BaseButton v-if="!isCreatingAccount && !isCreatingDiscountAccount" @click="loginUserWithDiscord(false)">
+        Login With Discord
+      </BaseButton>
+      <BaseButton v-if="isCreatingAccount" :disabled="mapboxAPIKey === undefined" @click="loginUserWithDiscord(true)">
+        Create Account With Discord
+      </BaseButton>
+      <BaseButton v-if="!isCreatingAccount && canCreateAccounts && !isCreatingDiscountAccount" @click="isCreatingAccount = !isCreatingAccount">
         Create New Account
       </BaseButton>
       <BaseButton v-if="isCreatingAccount" :disabled="!canSignUp" @click="pocketbaseStore.createAccount()">
@@ -163,3 +188,6 @@ const settingsMenuVisible = ref(false)
   transform: translateY(100%);
 }
 </style>
+./stores/notifications
+./stores/pocketbase
+./stores/mapbox

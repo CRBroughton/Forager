@@ -1,7 +1,6 @@
 <script  setup lang="ts">
 import { ref } from 'vue'
-import { useMapbox } from '@/mapbox'
-import { usePocketBase } from '@/pocketbase'
+import { useMapbox, usePocketBase } from '@/stores'
 
 // For default values for your props, use :
 // withDefaults(defineProps<Props>(), { msg: 'myDefaultValue' })}

@@ -12,6 +12,7 @@ export interface LandmarksRecordWithID extends LandmarksRecord {
 export interface UserRecordWithID extends UsersRecord {
   email: string
   id: string
+  images: UserImage[]
 }
 
 export interface UserImage {

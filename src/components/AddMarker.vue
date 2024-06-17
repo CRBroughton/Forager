@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { usePocketBase } from '@/pocketbase'
-import { useMapbox } from '@/mapbox'
+import { useMapbox, usePocketBase } from '@/stores'
 import type { UserImage } from '@/types'
-import { createPopup } from '@/tippy'
+import { createPopup } from '@/utils/tippy'
 
 interface Props {
   hidden: boolean
@@ -46,9 +45,8 @@ function hide() {
   emits('hide')
 }
 
-
 function setSelectedItem(event: UserImage) {
-  Object.assign(selectedItem, event) 
+  Object.assign(selectedItem, event)
 }
 
 function create() {
@@ -62,12 +60,11 @@ function create() {
     lng: lng.value,
     lat: lat.value,
   })
-  
 }
 </script>
 
 <template>
-  <div v-if="!hidden" class="absolute overflow-scroll m-auto bottom-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-lg w-[calc(100% - 1em)] mx-4 rounded-tr-xl rounded-tl-xl p-4 md:bottom-2 md:left-2 md:w-2/3 md:h-auto md:rounded-br-xl md:rounded-bl-xl md:px-0 md:m-0 md:max-w-md md:max-h-[50%] md:overflow-scroll">
+  <div v-if="!hidden" class="absolute overflow-scroll m-auto bottom-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-lg w-[calc(100% - 1em)] mx-4 rounded-tr-xl rounded-tl-xl p-4 md:bottom-2 md:left-2 md:w-2/3 md:h-auto md:rounded-br-xl md:rounded-bl-xl md:px-0 md:m-0 md:max-w-md md:overflow-scroll">
     <div class="max-w-sm flex flex-col m-auto rounded-xl md:max-w-none md:mx-4">
       <div class="flex gap-2 items-center">
         <h1>{{ !createLandmark ? 'Create new item' : 'Create landmark' }}</h1>
@@ -82,7 +79,7 @@ function create() {
       <div class="m-auto items-center w-full overflow-hidden">
         <Transition name="slide" mode="out-in">
           <div v-if="!createLandmark">
-            <ReferenceImages :new="createLandmark" :images="user?.images" @change="setSelectedItem">
+            <ReferenceImages :new="createLandmark" :images="user?.images!" @change="setSelectedItem">
               <div class="h-16 w-16 min-w-[4rem] min-h-[4rem] bg-white active:bg-gray-100 flex justify-center items-center rounded-full border-gray-200 border cursor-pointer text-gray-500" @click="createLandmark = !createLandmark">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2Z" /></svg>
               </div>
@@ -121,7 +118,6 @@ function create() {
 h1 {
   font-size: 1.2em;
 }
-
 
 .slide-enter-active {
   transition: all 0.2s ease-out;

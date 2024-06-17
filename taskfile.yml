@@ -5,7 +5,7 @@ vars:
 
 tasks:
   build: 
-    deps: [clean, linux32, linux64, windows64, apple, applesilicon]
+    deps: [clean, linux32, linux64, linuxarm, linuxarm64, windows64, apple, applesilicon]
 
   clean:
     cmds:
@@ -32,6 +32,18 @@ tasks:
     cmds:
       - cd db && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ../build/forager-"{{.version}}"-linux
       - cd build && zip forager-"{{.version}}"-linux.zip forager-"{{.version}}"-linux
+
+  buildlinuxarm:
+    deps: [front]
+    cmds:
+      - cd db && CGO_ENABLED=0 GOOS=linux GOARCH=arm go build -o ../build/forager-"{{.version}}"-linuxarm
+      - cd build && zip forager-"{{.version}}"-linuxarm.zip forager-"{{.version}}"-linuxarm
+
+  buildlinuxarm64:
+    deps: [front]
+    cmds:
+      - cd db && CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o ../build/forager-"{{.version}}"-linuxarm64
+      - cd build && zip forager-"{{.version}}"-linuxarm64.zip forager-"{{.version}}"-linuxarm64
 
   buildwindows64:
     deps: [front]
@@ -60,6 +72,16 @@ tasks:
     deps: [buildlinux64]
     cmds:
       - cd build && rm -rf forager-"{{.version}}"-linux
+
+  linuxarm:
+    deps: [buildlinuxarm]
+    cmds:
+      - cd build && rm -rf forager-"{{.version}}"-linuxarm
+
+  linuxarm64:
+    deps: [buildlinuxarm64]
+    cmds:
+      - cd build && rm -rf forager-"{{.version}}"-linuxarm64
       
   windows64:
     deps: [buildwindows64]
