@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 const emit = defineEmits(['toggleSettings'])
 </script>
 
@@ -39,4 +39,74 @@ const emit = defineEmits(['toggleSettings'])
     margin: 0 auto;
     padding-inline: 1em;
 }
-</style>
+</style> -->
+
+<script setup lang="ts">
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+</script>
+
+<template>
+  <div class="w-full grid lg:grid-cols-2 h-screen ">
+    <div class="flex items-center justify-center py-12">
+      <div class="mx-auto grid w-[350px] gap-6">
+        <div class="grid gap-2 text-center">
+          <h1 class="text-3xl font-bold">
+            Forager
+          </h1>
+          <p class="text-balance text-muted-foreground">
+            Enter your email below to login to your account
+          </p>
+        </div>
+        <div class="grid gap-4">
+          <div class="grid gap-2">
+            <Label for="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="m@example.com"
+              required
+            />
+          </div>
+          <div class="grid gap-2">
+            <div class="flex items-center">
+              <Label for="password">Password</Label>
+              <!-- <a
+                href="/forgot-password"
+                class="ml-auto inline-block text-sm underline"
+              >
+                Forgot your password?
+              </a> -->
+            </div>
+            <Input id="password" type="password" required />
+          </div>
+          <Button type="submit" class="w-full">
+            Login
+          </Button>
+          <Button variant="outline" class="w-full">
+            Login with Discord
+          </Button>
+        </div>
+        <div class="mt-4 text-center text-sm">
+          Don't have an account?
+          <a href="#" class="underline">
+            Sign up
+          </a>
+          <p class="text-xs pt-1">
+            Copyright © 2023 Craig R Broughton
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="hidden bg-muted h-full lg:flex lg:justify-center lg:items-center ">
+      <img
+        src="/public/assets/logo.png"
+        alt="Image"
+        width="200"
+        height="200"
+        class="flex object-cover dark:brightness-[0.2] dark:grayscale"
+      >
+    </div>
+  </div>
+</template>

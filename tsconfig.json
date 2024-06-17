@@ -24,6 +24,7 @@
     "noFallthroughCasesInSwitch": true,
 
     "types": ["vite/client", "@types/node"],
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }

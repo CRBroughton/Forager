@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { notifications, useMapbox, usePocketBase } from '@/stores'
 import { errorMessage, user } from '@/utils/pocketbase'
+import { Button } from '@/components/ui/button'
 
 const pocketbaseStore = usePocketBase()
 const mapboxStore = useMapbox()
@@ -88,6 +89,7 @@ const settingsMenuVisible = ref(false)
       <BaseButton v-if="!isCreatingAccount && canCreateAccounts" @click="loginUserWithDiscord()">
         Login With Discord
       </BaseButton>
+      <Button>Click me</Button>
       <BaseButton v-if="!isCreatingAccount && canCreateAccounts" @click="isCreatingAccount = !isCreatingAccount">
         Create New Account
       </BaseButton>
