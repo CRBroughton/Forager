@@ -4,9 +4,17 @@ import AutoImport from 'unplugin-auto-import/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import { defineConfig } from 'vite'
 
+import tailwind from 'tailwindcss'
+import autoprefixer from 'autoprefixer'
+
 export default defineConfig({
   server: {
     port: 4000,
+  },
+  css: {
+    postcss: {
+      plugins: [tailwind(), autoprefixer()],
+    },
   },
   plugins: [
     Vue(),
@@ -39,7 +47,8 @@ export default defineConfig({
       // targets to transform
       include: [
         /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
-        /\.vue$/, /\.vue\?vue/, // .vue
+        /\.vue$/,
+        /\.vue\?vue/, // .vue
       ],
       // global imports to register
       imports: [
