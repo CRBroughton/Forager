@@ -63,14 +63,13 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     }
   }
 
-  const loginWithDiscord = async (firstLogin: boolean) => {
+  const loginWithDiscord = async () => {
     try {
       await pb.collection('users').authWithOAuth2({ provider: 'discord' })
-      if (user.value && firstLogin === true) {
-        await pb.collection('users').update(user.value.id, {
-          mapboxAPIKey: mapboxAPIKey.value,
-        })
-      }
+      await pb.collection('users').update(user.value!.id, {
+        mapboxAPIKey: mapboxAPIKey.value,
+        images: [],
+      })
       return 'success'
     }
     catch (error: unknown) {
@@ -81,6 +80,10 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
 
   const canSignUp = computed(() => {
     return username.value && password.value && passwordConfirm.value && mapboxAPIKey.value
+  })
+
+  const canLogin = computed(() => {
+    return username.value && password.value
   })
 
   const createAccount = async () => {
@@ -361,6 +364,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     refresh,
     createAccount,
     canSignUp,
+    canLogin,
     canCreateAccount,
     getHealth,
     getItems,
