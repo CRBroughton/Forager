@@ -31,10 +31,10 @@ checkConnectivityDeBounce()
 </script>
 
 <template>
-  <div class="w-screen h-screen absolute bg-red-100 p-4">
+  <div>
     <div class="flex flex-col gap-2">
       <div>
-        <div class="flex items-center content-center">
+        <div class="flex items-center content-center pb-1">
           <div :class="serverClasses" />
           <p v-if="!serverIsAlive">
             Could not find pocketbase server
@@ -43,14 +43,14 @@ checkConnectivityDeBounce()
             Found pocketbase server!
           </p>
         </div>
-        <input v-model="state.server" class="login-input" type="text" name="server" placeholder="Pocketbase server address" @keydown="checkConnectivityDeBounce">
+        <Input v-model="state.server" type="text" name="server" placeholder="Pocketbase server address" @keydown="checkConnectivityDeBounce" />
       </div>
-      <BaseButton @click="emit('hide')">
+      <Button @click="emit('hide')">
         Submit
-      </BaseButton>
-      <BaseButton @click="emit('hide')">
+      </Button>
+      <Button @click="emit('hide')">
         Back
-      </BaseButton>
+      </Button>
     </div>
   </div>
 </template>
