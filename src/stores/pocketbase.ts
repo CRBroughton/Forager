@@ -77,6 +77,10 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     return username.value && password.value && passwordConfirm.value && mapboxAPIKey.value
   })
 
+  const canLogin = computed(() => {
+    return username.value && password.value
+  })
+
   const createAccount = async () => {
     try {
       await pb.collection('users').create({
@@ -355,6 +359,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     refresh,
     createAccount,
     canSignUp,
+    canLogin,
     canCreateAccount,
     getHealth,
     getItems,

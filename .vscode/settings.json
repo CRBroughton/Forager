@@ -8,10 +8,10 @@
         "vue"
   ],
   "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true,
-      "eslint.format.enable": true,
-      "editor.formatOnSave": true,
-    },
+    "source.fixAll.eslint": "explicit",
+    "eslint.format.enable": "explicit",
+    "editor.formatOnSave": "explicit"
+  },
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs": "active",
     "editor.wordWrap": "on",

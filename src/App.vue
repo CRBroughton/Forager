@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { notifications, useMapbox, usePocketBase } from '@/stores'
 import { errorMessage, user } from '@/utils/pocketbase'
-import { Button } from '@/components/ui/button'
 
 const pocketbaseStore = usePocketBase()
 const mapboxStore = useMapbox()
-const { username, password, passwordConfirm, mapboxAPIKey, isCreatingAccount, canSignUp } = storeToRefs(pocketbaseStore)
+
 const canCreateAccounts = ref<boolean | undefined>(false)
 const notificationsStore = notifications()
 
@@ -42,20 +41,6 @@ function openSettingsMenu() {
   settingsMenu.value = true
 }
 
-async function loginInUser() {
-  const result = await pocketbaseStore.login()
-
-  if (result === 'success')
-    location.reload()
-}
-
-async function loginUserWithDiscord() {
-  const result = await pocketbaseStore.loginWithDiscord()
-
-  if (result === 'success')
-    location.reload()
-}
-
 async function agree() {
   await pocketbaseStore.updateDisclaimerAgreement()
   location.reload()
@@ -70,39 +55,10 @@ const settingsMenuVisible = ref(false)
 </script>
 
 <template>
+  {{ user }}
   <div v-if="!user" class="login">
     <ErrorMessage :error-message="errorMessage" />
     <LoginForm @toggle-settings="settingsMenuVisible = !settingsMenuVisible">
-      <input v-model="username" class="login-input" placeholder="enter username" required>
-      <input v-model="password" class="login-input" type="password" placeholder="enter password" required>
-      <input
-        v-if="isCreatingAccount"
-        v-model="passwordConfirm" class="login-input" placeholder="confirm password" type="password" required
-      >
-      <input
-        v-if="isCreatingAccount"
-        v-model="mapboxAPIKey" class="login-input" placeholder="Mapbox API Key" type="password" required
-      >
-      <BaseButton v-if="!isCreatingAccount" @click="loginInUser()">
-        Login
-      </BaseButton>
-      <BaseButton v-if="!isCreatingAccount && canCreateAccounts" @click="loginUserWithDiscord()">
-        Login With Discord
-      </BaseButton>
-      <Button>Click me</Button>
-      <BaseButton v-if="!isCreatingAccount && canCreateAccounts" @click="isCreatingAccount = !isCreatingAccount">
-        Create New Account
-      </BaseButton>
-      <BaseButton v-if="isCreatingAccount" :disabled="!canSignUp" @click="pocketbaseStore.createAccount()">
-        Create Account
-      </BaseButton>
-      <BaseButton
-        v-if="isCreatingAccount"
-        @click="isCreatingAccount = !isCreatingAccount
-        "
-      >
-        Back
-      </BaseButton>
       <ServerSelector v-if="settingsMenuVisible" @hide="settingsMenuVisible = !settingsMenuVisible" />
     </LoginForm>
   </div>
