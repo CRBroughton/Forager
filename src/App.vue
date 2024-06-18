@@ -55,7 +55,6 @@ const settingsMenuVisible = ref(false)
 </script>
 
 <template>
-  {{ user }}
   <div v-if="!user" class="login">
     <ErrorMessage :error-message="errorMessage" />
     <LoginForm @toggle-settings="settingsMenuVisible = !settingsMenuVisible">
@@ -66,9 +65,9 @@ const settingsMenuVisible = ref(false)
     <ErrorMessage :error-message="errorMessage" />
     <LoginForm>
       <Disclaimer />
-      <BaseButton @click="agree">
+      <Button @click="agree">
         I understand
-      </BaseButton>
+      </Button>
     </LoginForm>
   </div>
   <div v-if="user && user.disclaimerAgreed">

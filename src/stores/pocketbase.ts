@@ -65,6 +65,10 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
   const loginWithDiscord = async () => {
     try {
       await pb.collection('users').authWithOAuth2({ provider: 'discord' })
+      await pb.collection('users').update(user.value!.id, {
+        mapboxAPIKey: mapboxAPIKey.value,
+        images: [],
+      })
       return 'success'
     }
     catch (error: unknown) {
