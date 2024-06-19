@@ -10,7 +10,6 @@
     "formulahendry.auto-rename-tag",
     "vivaxy.vscode-conventional-commits",
     "golang.go",
-    "afzalsayed96.icones",
-    "Vue.vscode-typescript-vue-plugin",
+    "afzalsayed96.icones"
   ]
 }
