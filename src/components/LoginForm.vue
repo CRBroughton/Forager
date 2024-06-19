@@ -24,6 +24,11 @@ async function loginUserWithDiscord() {
   if (result === 'success')
     location.reload()
 }
+
+const canCreateAccounts = ref<boolean | undefined>(false)
+onMounted(async () => {
+  canCreateAccounts.value = await pocketbaseStore.canCreateAccount()
+})
 </script>
 
 <template>
@@ -94,7 +99,7 @@ async function loginUserWithDiscord() {
             </div>
           </div>
           <div class="mt-4 text-center text-sm">
-            <div v-if="!signingUp">
+            <div v-if="!signingUp && canCreateAccounts">
               Don't have an account?
               <a class="underline" @click="signingUp = !signingUp">
                 Sign up

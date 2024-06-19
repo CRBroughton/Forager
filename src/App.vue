@@ -4,11 +4,9 @@ import { errorMessage, user } from '@/utils/pocketbase'
 
 const pocketbaseStore = usePocketBase()
 const mapboxStore = useMapbox()
-const canCreateAccounts = ref<boolean | undefined>(false)
 const notificationsStore = notifications()
 
 onMounted(async () => {
-  canCreateAccounts.value = await pocketbaseStore.canCreateAccount()
   if (pocketbaseStore.pb.authStore.token && user.value && user.value.disclaimerAgreed && user.value.mapboxAPIKey) {
     await mapboxStore.initMapbox()
     await pocketbaseStore.refresh()
