@@ -31,7 +31,13 @@ async function loginUserWithDiscord() {
     <div class="flex items-center justify-center py-12">
       <div class="mx-auto grid w-[350px] gap-6">
         <slot>
-          <div class="flex gap-2 justify-center">
+          <div class="flex gap-2 justify-center items-center">
+            <img
+              src="/public/assets/logo.png"
+              alt="Image"
+              width="42"
+              height="42"
+            >
             <h1 class="text-3xl font-bold">
               Forager
             </h1>
