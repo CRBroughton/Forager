@@ -87,7 +87,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
   })
 
   const canLogin = computed(() => {
-    return username.value && password.value
+    return username.value.length > 0 && password.value.length > 0
   })
 
   const createAccount = async () => {

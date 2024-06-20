@@ -29,6 +29,10 @@ const canCreateAccounts = ref<boolean | undefined>(false)
 onMounted(async () => {
   canCreateAccounts.value = await pocketbaseStore.canCreateAccount()
 })
+
+const conflictingDiscordWithSignup = computed(() => {
+  return (username.value.length > 0 || password.value.length > 0 || passwordConfirm.value.length > 0) || mapboxAPIKey.value.length <= 0
+})
 </script>
 
 <template>
@@ -93,7 +97,7 @@ onMounted(async () => {
               <Button type="submit" class="w-full" :disabled="!canSignUp" @click="pocketbaseStore.createAccount">
                 Signup
               </Button>
-              <Button variant="outline" class="w-full" :disabled="mapboxAPIKey.length <= 0" @click="loginUserWithDiscord">
+              <Button variant="outline" class="w-full" :disabled="conflictingDiscordWithSignup" @click="loginUserWithDiscord">
                 Signup with Discord
               </Button>
             </div>
