@@ -18,8 +18,8 @@ async function loginInUser() {
     location.reload()
 }
 
-async function loginUserWithDiscord() {
-  const result = await pocketbaseStore.loginWithDiscord()
+async function loginUserWith0Auth2(provider: 'discord' | 'strava') {
+  const result = await pocketbaseStore.loginWithProvider(provider)
 
   if (result === 'success')
     location.reload()
@@ -89,16 +89,22 @@ const conflictingDiscordWithSignup = computed(() => {
               <Button type="submit" class="w-full" :disabled="!canLogin" @click="loginInUser">
                 Login
               </Button>
-              <Button variant="outline" class="w-full" @click="loginUserWithDiscord">
+              <Button variant="outline" class="w-full" @click="loginUserWith0Auth2('discord')">
                 Login with Discord
+              </Button>
+              <Button variant="outline" class="w-full" @click="loginUserWith0Auth2('strava')">
+                Login with Strava
               </Button>
             </div>
             <div v-else class="grid gap-2">
               <Button type="submit" class="w-full" :disabled="!canSignUp" @click="pocketbaseStore.createAccount">
                 Signup
               </Button>
-              <Button variant="outline" class="w-full" :disabled="conflictingDiscordWithSignup" @click="loginUserWithDiscord">
+              <Button variant="outline" class="w-full" :disabled="conflictingDiscordWithSignup" @click="loginUserWith0Auth2('discord')">
                 Signup with Discord
+              </Button>
+              <Button variant="outline" class="w-full" :disabled="conflictingDiscordWithSignup" @click="loginUserWith0Auth2('strava')">
+                Signup with Strava
               </Button>
             </div>
           </div>

@@ -63,9 +63,9 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     }
   }
 
-  const loginWithDiscord = async () => {
+  const loginWithProvider = async (provider: 'discord' | 'strava') => {
     try {
-      await pb.collection('users').authWithOAuth2({ provider: 'discord' })
+      await pb.collection('users').authWithOAuth2({ provider })
 
       if (mapboxAPIKey.value.length > 0) {
         await pb.collection('users').update(user.value!.id, {
@@ -386,7 +386,7 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     setErrorMessage,
     createLandmark,
     getLandmarks,
-    loginWithDiscord,
+    loginWithProvider,
     isCreatingDiscountAccount,
   }
 })
