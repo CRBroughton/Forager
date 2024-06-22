@@ -25,6 +25,13 @@ async function loginUserWith0Auth2(provider: 'discord' | 'strava') {
     location.reload()
 }
 
+async function signingUpUserWith0Auth2(provider: 'discord' | 'strava') {
+  const result = await pocketbaseStore.signupWithProvider(provider)
+
+  if (result === 'success')
+    location.reload()
+}
+
 const canCreateAccounts = ref<boolean | undefined>(false)
 onMounted(async () => {
   canCreateAccounts.value = await pocketbaseStore.canCreateAccount()
@@ -100,10 +107,10 @@ const conflictingDiscordWithSignup = computed(() => {
               <Button type="submit" class="w-full" :disabled="!canSignUp" @click="pocketbaseStore.createAccount">
                 Signup
               </Button>
-              <Button variant="outline" class="w-full" :disabled="conflictingDiscordWithSignup" @click="loginUserWith0Auth2('discord')">
+              <Button variant="outline" class="w-full" :disabled="conflictingDiscordWithSignup" @click="signingUpUserWith0Auth2('discord')">
                 Signup with Discord
               </Button>
-              <Button variant="outline" class="w-full" :disabled="conflictingDiscordWithSignup" @click="loginUserWith0Auth2('strava')">
+              <Button variant="outline" class="w-full" :disabled="conflictingDiscordWithSignup" @click="signingUpUserWith0Auth2('strava')">
                 Signup with Strava
               </Button>
             </div>

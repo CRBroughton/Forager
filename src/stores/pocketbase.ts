@@ -67,14 +67,49 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     try {
       await pb.collection('users').authWithOAuth2({ provider })
 
-      if (mapboxAPIKey.value.length > 0) {
-        await pb.collection('users').update(user.value!.id, {
-          mapboxAPIKey: mapboxAPIKey.value,
-          images: [],
-        })
+      if (user.value && user.value.mapboxAPIKey && user.value.mapboxAPIKey.length > 0) {
+        return 'success'
       }
+      else {
+        pb.collection('user').delete(user.value!.id)
+        logout()
+        throw new Error('Signup has been disabled')
+      }
+    }
+    catch (error: unknown) {
+      if (isError(error))
+        setErrorMessage(error)
+    }
+  }
 
-      return 'success'
+  const canCreateAccount = async () => {
+    try {
+      const services = await pb.collection('services').getFullList<ServicesRecord>()
+      return services[0].canCreateAccounts
+    }
+    catch (error: unknown) {
+      if (isError(error))
+        setErrorMessage(error)
+    }
+  }
+  const signupWithProvider = async (provider: 'discord' | 'strava') => {
+    try {
+      await pb.collection('users').authWithOAuth2({ provider })
+
+      if (await canCreateAccount() === true) {
+        if (mapboxAPIKey.value.length > 0) {
+          await pb.collection('users').update(user.value!.id, {
+            mapboxAPIKey: mapboxAPIKey.value,
+            images: [],
+          })
+        }
+        return 'success'
+      }
+      else {
+        pb.collection('user').delete(user.value!.id)
+        logout()
+        throw new Error('Signup has been disabled')
+      }
     }
     catch (error: unknown) {
       if (isError(error))
@@ -135,17 +170,6 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
         lat: position.lat,
         lng: position.lng,
       })
-    }
-    catch (error: unknown) {
-      if (isError(error))
-        setErrorMessage(error)
-    }
-  }
-
-  const canCreateAccount = async () => {
-    try {
-      const services = await pb.collection('services').getFullList<ServicesRecord>()
-      return services[0].canCreateAccounts
     }
     catch (error: unknown) {
       if (isError(error))
@@ -388,5 +412,6 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
     getLandmarks,
     loginWithProvider,
     isCreatingDiscountAccount,
+    signupWithProvider,
   }
 })
