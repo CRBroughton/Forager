@@ -71,7 +71,6 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
         return 'success'
       }
       else {
-        pb.collection('user').delete(user.value!.id)
         logout()
         throw new Error('Signup has been disabled')
       }
@@ -106,7 +105,6 @@ export const usePocketBase = defineStore('pocketbase-store', () => {
         return 'success'
       }
       else {
-        pb.collection('user').delete(user.value!.id)
         logout()
         throw new Error('Signup has been disabled')
       }
