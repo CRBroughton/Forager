@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import Button from './ui/button/Button.vue'
 import { useMapbox, usePocketBase } from '@/stores'
 import type { UserImage } from '@/types'
 import { createPopup } from '@/utils/tippy'
@@ -99,12 +100,12 @@ function create() {
         </Transition>
       </div>
       <div class="flex gap-4 m-auto w-full justify-center">
-        <BaseButton @click="create()">
+        <Button class="w-full" size="lg" variant="outline" @click="create()">
           Create
-        </BaseButton>
-        <BaseButton @click="hide">
+        </Button>
+        <Button class="w-full" size="lg" variant="outline" @click="hide">
           Cancel
-        </BaseButton>
+        </Button>
       </div>
     </div>
   </div>

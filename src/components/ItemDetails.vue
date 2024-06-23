@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Button from './ui/button/Button.vue'
 import { useMapbox, usePocketBase } from '@/stores'
 
 const mapboxStore = useMapbox()
@@ -56,15 +57,15 @@ const previewImg = computed(() => {
       <p>End Month: {{ selectedItemPocketbase.endMonth || 'Not Set' }}</p>
     </div>
     <div class="item-detail-buttons">
-      <BaseButton @click="deleteItem">
+      <Button class="w-full" size="lg" variant="outline" @click="deleteItem">
         Delete
-      </BaseButton>
-      <BaseButton v-if="selectedCollection === 'items'" @click="forageItem">
+      </Button>
+      <Button v-if="selectedCollection === 'items'" class="w-full" size="lg" variant="outline" @click="forageItem">
         Forage Now
-      </BaseButton>
-      <BaseButton @click="clearSelected">
+      </Button>
+      <Button class="w-full" size="lg" variant="outline" @click="clearSelected">
         Close
-      </BaseButton>
+      </Button>
     </div>
   </div>
 </template>

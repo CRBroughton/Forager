@@ -3,6 +3,7 @@ import { useSettingsStore } from '@/views/settings/settingsStore'
 import { useMapbox, usePocketBase } from '@/stores'
 import type { ItemsRecordWithID, UserRecordWithID } from '@/types'
 import { jsonDownloader } from '@/utils/jsonDownloader'
+import Button from '@/components/ui/button/Button.vue'
 
 const { isSupported } = useFileSystemAccess()
 const { toggleAccountMenu } = useSettingsStore()
@@ -104,33 +105,33 @@ async function resetLocation() {
     <template #title>
       Account
     </template>
-    <BaseButton @click="resetLocation">
+    <Button class="w-full" size="lg" variant="outline" @click="resetLocation">
       Reset Home Location
-    </BaseButton>
-    <BaseButton v-if="isSupported" @click="downloadAccountData">
+    </Button>
+    <Button v-if="isSupported" variant="outline" @click="downloadAccountData">
       Download Account Data
-    </BaseButton>
-    <BaseButton v-if="isSupported" @click="downloadMarkerData">
+    </Button>
+    <Button v-if="isSupported" class="w-full" size="lg" variant="outline" @click="downloadMarkerData">
       Download Marker Data
-    </BaseButton>
-    <BaseButton v-if="isSupported" @click="uploadAccountData">
+    </Button>
+    <Button v-if="isSupported" class="w-full" size="lg" variant="outline" @click="uploadAccountData">
       {{ isUploadingAccountData === true ? 'Uploading...' : 'Upload Account Data' }}
-    </BaseButton>
-    <BaseButton v-if="isSupported" @click="uploadMarkerdata">
+    </Button>
+    <Button v-if="isSupported" class="w-full" size="lg" variant="outline" @click="uploadMarkerdata">
       {{ isUploading === true ? 'Uploading...' : 'Upload Marker Data' }}
-    </BaseButton>
-    <BaseButton v-if="!confirmDeletion" @click="confirmDeletion = !confirmDeletion">
+    </Button>
+    <Button v-if="!confirmDeletion" class="w-full" size="lg" variant="outline" @click="confirmDeletion = !confirmDeletion">
       Delete All Markers
-    </BaseButton>
-    <BaseButton v-if="confirmDeletion" @click="pocketbaseStore.deleteAllMarkers(items)">
+    </Button>
+    <Button v-if="confirmDeletion" class="w-full" size="lg" variant="outline" @click="pocketbaseStore.deleteAllMarkers(items)">
       Delete All Markers (Confirm)
-    </BaseButton>
-    <BaseButton v-if="confirmDeletion" @click="confirmDeletion = !confirmDeletion">
+    </Button>
+    <Button v-if="confirmDeletion" class="w-full" size="lg" variant="outline" @click="confirmDeletion = !confirmDeletion">
       Cancel Deletion (Go Back)
-    </BaseButton>
-    <BaseButton @click="toggleAccountMenu">
+    </Button>
+    <Button class="w-full" size="lg" variant="outline" @click="toggleAccountMenu">
       Return to main menu
-    </BaseButton>
+    </Button>
   </SettingsWrapper>
 </template>
 

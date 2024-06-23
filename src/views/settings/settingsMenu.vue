@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Button from '@/components/ui/button/Button.vue'
 import { notifications } from '@/stores'
 import { useSettingsStore } from '@/views/settings/settingsStore'
 
@@ -33,24 +34,24 @@ const notificationsStore = notifications()
       <label for="topology">Enable 3D Map</label>
       <input id="topology" v-model="state.map3D" name="topology" type="checkbox" class="w-12 " @change="restartApplication()">
     </div>
-    <BaseButton v-if="notificationsStore.notificationStatus !== 'granted' && notificationsStore.supportsNotificationsAPI" @click="notificationsStore.enableNotifications()">
+    <Button v-if="notificationsStore.notificationStatus !== 'granted' && notificationsStore.supportsNotificationsAPI" class="w-full" size="lg" variant="outline" @click="notificationsStore.enableNotifications()">
       Enable notifications
-    </BaseButton>
-    <BaseButton @click="settingsStore.toggleAccountMenu">
+    </Button>
+    <Button class="w-full" size="lg" variant="outline" @click="settingsStore.toggleAccountMenu">
       Account
-    </BaseButton>
+    </Button>
     <Transition name="slide">
       <AccountSettings v-if="accountSettingsOpen" />
     </Transition>
-    <BaseButton @click="settingsStore.toggleImageMenu">
+    <Button class="w-full" size="lg" variant="outline" @click="settingsStore.toggleImageMenu">
       Foragables
-    </BaseButton>
+    </Button>
     <Transition name="slide">
       <ImageSettings v-if="imagesOpen" />
     </Transition>
-    <BaseButton @click="$emit('close')">
+    <Button class="w-full" size="lg" variant="outline" @click="$emit('close')">
       Close
-    </BaseButton>
+    </Button>
   </SettingsWrapper>
 </template>
 

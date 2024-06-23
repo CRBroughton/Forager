@@ -61,12 +61,12 @@ const selectedEndMonth = ref('December')
       @update-end-month="selectedEndMonth = $event"
     />
     <div class="flex flex-col gap-4 w-full mt-auto">
-      <BaseButton :class="{ disabled: submitButtonDisabled }" :disabled="submitButtonDisabled" @click="pocketbaseStore.createImage({ name: imageName, url: imageURL, colour: selectedColour, startMonth: selectedStartMonth, endMonth: selectedEndMonth })">
+      <Button class="w-full" size="lg" variant="outline" :class="{ disabled: submitButtonDisabled }" :disabled="submitButtonDisabled" @click="pocketbaseStore.createImage({ name: imageName, url: imageURL, colour: selectedColour, startMonth: selectedStartMonth, endMonth: selectedEndMonth })">
         Create New Foragable
-      </BaseButton>
-      <BaseButton @click="toggleImageMenu">
+      </Button>
+      <Button class="w-full" size="lg" @click="toggleImageMenu">
         Return to main menu
-      </BaseButton>
+      </Button>
     </div>
   </SettingsWrapper>
 </template>
