@@ -15,3 +15,5 @@ db/pb_data
 **/*.zip
 db/forager
 build
+*storybook.log
+src/stories
