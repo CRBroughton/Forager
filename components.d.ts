@@ -10,6 +10,7 @@ declare module 'vue' {
     AccountSettings: typeof import('./src/views/settings/account/AccountSettings.vue')['default']
     AddMarker: typeof import('./src/components/AddMarker.vue')['default']
     Button: typeof import('./src/components/ui/button/Button.vue')['default']
+    CameraButton: typeof import('./src/components/buttons/CameraButton.vue')['default']
     ColourSelector: typeof import('./src/components/ColourSelector.vue')['default']
     Disclaimer: typeof import('./src/components/Disclaimer.vue')['default']
     ErrorMessage: typeof import('./src/components/ErrorMessage.vue')['default']

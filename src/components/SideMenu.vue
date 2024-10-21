@@ -94,6 +94,9 @@ const sideMenuHidden = ref(true)
       </div>
     </Transition>
     <Transition name="slide">
+      <CameraButton v-if="!sideMenuHidden" />
+    </Transition>
+    <Transition name="slide">
       <div
         v-if="!sideMenuHidden"
         data-test="sidemenu-return-home"
